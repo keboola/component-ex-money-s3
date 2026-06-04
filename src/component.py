@@ -2,6 +2,7 @@
 
 import csv
 import logging
+import os
 import re
 
 from keboola.component.base import ComponentBase, sync_action
@@ -151,6 +152,10 @@ class Component(ComponentBase):
         return build_where(cfg.incremental_field, gte=gte, lte=cfg.date_to)
 
     def _write_parent(self, name, selection, rows, cfg):
+        # An empty result produces no table and no manifest at all.
+        if not rows:
+            logging.info(f"No rows for '{name}'; skipping table and manifest.")
+            return
         columns = parent_columns(selection)
         pk = [selection.pk_field] if selection.pk_field else []
         # Incremental upsert needs a PK; without one, fall back to full overwrite to avoid
@@ -180,6 +185,7 @@ class Component(ComponentBase):
             return
         writers = {}
         files = {}
+        counts = {}
         try:
             for list_name in selection.lists:
                 cols = child_columns(selection, list_name)
@@ -194,15 +200,23 @@ class Component(ComponentBase):
                 fh = open(table.full_path, "w", encoding="utf-8", newline="")
                 files[list_name] = (fh, table)
                 writers[list_name] = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
+                counts[list_name] = 0
             for item in rows:
                 pk_value = item.get(selection.pk_field) if selection.pk_field else None
                 for list_name, child_rows in extract_children(item, selection, pk_value).items():
                     for row in child_rows:
                         writers[list_name].writerow(row)
+                        counts[list_name] += 1
         finally:
-            for fh, table in files.values():
+            for list_name, (fh, table) in files.items():
                 fh.close()
-                self.write_manifest(table)
+                # A child list with no rows produces neither table nor manifest.
+                if counts[list_name]:
+                    self.write_manifest(table)
+                else:
+                    logging.info(f"No rows for child table '{table.name}'; skipping table and manifest.")
+                    if os.path.exists(table.full_path):
+                        os.remove(table.full_path)
 
     @sync_action("testConnection")
     def test_connection(self):

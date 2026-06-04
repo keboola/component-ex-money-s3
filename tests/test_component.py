@@ -1,9 +1,21 @@
+import os
+import tempfile
 import unittest
+from unittest.mock import MagicMock
 
 from keboola.component.exceptions import UserException
 
 from component import Component, legislation_incompatible_members, max_incremental_value
-from query_builder import Selection
+from query_builder import ChildSelection, Selection
+
+_FULL_LOAD = type("C", (), {"is_incremental": False})()
+
+
+def _fake_table(directory, filename):
+    table = MagicMock()
+    table.full_path = os.path.join(directory, filename)
+    table.name = filename
+    return table
 
 
 class TestComponent(unittest.TestCase):
@@ -107,6 +119,51 @@ class TestFetchRows(unittest.TestCase):
         comp = self._component_with_client(_ErrClient())
         with self.assertRaises(UserException):
             comp._fetch_rows(sel, where_clause=None, endpoint="x")
+
+
+class TestEmptyTableSkipping(unittest.TestCase):
+    def test_parent_with_no_rows_writes_nothing(self):
+        comp = Component.__new__(Component)
+        comp.create_out_table_definition = MagicMock()
+        comp.write_manifest = MagicMock()
+        sel = Selection(endpoint="e", pk_field="guid", scalars=["guid"], nested={}, lists={})
+        comp._write_parent("e", sel, [], _FULL_LOAD)
+        comp.create_out_table_definition.assert_not_called()
+        comp.write_manifest.assert_not_called()
+
+    def test_parent_with_rows_writes_manifest(self):
+        with tempfile.TemporaryDirectory() as d:
+            comp = Component.__new__(Component)
+            table = _fake_table(d, "e.csv")
+            comp.create_out_table_definition = MagicMock(return_value=table)
+            comp.write_manifest = MagicMock()
+            sel = Selection(endpoint="e", pk_field="guid", scalars=["guid"], nested={}, lists={})
+            comp._write_parent("e", sel, [{"guid": "g1"}], _FULL_LOAD)
+            comp.write_manifest.assert_called_once()
+            self.assertTrue(os.path.exists(table.full_path))
+
+    def test_empty_child_table_skipped_and_file_removed(self):
+        with tempfile.TemporaryDirectory() as d:
+            comp = Component.__new__(Component)
+            comp.create_out_table_definition = MagicMock(side_effect=lambda fname, **kw: _fake_table(d, fname))
+            comp.write_manifest = MagicMock()
+            sel = Selection(
+                endpoint="e",
+                pk_field="guid",
+                scalars=["guid"],
+                nested={},
+                lists={
+                    "full": ChildSelection(["a"], pk_field=None),
+                    "empty": ChildSelection(["b"], pk_field=None),
+                },
+            )
+            rows = [{"guid": "g1", "full": [{"a": 1}], "empty": []}]
+            comp._write_children("e", sel, rows, _FULL_LOAD)
+
+            manifested = {c.args[0].name for c in comp.write_manifest.call_args_list}
+            self.assertEqual(manifested, {"e_full.csv"})  # only the non-empty child
+            self.assertTrue(os.path.exists(os.path.join(d, "e_full.csv")))
+            self.assertFalse(os.path.exists(os.path.join(d, "e_empty.csv")))  # empty CSV removed
 
 
 if __name__ == "__main__":
