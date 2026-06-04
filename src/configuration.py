@@ -10,9 +10,8 @@ class Destination(BaseModel):
 
 
 class Configuration(BaseModel):
-    # connection (root config)
+    # connection (root config). NOTE: app_id is supplied via image parameters, not here.
     base_url: str
-    app_id: str
     client_id: str
     client_secret: str = Field(default="", alias="#client_secret")
     scope: str = "s3api"

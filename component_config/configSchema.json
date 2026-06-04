@@ -3,7 +3,6 @@
   "title": "Money S3 Connection",
   "required": [
     "base_url",
-    "app_id",
     "client_id",
     "#client_secret",
     "agenda_id"
@@ -14,11 +13,6 @@
       "title": "Base URL",
       "default": "http://localhost:28085",
       "propertyOrder": 1
-    },
-    "app_id": {
-      "type": "string",
-      "title": "App ID",
-      "propertyOrder": 2
     },
     "client_id": {
       "type": "string",

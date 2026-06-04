@@ -1,7 +1,6 @@
 {
   "parameters": {
     "base_url": "http://localhost:28085",
-    "app_id": "PLACEHOLDER_APPID",
     "client_id": "PLACEHOLDER_CLIENTID",
     "#client_secret": "PLACEHOLDER_SECRET",
     "scope": "s3api",
@@ -10,6 +9,9 @@
     "fields": ["id", "documentNumber", "dateOfIssue", "totalWithVatHc", "lastChangeDate", "currency.code", "vatRateSummary"],
     "load_type": "full_load",
     "destination": {}
+  },
+  "image_parameters": {
+    "app_id": "PLACEHOLDER_APPID"
   },
   "action": "run"
 }

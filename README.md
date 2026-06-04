@@ -29,8 +29,10 @@ Prerequisites
 
 - A running Money S3 instance with the S3 API module enabled.
 - An application registration in the Money S3 administration panel, providing an `App ID`,
-  `Client ID`, and `Client Secret`.
-- The agenda (company file) GUID, which can be loaded via the `listAgendas` sync action.
+  `Client ID`, and `Client Secret`. The `App ID` is provided via the component image
+  parameters (it is a vendor-wide constant), while `Client ID` / `Client Secret` are
+  per-configuration.
+- The agenda (company file) GUID, which can be loaded via the `list_agendas` sync action.
 
 Features
 ========
@@ -54,13 +56,15 @@ Root configuration (connection — shared across all rows)
 | Parameter        | Type   | Required | Description                                                     |
 |------------------|--------|----------|-----------------------------------------------------------------|
 | `base_url`       | string | yes      | Base URL of the Money S3 API, e.g. `https://s3.example.com`.   |
-| `app_id`         | string | yes      | Application ID registered in Money S3 administration.          |
 | `client_id`      | string | yes      | OAuth2 client ID for the registered application.               |
 | `#client_secret` | string | yes      | OAuth2 client secret (stored encrypted).                       |
 | `scope`          | string | no       | OAuth2 scope. Defaults to `s3api`.                             |
 | `agenda_id`      | string | yes      | GUID of the agenda (company file) to extract from.             |
 
-Use the **listAgendas** sync action to load available agendas into the `agenda_id` dropdown.
+`app_id` is **not** a user parameter — it is supplied through the component **image parameters**
+(`image_parameters.app_id`), since it is constant for the vendor's Money S3 application.
+
+Use the **list_agendas** sync action to load available agendas into the `agenda_id` dropdown.
 
 Row configuration (extraction — one row per endpoint)
 ------------------------------------------------------

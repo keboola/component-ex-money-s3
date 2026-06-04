@@ -59,7 +59,10 @@ class Component(ComponentBase):
     def _get_client(self) -> MoneyS3Client:
         if self._client is None:
             c = self._config()
-            tokens = TokenProvider(c.base_url, c.app_id, c.client_id, c.client_secret, c.scope)
+            app_id = self.configuration.image_parameters.get("app_id")
+            if not app_id:
+                raise UserException("App ID is not configured; it must be provided via the component image parameters.")
+            tokens = TokenProvider(c.base_url, app_id, c.client_id, c.client_secret, c.scope)
             self._client = MoneyS3Client(c.base_url, tokens, c.agenda_id)
         return self._client
 

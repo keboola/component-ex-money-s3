@@ -7,7 +7,6 @@ from configuration import Configuration
 def _base():
     return {
         "base_url": "http://localhost:28085",
-        "app_id": "APPID",
         "client_id": "cid",
         "#client_secret": "secret",
         "agenda_id": "ag-1",

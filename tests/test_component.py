@@ -1,7 +1,7 @@
 import os
 import tempfile
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, PropertyMock, patch
 
 from keboola.component.exceptions import UserException
 
@@ -130,6 +130,31 @@ class TestFetchRows(unittest.TestCase):
         comp = self._component_with_client(_NullDataClient())
         with self.assertRaises(UserException):
             comp._fetch_rows(sel, where_clause=None, endpoint="x")
+
+
+class TestClientAppId(unittest.TestCase):
+    def _comp(self):
+        comp = Component.__new__(Component)
+        comp._client = None
+        comp._cfg = type(
+            "C", (), {"base_url": "http://h", "client_id": "c", "client_secret": "s", "scope": "s3api", "agenda_id": "a"}
+        )()
+        return comp
+
+    def _with_image_params(self, comp, image_parameters):
+        cfg = type("Cfg", (), {"image_parameters": image_parameters})()
+        return patch.object(type(comp), "configuration", new_callable=PropertyMock, return_value=cfg)
+
+    def test_missing_app_id_raises(self):
+        comp = self._comp()
+        with self._with_image_params(comp, {}), self.assertRaises(UserException):
+            comp._get_client()
+
+    def test_app_id_from_image_parameters_is_used(self):
+        comp = self._comp()
+        with self._with_image_params(comp, {"app_id": "APPID"}):
+            client = comp._get_client()
+        self.assertEqual(client._tokens._app_id, "APPID")
 
 
 class TestEmptyTableSkipping(unittest.TestCase):
