@@ -17,7 +17,7 @@ def test_normalize_columns_replaces_forbidden_chars():
 
 SEL = Selection(
     endpoint="issuedInvoices",
-    pk_field="id",
+    pk_fields=["id"],
     scalars=["id", "documentNumber"],
     nested={"currency": ["code"], "partnerAddress": ["identificationNumber"]},
     lists={
@@ -56,7 +56,7 @@ def test_child_columns_index_fallback_and_sequence():
 
 
 def test_extract_children_builds_fk_and_keys():
-    children = extract_children(ITEM, SEL, parent_pk_value=12)
+    children = extract_children(ITEM, SEL)
     assert children["vatRateSummary"] == [
         {"issuedInvoices_id": 12, "_index": 0, "vatRate": 21.0, "totalVat": 0.0},
         {"issuedInvoices_id": 12, "_index": 1, "vatRate": 12.0, "totalVat": 1.0},
@@ -66,8 +66,23 @@ def test_extract_children_builds_fk_and_keys():
 
 def test_extract_children_empty_list():
     item = dict(ITEM, vatRateSummary=[], items=[])
-    children = extract_children(item, SEL, parent_pk_value=12)
+    children = extract_children(item, SEL)
     assert children == {"vatRateSummary": [], "items": []}
+
+
+def test_composite_parent_pk_emits_multiple_fk_columns():
+    sel = Selection(
+        endpoint="docs",
+        pk_fields=["documentNumber", "periodYear"],
+        scalars=["documentNumber", "periodYear"],
+        nested={},
+        lists={"lines": ChildSelection(["amount"], pk_field=None)},
+    )
+    assert child_columns(sel, "lines") == ["docs_documentNumber", "docs_periodYear", "_index", "amount"]
+    item = {"documentNumber": "D1", "periodYear": 2026, "lines": [{"amount": 5}]}
+    assert extract_children(item, sel)["lines"] == [
+        {"docs_documentNumber": "D1", "docs_periodYear": 2026, "_index": 0, "amount": 5}
+    ]
 
 
 def test_no_parent_pk_omits_fk_column():
@@ -75,14 +90,14 @@ def test_no_parent_pk_omits_fk_column():
     # column — neither in the column list nor in the row data.
     sel = Selection(
         endpoint="currencies",
-        pk_field=None,
+        pk_fields=[],
         scalars=["code"],
         nested={},
         lists={"rates": ChildSelection(["rate"], pk_field=None)},
     )
     assert child_columns(sel, "rates") == ["_index", "rate"]
     item = {"code": "EUR", "rates": [{"rate": 1.0}, {"rate": 2.0}]}
-    assert extract_children(item, sel, parent_pk_value=None)["rates"] == [
+    assert extract_children(item, sel)["rates"] == [
         {"_index": 0, "rate": 1.0},
         {"_index": 1, "rate": 2.0},
     ]

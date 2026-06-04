@@ -14,11 +14,15 @@ def normalize_columns(names: list[str]) -> list[str]:
     return [n.lstrip("_") or n for n in normalized]
 
 
-def _fk_column(sel: Selection) -> str | None:
-    # No parent PK → no foreign-key column to emit (avoids a bogus "<endpoint>_None").
-    if not sel.pk_field:
-        return None
-    return f"{sel.endpoint}_{sel.pk_field}"
+def fk_columns(sel: Selection) -> list[str]:
+    # One foreign-key column per parent primary-key field; empty when the parent has no PK
+    # (avoids a bogus "<endpoint>_None").
+    return [f"{sel.endpoint}_{pk}" for pk in sel.pk_fields]
+
+
+def fk_values(sel: Selection, item: dict) -> dict:
+    """The foreign-key column -> value mapping for a parent row."""
+    return {f"{sel.endpoint}_{pk}": item.get(pk) for pk in sel.pk_fields}
 
 
 def parent_columns(sel: Selection) -> list[str]:
@@ -39,8 +43,7 @@ def flatten_parent(item: dict, sel: Selection) -> dict:
 
 def child_columns(sel: Selection, list_name: str) -> list[str]:
     child = sel.lists[list_name]
-    fk = _fk_column(sel)
-    cols = [fk] if fk else []
+    cols = fk_columns(sel)
     if not child.pk_field:
         cols.append("_index")
     # pk_field (e.g. sequence) is already one of child.scalars
@@ -48,13 +51,13 @@ def child_columns(sel: Selection, list_name: str) -> list[str]:
     return cols
 
 
-def extract_children(item: dict, sel: Selection, parent_pk_value) -> dict[str, list[dict]]:
-    fk = _fk_column(sel)
+def extract_children(item: dict, sel: Selection) -> dict[str, list[dict]]:
+    fks = fk_values(sel, item)
     out: dict[str, list[dict]] = {}
     for list_name, child in sel.lists.items():
         rows: list[dict] = []
         for idx, element in enumerate(item.get(list_name) or []):
-            row: dict = {fk: parent_pk_value} if fk else {}
+            row: dict = dict(fks)
             if not child.pk_field:
                 row["_index"] = idx
             for s in child.scalars:

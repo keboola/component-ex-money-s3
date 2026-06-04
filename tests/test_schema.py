@@ -1,3 +1,6 @@
+import pytest
+from keboola.component.exceptions import UserException
+
 from query_builder import ChildSelection, Selection
 from schema import all_field_paths, classify_fields, date_filter_field_names, detect_pk, prune_fields, resolve_selection
 
@@ -71,7 +74,7 @@ def test_resolve_selection_full():
     sel = resolve_selection(
         client, "issuedInvoices", ["documentNumber", "currency.code", "items"], incremental_field=None, override_pk=None
     )
-    assert sel.pk_field == "id"
+    assert sel.pk_fields == ["id"]
     assert "id" in sel.scalars and "documentNumber" in sel.scalars  # pk force-included
     assert sel.nested == {"currency": ["code"]}
     assert isinstance(sel.lists["items"], ChildSelection)
@@ -100,7 +103,7 @@ def test_all_field_paths_includes_scalars_nested_and_lists():
 def test_prune_fields_removes_scalars_nested_and_list_members():
     sel = Selection(
         endpoint="issuedInvoices",
-        pk_field="guid",
+        pk_fields=["guid"],
         scalars=["guid", "documentNumber", "originalDocumentNumber"],
         nested={"partnerAddress": ["identificationNumber", "vatIdentificationNumberSk"]},
         lists={"items": ChildSelection(["sequence", "description"], pk_field="sequence")},
@@ -109,13 +112,13 @@ def test_prune_fields_removes_scalars_nested_and_list_members():
     assert pruned.scalars == ["guid", "documentNumber"]
     assert pruned.nested == {"partnerAddress": ["identificationNumber"]}
     assert pruned.lists["items"].scalars == ["sequence", "description"]
-    assert pruned.pk_field == "guid"
+    assert pruned.pk_fields == ["guid"]
 
 
 def test_prune_fields_drops_emptied_nested_and_whole_list_by_name():
     sel = Selection(
         endpoint="issuedInvoices",
-        pk_field="guid",
+        pk_fields=["guid"],
         scalars=["guid"],
         nested={"myAddress": ["vatIdentificationNumberSk"]},
         lists={"shippingListServices": ChildSelection(["name"], pk_field=None)},
@@ -128,7 +131,7 @@ def test_prune_fields_drops_emptied_nested_and_whole_list_by_name():
 def test_prune_fields_resets_child_pk_when_removed():
     sel = Selection(
         endpoint="x",
-        pk_field=None,
+        pk_fields=[],
         scalars=["code"],
         nested={},
         lists={"rows": ChildSelection(["sequence", "amount"], pk_field="sequence")},
@@ -143,4 +146,21 @@ def test_resolve_selection_override_pk():
     sel = resolve_selection(
         client, "issuedInvoices", ["documentNumber"], incremental_field=None, override_pk=["documentNumber"]
     )
-    assert sel.pk_field == "documentNumber"
+    assert sel.pk_fields == ["documentNumber"]
+
+
+def test_resolve_selection_composite_override_pk_is_preserved():
+    client = _FakeClient(_invoice_fields())
+    sel = resolve_selection(
+        client, "issuedInvoices", ["documentNumber"], incremental_field=None, override_pk=["id", "documentNumber"]
+    )
+    assert sel.pk_fields == ["id", "documentNumber"]  # both kept, not truncated to one
+    assert "id" in sel.scalars and "documentNumber" in sel.scalars  # both force-included as columns
+
+
+def test_resolve_selection_invalid_override_pk_raises():
+    client = _FakeClient(_invoice_fields())
+    with pytest.raises(UserException, match="not found among scalar fields"):
+        resolve_selection(
+            client, "issuedInvoices", ["documentNumber"], incremental_field=None, override_pk=["doesNotExist"]
+        )

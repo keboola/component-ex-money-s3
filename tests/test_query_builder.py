@@ -17,7 +17,7 @@ def test_build_where_none():
 def _selection():
     return Selection(
         endpoint="issuedInvoices",
-        pk_field="id",
+        pk_fields=["id"],
         scalars=["id", "documentNumber", "lastChangeDate"],
         nested={"currency": ["code"]},
         lists={
@@ -50,7 +50,7 @@ def test_build_query_incremental_inlines_where():
 
 
 def test_build_query_without_pk_omits_order():
-    sel = Selection(endpoint="currencies", pk_field=None, scalars=["code"], nested={}, lists={})
+    sel = Selection(endpoint="currencies", pk_fields=[], scalars=["code"], nested={}, lists={})
     q = build_query(sel, where_clause=None)
     assert "order:" not in q
     assert "currencies(skip: $skip, take: $take)" in q

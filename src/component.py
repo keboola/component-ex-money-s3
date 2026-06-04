@@ -14,7 +14,7 @@ from client import MoneyS3Client
 from configuration import Configuration
 from query_builder import build_query, build_where
 from schema import all_field_paths, classify_fields, date_filter_field_names, prune_fields, resolve_selection
-from writer import child_columns, extract_children, flatten_parent, normalize_columns, parent_columns
+from writer import child_columns, extract_children, fk_columns, flatten_parent, normalize_columns, parent_columns
 
 _PAGE_SIZE = 500
 
@@ -95,7 +95,7 @@ class Component(ComponentBase):
         # Only advance the incremental watermark for true incremental loads (those with a PK,
         # so rows upsert). Without a PK we full-overwrite, and persisting a watermark would make
         # the next run fetch only newer rows and overwrite away the older ones.
-        if cfg.is_incremental and selection.pk_field:
+        if cfg.is_incremental and selection.pk_fields:
             new_value = max_incremental_value(rows, cfg.incremental_field)
             if new_value:
                 state = self.get_state_file() or {}
@@ -131,7 +131,9 @@ class Component(ComponentBase):
             messages = "; ".join(e.get("message", str(e)) for e in body["errors"])
             raise UserException(f"GraphQL error: {messages}")
 
-        segment = body["data"][endpoint]
+        segment = (body.get("data") or {}).get(endpoint)
+        if segment is None:
+            raise UserException(f"No data returned for endpoint '{endpoint}'.")
         rows = list(segment.get("items") or [])
         skip = _PAGE_SIZE
         while segment.get("pageInfo", {}).get("hasNextPage"):
@@ -160,11 +162,11 @@ class Component(ComponentBase):
         # (no per-row regex).
         schema = normalize_columns(raw_columns)
         rename = dict(zip(raw_columns, schema))
-        pk = normalize_columns([selection.pk_field]) if selection.pk_field else []
+        pk = normalize_columns(selection.pk_fields)
         # Incremental upsert needs a PK; without one, fall back to full overwrite to avoid
         # appending duplicates on every run.
-        incremental = cfg.is_incremental and bool(selection.pk_field)
-        if cfg.is_incremental and not selection.pk_field:
+        incremental = cfg.is_incremental and bool(selection.pk_fields)
+        if cfg.is_incremental and not selection.pk_fields:
             logging.warning(
                 f"Endpoint '{selection.endpoint}' has no detectable primary key; "
                 f"writing '{name}' as a full overwrite instead of incremental."
@@ -181,10 +183,8 @@ class Component(ComponentBase):
 
     def _child_pk(self, selection, list_name) -> list[str]:
         child = selection.lists[list_name]
-        if not selection.pk_field:
-            return [child.pk_field] if child.pk_field else ["_index"]
-        fk = f"{selection.endpoint}_{selection.pk_field}"
-        return [fk, child.pk_field] if child.pk_field else [fk, "_index"]
+        tail = child.pk_field if child.pk_field else "_index"
+        return [*fk_columns(selection), tail]
 
     def _write_children(self, parent_name, selection, rows, cfg):
         if not selection.lists:
@@ -203,7 +203,7 @@ class Component(ComponentBase):
                 table = self.create_out_table_definition(
                     f"{child_table_name}.csv",
                     primary_key=pk,
-                    incremental=cfg.is_incremental and bool(selection.pk_field),
+                    incremental=cfg.is_incremental and bool(selection.pk_fields),
                     schema=schema,
                     has_header=True,
                 )
@@ -213,8 +213,7 @@ class Component(ComponentBase):
                 writers[list_name].writeheader()
                 counts[list_name] = 0
             for item in rows:
-                pk_value = item.get(selection.pk_field) if selection.pk_field else None
-                for list_name, child_rows in extract_children(item, selection, pk_value).items():
+                for list_name, child_rows in extract_children(item, selection).items():
                     rename = renames[list_name]
                     for row in child_rows:
                         writers[list_name].writerow({rename[k]: v for k, v in row.items()})
@@ -280,7 +279,7 @@ if __name__ == "__main__":
         comp = Component()
         comp.execute_action()
     except UserException as exc:
-        logging.exception(exc)
+        logging.error(str(exc))
         exit(1)
     except Exception as exc:
         logging.exception(exc)

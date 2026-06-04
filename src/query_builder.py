@@ -10,7 +10,7 @@ class ChildSelection:
 @dataclass
 class Selection:
     endpoint: str
-    pk_field: str | None
+    pk_fields: list[str]  # parent primary key column(s); empty when none detected/configured
     scalars: list[str] = field(default_factory=list)
     nested: dict[str, list[str]] = field(default_factory=dict)  # object -> [subfields]
     lists: dict[str, ChildSelection] = field(default_factory=dict)

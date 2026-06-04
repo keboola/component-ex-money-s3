@@ -87,7 +87,7 @@ class TestFetchRows(unittest.TestCase):
     def test_prunes_incompatible_fields_then_fetches(self):
         sel = Selection(
             endpoint="issuedInvoices",
-            pk_field="guid",
+            pk_fields=["guid"],
             scalars=["guid", "documentNumber", "insured"],
             nested={"partnerAddress": ["identificationNumber", "vatIdentificationNumberSk"]},
             lists={},
@@ -101,7 +101,7 @@ class TestFetchRows(unittest.TestCase):
         self.assertEqual(client.first_page_calls, 2)  # one failing + one clean
 
     def test_no_extra_request_when_compatible(self):
-        sel = Selection(endpoint="x", pk_field="guid", scalars=["guid"], nested={}, lists={})
+        sel = Selection(endpoint="x", pk_fields=["guid"], scalars=["guid"], nested={}, lists={})
         client = _ProbeClient("x", set(), {"guid": "g1"})
         comp = self._component_with_client(client)
         result, rows = comp._fetch_rows(sel, where_clause=None, endpoint="x")
@@ -110,7 +110,7 @@ class TestFetchRows(unittest.TestCase):
         self.assertEqual(client.first_page_calls, 1)  # happy path: a single request
 
     def test_non_legislation_error_is_raised(self):
-        sel = Selection(endpoint="x", pk_field="guid", scalars=["guid"], nested={}, lists={})
+        sel = Selection(endpoint="x", pk_fields=["guid"], scalars=["guid"], nested={}, lists={})
 
         class _ErrClient:
             def execute_with_errors(self, query, variables=None, with_agenda=True):
@@ -120,13 +120,24 @@ class TestFetchRows(unittest.TestCase):
         with self.assertRaises(UserException):
             comp._fetch_rows(sel, where_clause=None, endpoint="x")
 
+    def test_null_data_without_errors_raises_user_exception(self):
+        sel = Selection(endpoint="x", pk_fields=["guid"], scalars=["guid"], nested={}, lists={})
+
+        class _NullDataClient:
+            def execute_with_errors(self, query, variables=None, with_agenda=True):
+                return {"data": None}  # valid GraphQL, but no payload
+
+        comp = self._component_with_client(_NullDataClient())
+        with self.assertRaises(UserException):
+            comp._fetch_rows(sel, where_clause=None, endpoint="x")
+
 
 class TestEmptyTableSkipping(unittest.TestCase):
     def test_parent_with_no_rows_writes_nothing(self):
         comp = Component.__new__(Component)
         comp.create_out_table_definition = MagicMock()
         comp.write_manifest = MagicMock()
-        sel = Selection(endpoint="e", pk_field="guid", scalars=["guid"], nested={}, lists={})
+        sel = Selection(endpoint="e", pk_fields=["guid"], scalars=["guid"], nested={}, lists={})
         comp._write_parent("e", sel, [], _FULL_LOAD)
         comp.create_out_table_definition.assert_not_called()
         comp.write_manifest.assert_not_called()
@@ -137,7 +148,7 @@ class TestEmptyTableSkipping(unittest.TestCase):
             table = _fake_table(d, "e.csv")
             comp.create_out_table_definition = MagicMock(return_value=table)
             comp.write_manifest = MagicMock()
-            sel = Selection(endpoint="e", pk_field="guid", scalars=["guid"], nested={}, lists={})
+            sel = Selection(endpoint="e", pk_fields=["guid"], scalars=["guid"], nested={}, lists={})
             comp._write_parent("e", sel, [{"guid": "g1"}], _FULL_LOAD)
             comp.write_manifest.assert_called_once()
             self.assertTrue(os.path.exists(table.full_path))
@@ -149,7 +160,7 @@ class TestEmptyTableSkipping(unittest.TestCase):
             comp.write_manifest = MagicMock()
             sel = Selection(
                 endpoint="e",
-                pk_field="guid",
+                pk_fields=["guid"],
                 scalars=["guid"],
                 nested={},
                 lists={

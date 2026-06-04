@@ -1,3 +1,5 @@
+from keboola.component.exceptions import UserException
+
 from graphql_types import normalize_field, unwrap_type
 from query_builder import ChildSelection, Selection
 
@@ -64,7 +66,7 @@ def prune_fields(selection: Selection, bad: set[str]) -> Selection:
             lists[name] = ChildSelection(scalars=kept, pk_field=pk)
 
     return Selection(
-        endpoint=selection.endpoint, pk_field=selection.pk_field, scalars=scalars, nested=nested, lists=lists
+        endpoint=selection.endpoint, pk_fields=selection.pk_fields, scalars=scalars, nested=nested, lists=lists
     )
 
 
@@ -106,11 +108,20 @@ def resolve_selection(
             selected_scalars.append(field_path)
         # silently ignore unknown / object-without-subfield selections
 
-    pk_field = override_pk[0] if override_pk else detect_pk(scalar_names)
+    if override_pk:
+        missing = [c for c in override_pk if c not in scalar_names]
+        if missing:
+            raise UserException(
+                f"Configured primary key {missing} not found among scalar fields of endpoint '{endpoint}'."
+            )
+        pk_fields = list(override_pk)
+    else:
+        detected = detect_pk(scalar_names)
+        pk_fields = [detected] if detected else []
 
     # force-include PK and incremental field as scalar columns
-    for required in (pk_field, incremental_field):
+    for required in (*pk_fields, incremental_field):
         if required and required in scalar_names and required not in selected_scalars:
             selected_scalars.append(required)
 
-    return Selection(endpoint=endpoint, pk_field=pk_field, scalars=selected_scalars, nested=nested, lists=lists)
+    return Selection(endpoint=endpoint, pk_fields=pk_fields, scalars=selected_scalars, nested=nested, lists=lists)
