@@ -39,6 +39,20 @@ def date_filter_field_names(filter_fields_json: list[dict]) -> list[str]:
     return names
 
 
+def all_field_paths(client, endpoint: str) -> list[str]:
+    """Every selectable field path for an endpoint — scalars, nested object scalars
+    (``obj.sub``) and list field names (child tables). Mirrors what the ``list_fields``
+    sync action offers, so it can serve as the default selection when the user picks none."""
+    item_type, _ = client.endpoint_meta(endpoint)
+    scalars, objects, lists = classify_fields(client.type_fields(item_type))
+    paths = list(scalars)
+    for obj, obj_type in objects.items():
+        sub_scalars, _, _ = classify_fields(client.type_fields(obj_type))
+        paths.extend(f"{obj}.{sub}" for sub in sub_scalars)
+    paths.extend(lists.keys())
+    return paths
+
+
 def resolve_selection(
     client, endpoint: str, fields: list[str], incremental_field: str | None, override_pk: list[str] | None
 ) -> Selection:

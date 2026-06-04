@@ -3,7 +3,6 @@
   "title": "Extraction",
   "required": [
     "endpoint",
-    "fields",
     "load_type"
   ],
   "properties": {
@@ -23,6 +22,7 @@
     "fields": {
       "type": "array",
       "title": "Fields",
+      "description": "Fields to extract. Leave empty to extract all available fields.",
       "propertyOrder": 2,
       "format": "select",
       "uniqueItems": true,

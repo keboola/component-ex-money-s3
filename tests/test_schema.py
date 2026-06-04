@@ -1,5 +1,5 @@
 from query_builder import ChildSelection
-from schema import classify_fields, date_filter_field_names, detect_pk, resolve_selection
+from schema import all_field_paths, classify_fields, date_filter_field_names, detect_pk, resolve_selection
 
 FIELDS = [
     {"name": "id", "type": {"kind": "NON_NULL", "ofType": {"kind": "SCALAR", "name": "Int"}}},
@@ -85,6 +85,16 @@ def test_resolve_selection_forces_incremental_field():
         client, "issuedInvoices", ["documentNumber"], incremental_field="lastChangeDate", override_pk=None
     )
     assert "lastChangeDate" in sel.scalars
+
+
+def test_all_field_paths_includes_scalars_nested_and_lists():
+    client = _FakeClient(_invoice_fields())
+    paths = all_field_paths(client, "issuedInvoices")
+    assert "id" in paths and "documentNumber" in paths and "lastChangeDate" in paths
+    assert "currency.code" in paths  # nested object scalar
+    assert "items" in paths  # list -> child table
+    # objects themselves are not selectable directly (only their sub-scalars)
+    assert "currency" not in paths
 
 
 def test_resolve_selection_override_pk():

@@ -11,7 +11,7 @@ from auth import TokenProvider
 from client import MoneyS3Client
 from configuration import Configuration
 from query_builder import build_query, build_where
-from schema import classify_fields, date_filter_field_names, resolve_selection
+from schema import all_field_paths, classify_fields, date_filter_field_names, resolve_selection
 from writer import child_columns, extract_children, flatten_parent, parent_columns
 
 _PAGE_SIZE = 500
@@ -44,14 +44,18 @@ class Component(ComponentBase):
         cfg = self._config()
         if not cfg.endpoint:
             raise UserException("No 'endpoint' selected.")
-        if not cfg.fields:
-            raise UserException("No 'fields' selected for extraction.")
         client = self._get_client()
+
+        # No explicit field selection → extract every available field (all scalars,
+        # nested object scalars and lists as child tables).
+        fields = cfg.fields or all_field_paths(client, cfg.endpoint)
+        if not fields:
+            raise UserException(f"Endpoint '{cfg.endpoint}' exposes no extractable fields.")
 
         selection = resolve_selection(
             client,
             cfg.endpoint,
-            cfg.fields,
+            fields,
             incremental_field=cfg.incremental_field if cfg.is_incremental else None,
             override_pk=cfg.destination.primary_key,
         )
