@@ -33,6 +33,22 @@ query ($name: String!) {
 """
 
 
+def repair_cp1250(value):
+    """Reverse Money S3's encoding bug: cp1250 text the server mis-decoded as cp1252 before
+    encoding to UTF-8, so e.g. 'ř' arrives as 'ø'. Recurses through the JSON body; strings
+    that don't fit the pattern (already-correct text) raise and are left untouched."""
+    if isinstance(value, dict):
+        return {k: repair_cp1250(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [repair_cp1250(v) for v in value]
+    if isinstance(value, str):
+        try:
+            return value.encode("cp1252").decode("cp1250")
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            return value
+    return value
+
+
 class MoneyS3Client:
     def __init__(self, base_url: str, token_provider: TokenProvider, agenda_id: str, max_retries: int = 8):
         self._http = HttpClient(
@@ -50,9 +66,10 @@ class MoneyS3Client:
             headers["AgendaId"] = self._agenda_id
         # HttpClient.post (via @response_error_handling) returns the parsed JSON body (dict),
         # not a requests.Response.
-        return self._http.post(
+        body = self._http.post(
             endpoint_path="graphql", headers=headers, json={"query": query, "variables": variables or {}}
         )
+        return repair_cp1250(body)
 
     def execute(self, query: str, variables: dict | None = None, with_agenda: bool = True) -> dict:
         body = self.execute_with_errors(query, variables, with_agenda)

@@ -1,7 +1,28 @@
 import pytest
 from keboola.component.exceptions import UserException
 
-from client import MoneyS3Client
+from client import MoneyS3Client, repair_cp1250
+
+
+def test_repair_cp1250_fixes_czech_caron_r():
+    assert repair_cp1250("hospodáøství") == "hospodářství"
+    assert repair_cp1250("pøepravné") == "přepravné"
+    # 'š' (which already survives the server's cp1252 round-trip) stays correct
+    assert repair_cp1250("odvody vedlejších hospodáøství") == "odvody vedlejších hospodářství"
+
+
+def test_repair_cp1250_leaves_ascii_and_correct_text_untouched():
+    assert repair_cp1250("CODE-123") == "CODE-123"
+    # genuinely-correct 'ř' (U+0159) isn't representable in cp1252 -> guard leaves it alone
+    assert repair_cp1250("přeprava") == "přeprava"
+    assert repair_cp1250("") == ""
+
+
+def test_repair_cp1250_recurses_through_dicts_and_lists():
+    payload = {"items": [{"description": "pøepravné", "code": "0417", "n": 5, "ok": None}]}
+    assert repair_cp1250(payload) == {
+        "items": [{"description": "přepravné", "code": "0417", "n": 5, "ok": None}]
+    }
 
 
 class _FakeToken:
