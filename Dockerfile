@@ -1,9 +1,5 @@
-FROM python:3.13-slim
+FROM python:3.13-slim AS base
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
-# uncomment the following line should you have any troubles installing certain packages which require C/C++ extensions
-# to be compiled during installation, eg. numpy, psycopg2, …
-# RUN apt-get update && apt-get install -y build-essential
 
 WORKDIR /code/
 
@@ -16,6 +12,12 @@ RUN uv sync --all-groups --frozen
 COPY src/ src
 COPY tests/ tests
 COPY scripts/ scripts
-RUN uv run ruff check .
 
+
+FROM base AS test
+RUN uv run ruff check .
+CMD ["python", "-m", "pytest", "-v", "tests"]
+
+
+FROM base AS production
 CMD ["python", "-u", "src/component.py"]
