@@ -1,19 +1,66 @@
 {
   "type": "object",
-  "title": "extractor configuration",
+  "title": "Money S3 Connection",
   "required": [
-    "print_hello"
+    "base_url",
+    "app_id",
+    "client_id",
+    "#client_secret",
+    "agenda_id"
   ],
   "properties": {
-    "print_hello": {
-      "type": "boolean",
-      "title": "Print Hello",
+    "base_url": {
+      "type": "string",
+      "title": "Base URL",
+      "default": "http://localhost:28085",
       "propertyOrder": 1
     },
-    "debug": {
-      "type": "boolean",
-      "title": "Debug",
+    "app_id": {
+      "type": "string",
+      "title": "App ID",
       "propertyOrder": 2
+    },
+    "client_id": {
+      "type": "string",
+      "title": "Client ID",
+      "propertyOrder": 3
+    },
+    "#client_secret": {
+      "type": "string",
+      "title": "Client Secret",
+      "format": "password",
+      "propertyOrder": 4
+    },
+    "scope": {
+      "type": "string",
+      "title": "Scope",
+      "default": "s3api",
+      "propertyOrder": 5
+    },
+    "agenda_id": {
+      "type": "string",
+      "title": "Agenda",
+      "propertyOrder": 6,
+      "enum": [],
+      "format": "select",
+      "options": {
+        "async": {
+          "label": "Load agendas",
+          "action": "list_agendas"
+        }
+      }
+    },
+    "test_connection": {
+      "type": "button",
+      "format": "sync-action",
+      "title": "Test Connection",
+      "propertyOrder": 7,
+      "options": {
+        "async": {
+          "label": "Test Connection",
+          "action": "testConnection"
+        }
+      }
     }
   }
 }

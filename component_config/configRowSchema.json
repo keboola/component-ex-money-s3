@@ -1,1 +1,104 @@
-{}
+{
+  "type": "object",
+  "title": "Extraction",
+  "required": [
+    "endpoint",
+    "fields",
+    "load_type"
+  ],
+  "properties": {
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "propertyOrder": 1,
+      "enum": [],
+      "format": "select",
+      "options": {
+        "async": {
+          "label": "Load endpoints",
+          "action": "list_endpoints"
+        }
+      }
+    },
+    "fields": {
+      "type": "array",
+      "title": "Fields",
+      "propertyOrder": 2,
+      "format": "select",
+      "uniqueItems": true,
+      "items": {
+        "enum": [],
+        "type": "string"
+      },
+      "options": {
+        "async": {
+          "label": "Load fields",
+          "action": "list_fields"
+        }
+      }
+    },
+    "load_type": {
+      "type": "string",
+      "title": "Load Type",
+      "default": "full_load",
+      "propertyOrder": 3,
+      "enum": [
+        "full_load",
+        "incremental_load"
+      ],
+      "options": {
+        "enum_titles": [
+          "Full Load",
+          "Incremental Load"
+        ]
+      }
+    },
+    "incremental_field": {
+      "type": "string",
+      "title": "Incremental Field",
+      "propertyOrder": 4,
+      "enum": [],
+      "format": "select",
+      "default": "lastChangeDate",
+      "options": {
+        "async": {
+          "label": "Load fields",
+          "action": "list_incremental_fields"
+        },
+        "dependencies": {
+          "load_type": "incremental_load"
+        }
+      }
+    },
+    "date_from": {
+      "type": "string",
+      "title": "Date From",
+      "propertyOrder": 5,
+      "description": "ISO date (YYYY-MM-DD) lower bound on the incremental field. Optional."
+    },
+    "date_to": {
+      "type": "string",
+      "title": "Date To",
+      "propertyOrder": 6,
+      "description": "ISO date (YYYY-MM-DD) upper bound on the incremental field. Optional."
+    },
+    "destination": {
+      "type": "object",
+      "title": "Destination",
+      "propertyOrder": 7,
+      "properties": {
+        "table_name": {
+          "type": "string",
+          "title": "Table Name (defaults to endpoint)"
+        },
+        "primary_key": {
+          "type": "array",
+          "title": "Primary Key override",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
