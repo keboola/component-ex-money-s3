@@ -2,6 +2,7 @@
 
 import csv
 import logging
+import re
 
 from keboola.component.base import ComponentBase, sync_action
 from keboola.component.exceptions import UserException
@@ -11,15 +12,36 @@ from auth import TokenProvider
 from client import MoneyS3Client
 from configuration import Configuration
 from query_builder import build_query, build_where
-from schema import all_field_paths, classify_fields, date_filter_field_names, resolve_selection
+from schema import all_field_paths, classify_fields, date_filter_field_names, prune_fields, resolve_selection
 from writer import child_columns, extract_children, flatten_parent, parent_columns
 
 _PAGE_SIZE = 500
+
+# Money S3 rejects fields that belong to the other legislation (e.g. an `Sk`-only member
+# queried against a `Cz` company) with a per-item error like:
+#   Cannot access member 'vatIdentificationNumberSk' on path '/issuedInvoices/items[0]...'.
+#   Member is available only for 'Sk' legislation
+_LEGISLATION_ERROR = re.compile(r"only for '\w+' legislation", re.IGNORECASE)
+_LEGISLATION_MEMBER = re.compile(r"member '([^']+)'", re.IGNORECASE)
+_PRUNE_MAX_ROUNDS = 12
 
 
 def max_incremental_value(rows: list[dict], field_name: str) -> str | None:
     values = [r[field_name] for r in rows if r.get(field_name) is not None]
     return max(values) if values else None
+
+
+def legislation_incompatible_members(errors: list[dict]) -> set[str]:
+    """Extract the member names from GraphQL errors that reject a field for legislation
+    reasons. Non-legislation errors are ignored so they still surface on the real run."""
+    bad: set[str] = set()
+    for err in errors:
+        message = err.get("message", "")
+        if _LEGISLATION_ERROR.search(message):
+            match = _LEGISLATION_MEMBER.search(message)
+            if match:
+                bad.add(match.group(1))
+    return bad
 
 
 class Component(ComponentBase):
@@ -61,10 +83,9 @@ class Component(ComponentBase):
         )
 
         where_clause = self._build_where_clause(cfg)
-        query = build_query(selection, where_clause)
 
         parent_name = cfg.destination.table_name or cfg.endpoint
-        rows = list(client.paginate(query, cfg.endpoint, page_size=_PAGE_SIZE))
+        selection, rows = self._fetch_rows(selection, where_clause, cfg.endpoint)
         logging.info(f"Fetched {len(rows)} records from '{cfg.endpoint}'.")
 
         self._write_parent(parent_name, selection, rows, cfg)
@@ -79,6 +100,45 @@ class Component(ComponentBase):
                 state = self.get_state_file() or {}
                 state[cfg.endpoint] = {"last_value": new_value}
                 self.write_state_file(state)
+
+    def _fetch_rows(self, selection, where_clause, endpoint):
+        """Fetch all rows for the endpoint, pruning legislation-incompatible fields on the way.
+
+        The first page doubles as a compatibility probe: if the server rejects any fields
+        because they belong to the other legislation (e.g. `Sk`-only members on a `Cz`
+        company), those fields are dropped and the first page is re-fetched until the query
+        is accepted — so one incompatible field no longer aborts an otherwise valid endpoint.
+        Non-legislation errors are still raised with their original message. Returns the
+        (possibly pruned) selection together with the collected rows."""
+        body = None
+        for _ in range(_PRUNE_MAX_ROUNDS):
+            query = build_query(selection, where_clause)
+            body = self._client.execute_with_errors(query, variables={"skip": 0, "take": _PAGE_SIZE})
+            bad = legislation_incompatible_members(body.get("errors") or [])
+            if not bad:
+                break
+            logging.warning(
+                f"Endpoint '{endpoint}': dropping fields incompatible with the company "
+                f"legislation: {', '.join(sorted(bad))}."
+            )
+            pruned = prune_fields(selection, bad)
+            if pruned == selection:  # nothing left we can remove — avoid looping
+                break
+            selection = pruned
+
+        if body.get("errors"):  # non-legislation errors (or unremovable ones) — surface them
+            messages = "; ".join(e.get("message", str(e)) for e in body["errors"])
+            raise UserException(f"GraphQL error: {messages}")
+
+        segment = body["data"][endpoint]
+        rows = list(segment.get("items") or [])
+        skip = _PAGE_SIZE
+        while segment.get("pageInfo", {}).get("hasNextPage"):
+            data = self._client.execute(query, variables={"skip": skip, "take": _PAGE_SIZE})
+            segment = data[endpoint]
+            rows.extend(segment.get("items") or [])
+            skip += _PAGE_SIZE
+        return selection, rows
 
     def _build_where_clause(self, cfg: Configuration) -> str | None:
         gte = cfg.date_from

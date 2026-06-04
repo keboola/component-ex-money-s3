@@ -39,6 +39,35 @@ def date_filter_field_names(filter_fields_json: list[dict]) -> list[str]:
     return names
 
 
+def prune_fields(selection: Selection, bad: set[str]) -> Selection:
+    """Return a copy of ``selection`` with every field named in ``bad`` removed —
+    from top-level scalars, nested object sub-fields, and child (list) selections.
+    A nested object or list left with no fields is dropped entirely. Used to strip
+    fields the server rejects (e.g. legislation-incompatible members)."""
+    scalars = [s for s in selection.scalars if s not in bad]
+
+    nested: dict[str, list[str]] = {}
+    for obj, subs in selection.nested.items():
+        if obj in bad:
+            continue
+        kept = [s for s in subs if s not in bad]
+        if kept:
+            nested[obj] = kept
+
+    lists: dict[str, ChildSelection] = {}
+    for name, child in selection.lists.items():
+        if name in bad:
+            continue
+        kept = [s for s in child.scalars if s not in bad]
+        if kept:
+            pk = child.pk_field if child.pk_field in kept else None
+            lists[name] = ChildSelection(scalars=kept, pk_field=pk)
+
+    return Selection(
+        endpoint=selection.endpoint, pk_field=selection.pk_field, scalars=scalars, nested=nested, lists=lists
+    )
+
+
 def all_field_paths(client, endpoint: str) -> list[str]:
     """Every selectable field path for an endpoint — scalars, nested object scalars
     (``obj.sub``) and list field names (child tables). Mirrors what the ``list_fields``

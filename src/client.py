@@ -41,15 +41,21 @@ class MoneyS3Client:
         self._tokens = token_provider
         self._agenda_id = agenda_id
 
-    def execute(self, query: str, variables: dict | None = None, with_agenda: bool = True) -> dict:
+    def execute_with_errors(self, query: str, variables: dict | None = None, with_agenda: bool = True) -> dict:
+        """Run a GraphQL request and return the full response body ({data, errors}) WITHOUT raising.
+
+        Used by callers that need to inspect errors (e.g. legislation-field pruning)."""
         headers = {"Authorization": f"Bearer {self._tokens.get_token()}"}
         if with_agenda:
             headers["AgendaId"] = self._agenda_id
         # HttpClient.post (via @response_error_handling) returns the parsed JSON body (dict),
         # not a requests.Response.
-        body = self._http.post(
+        return self._http.post(
             endpoint_path="graphql", headers=headers, json={"query": query, "variables": variables or {}}
         )
+
+    def execute(self, query: str, variables: dict | None = None, with_agenda: bool = True) -> dict:
+        body = self.execute_with_errors(query, variables, with_agenda)
         if body.get("errors"):
             messages = "; ".join(e.get("message", str(e)) for e in body["errors"])
             raise UserException(f"GraphQL error: {messages}")

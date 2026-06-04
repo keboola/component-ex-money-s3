@@ -1,5 +1,5 @@
-from query_builder import ChildSelection
-from schema import all_field_paths, classify_fields, date_filter_field_names, detect_pk, resolve_selection
+from query_builder import ChildSelection, Selection
+from schema import all_field_paths, classify_fields, date_filter_field_names, detect_pk, prune_fields, resolve_selection
 
 FIELDS = [
     {"name": "id", "type": {"kind": "NON_NULL", "ofType": {"kind": "SCALAR", "name": "Int"}}},
@@ -95,6 +95,47 @@ def test_all_field_paths_includes_scalars_nested_and_lists():
     assert "items" in paths  # list -> child table
     # objects themselves are not selectable directly (only their sub-scalars)
     assert "currency" not in paths
+
+
+def test_prune_fields_removes_scalars_nested_and_list_members():
+    sel = Selection(
+        endpoint="issuedInvoices",
+        pk_field="guid",
+        scalars=["guid", "documentNumber", "originalDocumentNumber"],
+        nested={"partnerAddress": ["identificationNumber", "vatIdentificationNumberSk"]},
+        lists={"items": ChildSelection(["sequence", "description"], pk_field="sequence")},
+    )
+    pruned = prune_fields(sel, {"originalDocumentNumber", "vatIdentificationNumberSk"})
+    assert pruned.scalars == ["guid", "documentNumber"]
+    assert pruned.nested == {"partnerAddress": ["identificationNumber"]}
+    assert pruned.lists["items"].scalars == ["sequence", "description"]
+    assert pruned.pk_field == "guid"
+
+
+def test_prune_fields_drops_emptied_nested_and_whole_list_by_name():
+    sel = Selection(
+        endpoint="issuedInvoices",
+        pk_field="guid",
+        scalars=["guid"],
+        nested={"myAddress": ["vatIdentificationNumberSk"]},
+        lists={"shippingListServices": ChildSelection(["name"], pk_field=None)},
+    )
+    pruned = prune_fields(sel, {"vatIdentificationNumberSk", "shippingListServices"})
+    assert pruned.nested == {}  # nested object emptied -> dropped
+    assert pruned.lists == {}  # whole list removed by name
+
+
+def test_prune_fields_resets_child_pk_when_removed():
+    sel = Selection(
+        endpoint="x",
+        pk_field=None,
+        scalars=["code"],
+        nested={},
+        lists={"rows": ChildSelection(["sequence", "amount"], pk_field="sequence")},
+    )
+    pruned = prune_fields(sel, {"sequence"})
+    assert pruned.lists["rows"].scalars == ["amount"]
+    assert pruned.lists["rows"].pk_field is None
 
 
 def test_resolve_selection_override_pk():
