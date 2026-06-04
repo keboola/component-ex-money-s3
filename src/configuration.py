@@ -1,26 +1,44 @@
 import logging
 
 from keboola.component.exceptions import UserException
-from pydantic import BaseModel, Field, ValidationError, field_validator
+from pydantic import BaseModel, Field, ValidationError
+
+
+class Destination(BaseModel):
+    table_name: str | None = None
+    primary_key: list[str] | None = None
 
 
 class Configuration(BaseModel):
-    print_hello: bool
-    api_token: str = Field(alias="#api_token")
+    # connection (root config)
+    base_url: str
+    app_id: str
+    client_id: str
+    client_secret: str = Field(default="", alias="#client_secret")
+    scope: str = "s3api"
+    agenda_id: str = ""
+
+    # extraction (row config)
+    endpoint: str = ""
+    fields: list[str] = Field(default_factory=list)
+    load_type: str = "full_load"
+    incremental_field: str = "lastChangeDate"
+    date_from: str | None = None
+    date_to: str | None = None
+    destination: Destination = Field(default_factory=Destination)
     debug: bool = False
 
     def __init__(self, **data):
         try:
             super().__init__(**data)
         except ValidationError as e:
-            error_messages = [f"{err['loc'][0]}: {err['msg']}" for err in e.errors()]
-            raise UserException(f"Validation Error: {', '.join(error_messages)}")
-
+            msgs = [f"{err['loc'][0]}: {err['msg']}" for err in e.errors()]
+            raise UserException(f"Validation Error: {', '.join(msgs)}")
         if self.debug:
             logging.debug("Component will run in Debug mode")
 
-    @field_validator("api_token")
-    def token_must_be_uppercase(cls, v):
-        if not v.isupper():
-            raise UserException("API token must be uppercase")
-        return v
+    @property
+    def is_incremental(self) -> bool:
+        return self.load_type == "incremental_load"
+
+    model_config = {"populate_by_name": True}
