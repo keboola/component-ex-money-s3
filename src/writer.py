@@ -1,4 +1,17 @@
+from keboola.utils.header_normalizer import NormalizerStrategy, get_normalizer
+
 from query_builder import Selection
+
+_HEADER_NORMALIZER = get_normalizer(NormalizerStrategy.DEFAULT)
+
+
+def normalize_columns(names: list[str]) -> list[str]:
+    """Normalize column names the way the Keboola Storage platform does, so the manifest
+    schema, primary keys and header match the stored columns. Uses Keboola's default header
+    normalizer and additionally strips leading underscores, which the platform webalizes
+    away (e.g. '_index' -> 'index')."""
+    normalized = _HEADER_NORMALIZER.normalize_header(list(names))
+    return [n.lstrip("_") or n for n in normalized]
 
 
 def _fk_column(sel: Selection) -> str | None:

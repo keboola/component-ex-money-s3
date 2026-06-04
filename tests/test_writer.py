@@ -1,5 +1,19 @@
 from query_builder import ChildSelection, Selection
-from writer import child_columns, extract_children, flatten_parent, parent_columns
+from writer import child_columns, extract_children, flatten_parent, normalize_columns, parent_columns
+
+
+def test_normalize_columns_strips_leading_underscore():
+    # The platform webalizes '_index' -> 'index'; we do the same so the manifest matches.
+    assert normalize_columns(["_index"]) == ["index"]
+    assert normalize_columns(["issuedInvoices_guid", "currency_code", "documentNumber"]) == [
+        "issuedInvoices_guid",
+        "currency_code",
+        "documentNumber",
+    ]
+
+
+def test_normalize_columns_replaces_forbidden_chars():
+    assert normalize_columns(["a b", "x.y", "ok_1"]) == ["a_b", "xy", "ok_1"]
 
 SEL = Selection(
     endpoint="issuedInvoices",

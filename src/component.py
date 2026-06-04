@@ -14,7 +14,7 @@ from client import MoneyS3Client
 from configuration import Configuration
 from query_builder import build_query, build_where
 from schema import all_field_paths, classify_fields, date_filter_field_names, prune_fields, resolve_selection
-from writer import child_columns, extract_children, flatten_parent, parent_columns
+from writer import child_columns, extract_children, flatten_parent, normalize_columns, parent_columns
 
 _PAGE_SIZE = 500
 
@@ -152,12 +152,15 @@ class Component(ComponentBase):
         return build_where(cfg.incremental_field, gte=gte, lte=cfg.date_to)
 
     def _write_parent(self, name, selection, rows, cfg):
-        # An empty result produces no table and no manifest at all.
         if not rows:
             logging.info(f"No rows for '{name}'; skipping table and manifest.")
             return
-        columns = parent_columns(selection)
-        pk = [selection.pk_field] if selection.pk_field else []
+        raw_columns = parent_columns(selection)
+        # Normalize names once for the schema/PK/header; remap row keys via this mapping
+        # (no per-row regex).
+        schema = normalize_columns(raw_columns)
+        rename = dict(zip(raw_columns, schema))
+        pk = normalize_columns([selection.pk_field]) if selection.pk_field else []
         # Incremental upsert needs a PK; without one, fall back to full overwrite to avoid
         # appending duplicates on every run.
         incremental = cfg.is_incremental and bool(selection.pk_field)
@@ -166,11 +169,14 @@ class Component(ComponentBase):
                 f"Endpoint '{selection.endpoint}' has no detectable primary key; "
                 f"writing '{name}' as a full overwrite instead of incremental."
             )
-        table = self.create_out_table_definition(f"{name}.csv", primary_key=pk, incremental=incremental, schema=columns)
+        table = self.create_out_table_definition(
+            f"{name}.csv", primary_key=pk, incremental=incremental, schema=schema, has_header=True
+        )
         with open(table.full_path, "w", encoding="utf-8", newline="") as fh:
-            writer = csv.DictWriter(fh, fieldnames=columns, extrasaction="ignore")
+            writer = csv.DictWriter(fh, fieldnames=schema, extrasaction="ignore")
+            writer.writeheader()
             for item in rows:
-                writer.writerow(flatten_parent(item, selection))
+                writer.writerow({rename[k]: v for k, v in flatten_parent(item, selection).items()})
         self.write_manifest(table)
 
     def _child_pk(self, selection, list_name) -> list[str]:
@@ -186,31 +192,36 @@ class Component(ComponentBase):
         writers = {}
         files = {}
         counts = {}
+        renames = {}
         try:
             for list_name in selection.lists:
-                cols = child_columns(selection, list_name)
+                raw_cols = child_columns(selection, list_name)
+                schema = normalize_columns(raw_cols)
+                renames[list_name] = dict(zip(raw_cols, schema))
                 child_table_name = f"{parent_name}_{list_name}"
-                pk = self._child_pk(selection, list_name)
+                pk = normalize_columns(self._child_pk(selection, list_name))
                 table = self.create_out_table_definition(
                     f"{child_table_name}.csv",
                     primary_key=pk,
                     incremental=cfg.is_incremental and bool(selection.pk_field),
-                    schema=cols,
+                    schema=schema,
+                    has_header=True,
                 )
                 fh = open(table.full_path, "w", encoding="utf-8", newline="")
                 files[list_name] = (fh, table)
-                writers[list_name] = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
+                writers[list_name] = csv.DictWriter(fh, fieldnames=schema, extrasaction="ignore")
+                writers[list_name].writeheader()
                 counts[list_name] = 0
             for item in rows:
                 pk_value = item.get(selection.pk_field) if selection.pk_field else None
                 for list_name, child_rows in extract_children(item, selection, pk_value).items():
+                    rename = renames[list_name]
                     for row in child_rows:
-                        writers[list_name].writerow(row)
+                        writers[list_name].writerow({rename[k]: v for k, v in row.items()})
                         counts[list_name] += 1
         finally:
             for list_name, (fh, table) in files.items():
                 fh.close()
-                # A child list with no rows produces neither table nor manifest.
                 if counts[list_name]:
                     self.write_manifest(table)
                 else:

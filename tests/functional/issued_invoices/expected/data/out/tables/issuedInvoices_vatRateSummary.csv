@@ -1,3 +1,4 @@
+issuedInvoices_guid,index,vatRate,totalWithoutVat,totalVat
 13c2ad80-9b46-4595-8696-384f4f7ed50d,0,0,0.0,0
 13c2ad80-9b46-4595-8696-384f4f7ed50d,1,12.0,0.0,0.0
 13c2ad80-9b46-4595-8696-384f4f7ed50d,2,21.0,0.0,0.0
