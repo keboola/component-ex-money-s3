@@ -1,21 +1,18 @@
-import os
 import unittest
 
-import mock
-from freezegun import freeze_time
-
-from component import Component
+from component import max_incremental_value
 
 
 class TestComponent(unittest.TestCase):
-    # set global time to 2010-10-10 - affects functions like datetime.now()
-    @freeze_time("2010-10-10")
-    # set KBC_DATADIR env to non-existing dir
-    @mock.patch.dict(os.environ, {"KBC_DATADIR": "./non-existing-dir"})
-    def test_run_no_cfg_fails(self):
-        with self.assertRaises(ValueError):
-            comp = Component()
-            comp.run()
+    def test_max_incremental_value(self):
+        rows = [{"lastChangeDate": "2024-01-01"}, {"lastChangeDate": "2024-03-02"}, {"lastChangeDate": "2024-02-01"}]
+        self.assertEqual(max_incremental_value(rows, "lastChangeDate"), "2024-03-02")
+
+    def test_max_incremental_value_empty(self):
+        self.assertIsNone(max_incremental_value([], "lastChangeDate"))
+
+    def test_max_incremental_value_missing_field(self):
+        self.assertIsNone(max_incremental_value([{"x": 1}], "lastChangeDate"))
 
 
 if __name__ == "__main__":
