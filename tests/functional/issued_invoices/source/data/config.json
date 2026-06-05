@@ -3,7 +3,6 @@
     "base_url": "http://localhost:28085",
     "client_id": "PLACEHOLDER_CLIENTID",
     "#client_secret": "PLACEHOLDER_SECRET",
-    "scope": "s3api",
     "agenda_id": "70efd056-d613-46f0-97bd-949c9d0989da",
     "endpoint": "issuedInvoices",
     "fields": ["id", "documentNumber", "dateOfIssue", "totalWithVatHc", "lastChangeDate", "currency.code", "vatRateSummary"],

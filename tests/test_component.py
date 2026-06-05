@@ -137,7 +137,7 @@ class TestClientAppId(unittest.TestCase):
         comp = Component.__new__(Component)
         comp._client = None
         comp._cfg = type(
-            "C", (), {"base_url": "http://h", "client_id": "c", "client_secret": "s", "scope": "s3api", "agenda_id": "a"}
+            "C", (), {"base_url": "http://h", "client_id": "c", "client_secret": "s", "agenda_id": "a"}
         )()
         return comp
 

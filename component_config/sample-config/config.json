@@ -3,7 +3,6 @@
     "base_url": "http://localhost:28085",
     "client_id": "CLIENT_ID",
     "#client_secret": "CLIENT_SECRET",
-    "scope": "s3api",
     "agenda_id": "00000000-0000-0000-0000-000000000000",
     "endpoint": "issuedInvoices",
     "fields": ["id", "guid", "documentNumber", "lastChangeDate", "currency.code", "vatRateSummary"],

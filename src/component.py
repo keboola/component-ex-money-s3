@@ -62,7 +62,7 @@ class Component(ComponentBase):
             app_id = self.configuration.image_parameters.get("app_id")
             if not app_id:
                 raise UserException("App ID is not configured; it must be provided via the component image parameters.")
-            tokens = TokenProvider(c.base_url, app_id, c.client_id, c.client_secret, c.scope)
+            tokens = TokenProvider(c.base_url, app_id, c.client_id, c.client_secret)
             self._client = MoneyS3Client(c.base_url, tokens, c.agenda_id)
         return self._client
 
@@ -236,7 +236,7 @@ class Component(ComponentBase):
         cfg = self._config()
         client = self._get_client()
         # agendas() exercises the full OAuth flow (token fetch) plus the GraphQL endpoint,
-        # validating base_url, app_id, client_id, client_secret and scope in one call.
+        # validating base_url, app_id, client_id and client_secret in one call.
         agendas = client.agendas()
         if cfg.agenda_id and cfg.agenda_id not in {a["guid"] for a in agendas}:
             raise UserException(

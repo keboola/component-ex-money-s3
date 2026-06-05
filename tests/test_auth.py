@@ -21,7 +21,7 @@ def test_fetches_and_caches_token(mocker):
         "auth.requests.post",
         return_value=_Resp(200, {"access_token": "TOK", "expires_in": 3600}),
     )
-    tp = TokenProvider("http://h:28085", "APPID", "cid", "sec", "s3api")
+    tp = TokenProvider("http://h:28085", "APPID", "cid", "sec")
     assert tp.get_token() == "TOK"
     assert tp.get_token() == "TOK"  # cached
     post.assert_called_once()
@@ -29,6 +29,7 @@ def test_fetches_and_caches_token(mocker):
     assert kwargs["params"] == {"AppId": "APPID"}
     assert kwargs["data"]["grant_type"] == "client_credentials"
     assert kwargs["data"]["client_secret"] == "sec"
+    assert kwargs["data"]["scope"] == "s3api"  # constant
 
 
 def test_refetches_when_expired(mocker):

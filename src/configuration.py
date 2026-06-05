@@ -14,7 +14,6 @@ class Configuration(BaseModel):
     base_url: str
     client_id: str
     client_secret: str = Field(default="", alias="#client_secret")
-    scope: str = "s3api"
     agenda_id: str = ""
 
     # extraction (row config)

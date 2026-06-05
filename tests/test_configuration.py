@@ -17,7 +17,6 @@ def _base():
 
 def test_parses_minimal_with_defaults():
     c = Configuration(**_base())
-    assert c.scope == "s3api"
     assert c.load_type == "full_load"
     assert c.incremental_field == "lastChangeDate"
     assert c.client_secret == "secret"
