@@ -99,6 +99,14 @@
           }
         }
       }
+    },
+    "debug": {
+      "type": "boolean",
+      "title": "Debug",
+      "description": "Enable verbose debug logging.",
+      "default": false,
+      "format": "checkbox",
+      "propertyOrder": 8
     }
   }
 }
