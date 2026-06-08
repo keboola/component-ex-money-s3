@@ -59,7 +59,7 @@
       "propertyOrder": 4,
       "enum": [],
       "format": "select",
-      "default": "lastChangeDate",
+      "default": "lastChange",
       "options": {
         "async": {
           "label": "Load fields",

@@ -20,7 +20,7 @@ class Configuration(BaseModel):
     endpoint: str = ""
     fields: list[str] = Field(default_factory=list)
     load_type: str = "full_load"
-    incremental_field: str = "lastChangeDate"
+    incremental_field: str = "lastChange"
     date_from: str | None = None
     date_to: str | None = None
     destination: Destination = Field(default_factory=Destination)
