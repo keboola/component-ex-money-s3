@@ -100,13 +100,21 @@
         }
       }
     },
+    "page_size": {
+      "type": "integer",
+      "title": "Page Size",
+      "description": "Number of records fetched per API request (skip/take pagination).",
+      "default": 500,
+      "minimum": 1,
+      "propertyOrder": 8
+    },
     "debug": {
       "type": "boolean",
       "title": "Debug",
       "description": "Enable verbose debug logging.",
       "default": false,
       "format": "checkbox",
-      "propertyOrder": 8
+      "propertyOrder": 9
     }
   }
 }

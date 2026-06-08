@@ -18,6 +18,7 @@ def _base():
 def test_parses_minimal_with_defaults():
     c = Configuration(**_base())
     assert c.load_type == "full_load"
+    assert c.page_size == 500
     assert c.incremental_field == "lastChange"
     assert c.client_secret == "secret"
     assert c.destination.table_name is None

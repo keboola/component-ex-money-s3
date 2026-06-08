@@ -96,7 +96,7 @@ class TestFetchRows(unittest.TestCase):
         )
         client = _ProbeClient("issuedInvoices", {"insured", "vatIdentificationNumberSk"}, {"guid": "g1"})
         comp = self._component_with_client(client)
-        result, rows = comp._fetch_rows(sel, where=None, endpoint="issuedInvoices")
+        result, rows = comp._fetch_rows(sel, where=None, endpoint="issuedInvoices", page_size=500)
         self.assertEqual(result.scalars, ["guid", "documentNumber"])
         self.assertEqual(result.nested, {"partnerAddress": ["identificationNumber"]})
         self.assertEqual(rows, [{"guid": "g1"}])
@@ -106,7 +106,7 @@ class TestFetchRows(unittest.TestCase):
         sel = Selection(endpoint="x", pk_fields=["guid"], scalars=["guid"], nested={}, lists={})
         client = _ProbeClient("x", set(), {"guid": "g1"})
         comp = self._component_with_client(client)
-        result, rows = comp._fetch_rows(sel, where=None, endpoint="x")
+        result, rows = comp._fetch_rows(sel, where=None, endpoint="x", page_size=500)
         self.assertEqual(result, sel)
         self.assertEqual(rows, [{"guid": "g1"}])
         self.assertEqual(client.first_page_calls, 1)  # happy path: a single request
@@ -120,7 +120,7 @@ class TestFetchRows(unittest.TestCase):
 
         comp = self._component_with_client(_ErrClient())
         with self.assertRaises(UserException):
-            comp._fetch_rows(sel, where=None, endpoint="x")
+            comp._fetch_rows(sel, where=None, endpoint="x", page_size=500)
 
     def test_null_data_without_errors_raises_user_exception(self):
         sel = Selection(endpoint="x", pk_fields=["guid"], scalars=["guid"], nested={}, lists={})
@@ -131,7 +131,14 @@ class TestFetchRows(unittest.TestCase):
 
         comp = self._component_with_client(_NullDataClient())
         with self.assertRaises(UserException):
-            comp._fetch_rows(sel, where=None, endpoint="x")
+            comp._fetch_rows(sel, where=None, endpoint="x", page_size=500)
+
+    def test_page_size_drives_take_variable(self):
+        sel = Selection(endpoint="x", pk_fields=["guid"], scalars=["guid"], nested={}, lists={})
+        client = _ProbeClient("x", set(), {"guid": "g1"})
+        comp = self._component_with_client(client)
+        comp._fetch_rows(sel, where=None, endpoint="x", page_size=50)
+        self.assertEqual(client.last_variables["take"], 50)
 
     def test_where_is_passed_as_a_variable(self):
         sel = Selection(
@@ -140,14 +147,14 @@ class TestFetchRows(unittest.TestCase):
         client = _ProbeClient("x", set(), {"guid": "g1"})
         comp = self._component_with_client(client)
         where = {"lastChangeDate": {"gte": "2024-01-01"}}
-        comp._fetch_rows(sel, where=where, endpoint="x")
+        comp._fetch_rows(sel, where=where, endpoint="x", page_size=500)
         self.assertEqual(client.last_variables["where"], where)  # sent as a variable, not interpolated
 
     def test_where_on_endpoint_without_filter_type_raises(self):
         sel = Selection(endpoint="x", pk_fields=["guid"], scalars=["guid"], nested={}, lists={}, filter_type=None)
         comp = self._component_with_client(_ProbeClient("x", set(), {"guid": "g1"}))
         with self.assertRaises(UserException):
-            comp._fetch_rows(sel, where={"d": {"gte": "2024-01-01"}}, endpoint="x")
+            comp._fetch_rows(sel, where={"d": {"gte": "2024-01-01"}}, endpoint="x", page_size=500)
 
 
 class TestClientAppId(unittest.TestCase):

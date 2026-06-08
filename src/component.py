@@ -25,8 +25,6 @@ from writer import (
     parent_schema,
 )
 
-_PAGE_SIZE = 500
-
 # Money S3 rejects fields that belong to the other legislation (e.g. an `Sk`-only member
 # queried against a `Cz` company) with a per-item error like:
 #   Cannot access member 'vatIdentificationNumberSk' on path '/issuedInvoices/items[0]...'.
@@ -98,7 +96,7 @@ class Component(ComponentBase):
         where_clause = self._build_where_clause(cfg)
 
         parent_name = cfg.destination.table_name or cfg.endpoint
-        selection, rows = self._fetch_rows(selection, where_clause, cfg.endpoint)
+        selection, rows = self._fetch_rows(selection, where_clause, cfg.endpoint, page_size=cfg.page_size)
         logging.info(f"Fetched {len(rows)} records from '{cfg.endpoint}'.")
 
         self._write_parent(parent_name, selection, rows, cfg)
@@ -114,7 +112,7 @@ class Component(ComponentBase):
                 state[cfg.endpoint] = {"last_value": new_value}
                 self.write_state_file(state)
 
-    def _fetch_rows(self, selection, where, endpoint):
+    def _fetch_rows(self, selection, where, endpoint, page_size):
         """Fetch all rows for the endpoint, pruning legislation-incompatible fields on the way.
 
         The first page doubles as a compatibility probe: if the server rejects any fields
@@ -127,7 +125,7 @@ class Component(ComponentBase):
             raise UserException(f"Endpoint '{endpoint}' does not support date filtering (it has no 'where' argument).")
 
         def variables(skip):
-            v = {"skip": skip, "take": _PAGE_SIZE}
+            v = {"skip": skip, "take": page_size}
             if where is not None:
                 v["where"] = where  # sent as the typed $where variable, never interpolated
             return v
@@ -156,12 +154,12 @@ class Component(ComponentBase):
         if segment is None:
             raise UserException(f"No data returned for endpoint '{endpoint}'.")
         rows = list(segment.get("items") or [])
-        skip = _PAGE_SIZE
+        skip = page_size
         while segment.get("pageInfo", {}).get("hasNextPage"):
             data = self._client.execute(query, variables=variables(skip))
             segment = data[endpoint]
             rows.extend(segment.get("items") or [])
-            skip += _PAGE_SIZE
+            skip += page_size
         return selection, rows
 
     def _build_where_clause(self, cfg: Configuration) -> str | None:

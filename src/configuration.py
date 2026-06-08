@@ -24,6 +24,7 @@ class Configuration(BaseModel):
     date_from: str | None = None
     date_to: str | None = None
     destination: Destination = Field(default_factory=Destination)
+    page_size: int = 500
     debug: bool = False
 
     def __init__(self, **data):
