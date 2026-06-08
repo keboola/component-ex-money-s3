@@ -1,5 +1,49 @@
 from query_builder import ChildSelection, Selection
-from writer import child_columns, extract_children, flatten_parent, normalize_columns, parent_columns
+from writer import (
+    child_columns,
+    child_schema,
+    extract_children,
+    flatten_parent,
+    normalize_columns,
+    parent_columns,
+    parent_schema,
+)
+
+
+def _base_type(coldef):
+    return coldef.data_types["base"].dtype
+
+
+def test_parent_schema_maps_graphql_types_to_base_types():
+    sel = Selection(
+        endpoint="e",
+        pk_fields=["guid"],
+        scalars=["guid", "id", "total", "issued", "paid"],
+        nested={},
+        lists={},
+        column_types={"guid": "UUID", "id": "Int", "total": "Decimal", "issued": "Date", "paid": "Boolean"},
+    )
+    schema = parent_schema(sel)
+    assert _base_type(schema["guid"]) == "STRING" and schema["guid"].primary_key is True
+    assert _base_type(schema["id"]) == "INTEGER"
+    assert _base_type(schema["total"]) == "NUMERIC"
+    assert _base_type(schema["issued"]) == "DATE"
+    assert _base_type(schema["paid"]) == "BOOLEAN"
+
+
+def test_child_schema_types_fk_index_and_scalars():
+    sel = Selection(
+        endpoint="e",
+        pk_fields=["guid"],
+        scalars=["guid"],
+        nested={},
+        lists={"rows": ChildSelection(["amount"], pk_field=None, column_types={"amount": "Decimal"})},
+        column_types={"guid": "UUID"},
+    )
+    schema = child_schema(sel, "rows")
+    assert _base_type(schema["e_guid"]) == "STRING"  # FK takes the parent UUID pk type
+    assert _base_type(schema["index"]) == "INTEGER"  # synthetic row index
+    assert _base_type(schema["amount"]) == "NUMERIC"
 
 
 def test_normalize_columns_strips_leading_underscore():

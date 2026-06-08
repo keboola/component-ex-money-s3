@@ -1,8 +1,35 @@
+from collections import OrderedDict
+
+from keboola.component.dao import BaseType, ColumnDefinition
 from keboola.utils.header_normalizer import NormalizerStrategy, get_normalizer
 
 from query_builder import Selection
 
 _HEADER_NORMALIZER = get_normalizer(NormalizerStrategy.DEFAULT)
+
+# Map Money S3 / HotChocolate GraphQL scalar types to Keboola base types. Anything not
+# listed (UUID, String, ID, TimeSpan, …) stays STRING.
+_GQL_BASE_TYPE = {
+    "Int": BaseType.integer,
+    "Long": BaseType.integer,
+    "Short": BaseType.integer,
+    "Byte": BaseType.integer,
+    "Decimal": BaseType.numeric,
+    "Float": BaseType.float,
+    "Boolean": BaseType.boolean,
+    "Date": BaseType.date,
+    "DateTime": BaseType.timestamp,
+    "DateTimeOffset": BaseType.timestamp,
+}
+
+
+def _normalize_one(name: str) -> str:
+    return normalize_columns([name])[0]
+
+
+def _column(gql_type: str | None, is_pk: bool) -> ColumnDefinition:
+    base = _GQL_BASE_TYPE.get(gql_type or "", BaseType.string)
+    return ColumnDefinition(data_types=base(), primary_key=is_pk)
 
 
 def normalize_columns(names: list[str]) -> list[str]:
@@ -65,3 +92,30 @@ def extract_children(item: dict, sel: Selection) -> dict[str, list[dict]]:
             rows.append(row)
         out[list_name] = rows
     return out
+
+
+def parent_schema(sel: Selection) -> "OrderedDict[str, ColumnDefinition]":
+    """Typed schema (normalized column name -> ColumnDefinition) for the parent table."""
+    pk = set(sel.pk_fields)
+    schema: OrderedDict[str, ColumnDefinition] = OrderedDict()
+    for raw in parent_columns(sel):
+        schema[_normalize_one(raw)] = _column(sel.column_types.get(raw), raw in pk)
+    return schema
+
+
+def child_schema(sel: Selection, list_name: str) -> "OrderedDict[str, ColumnDefinition]":
+    """Typed schema for a child table. Foreign-key columns take the parent PK's type, the
+    synthetic `_index` is an integer, and the rest come from the child element's scalar types."""
+    child = sel.lists[list_name]
+    fks = fk_columns(sel)
+    pk_cols = set(fks) | {child.pk_field or "_index"}
+    schema: OrderedDict[str, ColumnDefinition] = OrderedDict()
+    for raw in child_columns(sel, list_name):
+        if raw == "_index":
+            gql_type = "Int"
+        elif raw in fks:
+            gql_type = sel.column_types.get(raw[len(sel.endpoint) + 1 :])  # parent_<pk> -> pk type
+        else:
+            gql_type = child.column_types.get(raw)
+        schema[_normalize_one(raw)] = _column(gql_type, raw in pk_cols)
+    return schema

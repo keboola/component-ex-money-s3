@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 class ChildSelection:
     scalars: list[str]
     pk_field: str | None  # 'sequence' when the element type has it, else None
+    column_types: dict[str, str] = field(default_factory=dict)  # scalar name -> GraphQL scalar type
 
 
 @dataclass
@@ -15,6 +16,7 @@ class Selection:
     nested: dict[str, list[str]] = field(default_factory=dict)  # object -> [subfields]
     lists: dict[str, ChildSelection] = field(default_factory=dict)
     filter_type: str | None = None  # GraphQL input type of the `where` argument, if any
+    column_types: dict[str, str] = field(default_factory=dict)  # raw column name -> GraphQL scalar type
 
 
 def build_where(field_name: str, gte: str | None = None, lte: str | None = None) -> dict | None:

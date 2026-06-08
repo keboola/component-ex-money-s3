@@ -80,7 +80,7 @@ def prune_fields(selection: Selection, bad: set[str]) -> Selection:
         kept = [s for s in child.scalars if s not in bad]
         if kept:
             pk = child.pk_field if child.pk_field in kept else None
-            lists[name] = ChildSelection(scalars=kept, pk_field=pk)
+            lists[name] = ChildSelection(scalars=kept, pk_field=pk, column_types=child.column_types)
 
     return Selection(
         endpoint=selection.endpoint,
@@ -89,6 +89,7 @@ def prune_fields(selection: Selection, bad: set[str]) -> Selection:
         nested=nested,
         lists=lists,
         filter_type=selection.filter_type,
+        column_types=selection.column_types,
     )
 
 
@@ -112,22 +113,30 @@ def resolve_selection(
     item_type, filter_type = client.endpoint_meta(endpoint)
     entity_fields = client.type_fields(item_type)
     scalar_names, object_types, list_types = classify_fields(entity_fields)
+    item_scalar_types = scalar_field_types(entity_fields)
 
     selected_scalars: list[str] = []
     nested: dict[str, list[str]] = {}
     lists: dict[str, ChildSelection] = {}
+    column_types: dict[str, str] = {}  # raw output column name -> GraphQL scalar type
 
     for field_path in fields:
         if "." in field_path:
             obj, sub = field_path.split(".", 1)
             nested.setdefault(obj, []).append(sub)
+            obj_type = object_types.get(obj)
+            if obj_type:
+                column_types[f"{obj}_{sub}"] = scalar_field_types(client.type_fields(obj_type)).get(sub)
         elif field_path in list_types:
             child_fields = client.type_fields(list_types[field_path])
             child_scalars, _, _ = classify_fields(child_fields)
             pk = "sequence" if "sequence" in child_scalars else None
-            lists[field_path] = ChildSelection(scalars=child_scalars, pk_field=pk)
+            lists[field_path] = ChildSelection(
+                scalars=child_scalars, pk_field=pk, column_types=scalar_field_types(child_fields)
+            )
         elif field_path in scalar_names:
             selected_scalars.append(field_path)
+            column_types[field_path] = item_scalar_types.get(field_path)
         # silently ignore unknown / object-without-subfield selections
 
     if override_pk:
@@ -138,13 +147,14 @@ def resolve_selection(
             )
         pk_fields = list(override_pk)
     else:
-        detected = detect_pk(scalar_names, scalar_field_types(entity_fields))
+        detected = detect_pk(scalar_names, item_scalar_types)
         pk_fields = [detected] if detected else []
 
     # force-include PK and incremental field as scalar columns
     for required in (*pk_fields, incremental_field):
         if required and required in scalar_names and required not in selected_scalars:
             selected_scalars.append(required)
+            column_types[required] = item_scalar_types.get(required)
 
     return Selection(
         endpoint=endpoint,
@@ -153,4 +163,5 @@ def resolve_selection(
         nested=nested,
         lists=lists,
         filter_type=filter_type,
+        column_types=column_types,
     )

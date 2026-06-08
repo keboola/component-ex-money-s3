@@ -14,7 +14,16 @@ from client import MoneyS3Client
 from configuration import Configuration
 from query_builder import build_query, build_where
 from schema import all_field_paths, classify_fields, date_filter_field_names, prune_fields, resolve_selection
-from writer import child_columns, extract_children, fk_columns, flatten_parent, normalize_columns, parent_columns
+from writer import (
+    child_columns,
+    child_schema,
+    extract_children,
+    fk_columns,
+    flatten_parent,
+    normalize_columns,
+    parent_columns,
+    parent_schema,
+)
 
 _PAGE_SIZE = 500
 
@@ -170,10 +179,11 @@ class Component(ComponentBase):
             logging.info(f"No rows for '{name}'; skipping table and manifest.")
             return
         raw_columns = parent_columns(selection)
-        # Normalize names once for the schema/PK/header; remap row keys via this mapping
-        # (no per-row regex).
-        schema = normalize_columns(raw_columns)
-        rename = dict(zip(raw_columns, schema))
+        # Normalize names once for the header/row remap; the typed schema (with per-column
+        # data types) is keyed by the same normalized names, in the same order.
+        normalized = normalize_columns(raw_columns)
+        rename = dict(zip(raw_columns, normalized))
+        schema = parent_schema(selection)
         pk = normalize_columns(selection.pk_fields)
         # Incremental upsert needs a PK; without one, fall back to full overwrite to avoid
         # appending duplicates on every run.
@@ -187,7 +197,7 @@ class Component(ComponentBase):
             f"{name}.csv", primary_key=pk, incremental=incremental, schema=schema, has_header=True
         )
         with open(table.full_path, "w", encoding="utf-8", newline="") as fh:
-            writer = csv.DictWriter(fh, fieldnames=schema, extrasaction="ignore")
+            writer = csv.DictWriter(fh, fieldnames=normalized, extrasaction="ignore")
             writer.writeheader()
             for item in rows:
                 writer.writerow({rename[k]: v for k, v in flatten_parent(item, selection).items()})
@@ -208,20 +218,20 @@ class Component(ComponentBase):
         try:
             for list_name in selection.lists:
                 raw_cols = child_columns(selection, list_name)
-                schema = normalize_columns(raw_cols)
-                renames[list_name] = dict(zip(raw_cols, schema))
+                normalized = normalize_columns(raw_cols)
+                renames[list_name] = dict(zip(raw_cols, normalized))
                 child_table_name = f"{parent_name}_{list_name}"
                 pk = normalize_columns(self._child_pk(selection, list_name))
                 table = self.create_out_table_definition(
                     f"{child_table_name}.csv",
                     primary_key=pk,
                     incremental=cfg.is_incremental and bool(selection.pk_fields),
-                    schema=schema,
+                    schema=child_schema(selection, list_name),
                     has_header=True,
                 )
                 fh = open(table.full_path, "w", encoding="utf-8", newline="")
                 files[list_name] = (fh, table)
-                writers[list_name] = csv.DictWriter(fh, fieldnames=schema, extrasaction="ignore")
+                writers[list_name] = csv.DictWriter(fh, fieldnames=normalized, extrasaction="ignore")
                 writers[list_name].writeheader()
                 counts[list_name] = 0
             for item in rows:
