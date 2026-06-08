@@ -2,7 +2,7 @@ from unittest.mock import PropertyMock, patch
 
 import pytest
 from keboola.component.exceptions import UserException
-from keboola.component.sync_actions import MessageType, SelectElement, ValidationResult
+from keboola.component.sync_actions import SelectElement
 
 import component as component_module
 
@@ -74,11 +74,9 @@ def test_list_agendas():
     assert result[0].label == "Demo s.r.o."
 
 
-def test_connection_success():
+def test_connection_success_returns_none():
     comp = _component_with_stub()
-    result = _call(comp, "test_connection")
-    assert isinstance(result, ValidationResult)
-    assert result.type == MessageType.SUCCESS
+    assert _call(comp, "test_connection") is None
 
 
 def test_connection_unknown_agenda_fails():

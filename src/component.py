@@ -7,7 +7,7 @@ import re
 
 from keboola.component.base import ComponentBase, sync_action
 from keboola.component.exceptions import UserException
-from keboola.component.sync_actions import MessageType, SelectElement, ValidationResult
+from keboola.component.sync_actions import SelectElement
 
 from auth import TokenProvider
 from client import MoneyS3Client
@@ -243,7 +243,6 @@ class Component(ComponentBase):
                 f"Authenticated successfully, but the selected agenda '{cfg.agenda_id}' "
                 f"was not found among the {len(agendas)} available agendas."
             )
-        return ValidationResult("Connection successful.", MessageType.SUCCESS)
 
     @sync_action("list_agendas")
     def list_agendas(self):
