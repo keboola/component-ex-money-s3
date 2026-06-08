@@ -15,6 +15,7 @@ def test_normalize_columns_strips_leading_underscore():
 def test_normalize_columns_replaces_forbidden_chars():
     assert normalize_columns(["a b", "x.y", "ok_1"]) == ["a_b", "xy", "ok_1"]
 
+
 SEL = Selection(
     endpoint="issuedInvoices",
     pk_fields=["id"],

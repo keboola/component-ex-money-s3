@@ -20,9 +20,7 @@ def test_repair_cp1250_leaves_ascii_and_correct_text_untouched():
 
 def test_repair_cp1250_recurses_through_dicts_and_lists():
     payload = {"items": [{"description": "pøepravné", "code": "0417", "n": 5, "ok": None}]}
-    assert repair_cp1250(payload) == {
-        "items": [{"description": "přepravné", "code": "0417", "n": 5, "ok": None}]
-    }
+    assert repair_cp1250(payload) == {"items": [{"description": "přepravné", "code": "0417", "n": 5, "ok": None}]}
 
 
 class _FakeToken:

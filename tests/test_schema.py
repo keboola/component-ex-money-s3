@@ -20,10 +20,26 @@ def test_classify_fields_splits_kinds():
 
 
 def test_detect_pk_prefers_guid_then_id():
-    # guid wins over id (id is not unique in Money S3); id is the fallback.
+    # name-only fallback: guid wins over id (id is not unique in Money S3); id is the fallback.
     assert detect_pk(["documentNumber", "id", "guid"]) == "guid"
     assert detect_pk(["id", "documentNumber"]) == "id"
     assert detect_pk(["code", "name"]) is None
+
+
+def test_detect_pk_prefers_uuid_typed_field_by_metadata():
+    types = {"documentNumber": "String", "rowKey": "UUID", "id": "Int"}
+    # a UUID-typed scalar is chosen even when it is not named "guid"
+    assert detect_pk(["documentNumber", "rowKey", "id"], types) == "rowKey"
+
+
+def test_detect_pk_guid_wins_among_multiple_uuid_fields():
+    types = {"otherUuid": "UUID", "guid": "UUID", "id": "Int"}
+    assert detect_pk(["otherUuid", "guid", "id"], types) == "guid"
+
+
+def test_detect_pk_falls_back_to_id_when_no_uuid():
+    types = {"documentNumber": "String", "id": "Int"}
+    assert detect_pk(["documentNumber", "id"], types) == "id"
 
 
 def test_date_filter_field_names():
@@ -80,6 +96,20 @@ def test_resolve_selection_full():
     assert isinstance(sel.lists["items"], ChildSelection)
     assert sel.lists["items"].pk_field == "sequence"
     assert set(sel.lists["items"].scalars) == {"sequence", "description"}
+
+
+def test_resolve_selection_detects_uuid_pk():
+    fields = {
+        "IIssuedInvoice": [
+            {"name": "guid", "type": {"kind": "NON_NULL", "ofType": {"kind": "SCALAR", "name": "UUID"}}},
+            {"name": "id", "type": {"kind": "NON_NULL", "ofType": {"kind": "SCALAR", "name": "Int"}}},
+            {"name": "documentNumber", "type": {"kind": "SCALAR", "name": "String", "ofType": None}},
+        ],
+    }
+    sel = resolve_selection(
+        _FakeClient(fields), "issuedInvoices", ["documentNumber"], incremental_field=None, override_pk=None
+    )
+    assert sel.pk_fields == ["guid"]  # UUID-typed field chosen over the (non-unique) Int id
 
 
 def test_resolve_selection_forces_incremental_field():

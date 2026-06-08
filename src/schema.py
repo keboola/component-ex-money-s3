@@ -22,10 +22,27 @@ def classify_fields(fields_json: list[dict]) -> tuple[list[str], dict[str, str],
     return scalars, objects, lists
 
 
-def detect_pk(scalar_names: list[str]) -> str | None:
-    # Prefer `guid`: in Money S3 the integer `id` is NOT unique within an endpoint
-    # (it repeats across records), whereas `guid` is a unique UUID. Keying on `id`
-    # would collapse distinct records. Fall back to `id`, then none.
+def scalar_field_types(fields_json: list[dict]) -> dict[str, str]:
+    """Map each scalar field name to its unwrapped scalar type, e.g. {'guid': 'UUID', 'id': 'Int'}."""
+    types: dict[str, str] = {}
+    for raw in fields_json:
+        nf = normalize_field(raw)
+        if nf.is_scalar:
+            types[nf.name] = nf.type_name
+    return types
+
+
+def detect_pk(scalar_names: list[str], scalar_types: dict[str, str] | None = None) -> str | None:
+    # The unique identifier in Money S3 is a UUID-typed field (always `guid`). The integer `id`
+    # is NOT unique — it repeats across records — so keying on it would collapse distinct rows.
+    # Prefer a UUID-typed scalar by metadata (robust even if it were named something other than
+    # `guid`); fall back to name-based detection (guid > id) for schemas without UUID typing.
+    if scalar_types:
+        uuid_fields = [n for n in scalar_names if scalar_types.get(n) == "UUID"]
+        if "guid" in uuid_fields:
+            return "guid"
+        if uuid_fields:
+            return uuid_fields[0]
     for candidate in ("guid", "id"):
         if candidate in scalar_names:
             return candidate
@@ -121,7 +138,7 @@ def resolve_selection(
             )
         pk_fields = list(override_pk)
     else:
-        detected = detect_pk(scalar_names)
+        detected = detect_pk(scalar_names, scalar_field_types(entity_fields))
         pk_fields = [detected] if detected else []
 
     # force-include PK and incremental field as scalar columns

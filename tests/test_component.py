@@ -154,9 +154,7 @@ class TestClientAppId(unittest.TestCase):
     def _comp(self):
         comp = Component.__new__(Component)
         comp._client = None
-        comp._cfg = type(
-            "C", (), {"base_url": "http://h", "client_id": "c", "client_secret": "s", "agenda_id": "a"}
-        )()
+        comp._cfg = type("C", (), {"base_url": "http://h", "client_id": "c", "client_secret": "s", "agenda_id": "a"})()
         return comp
 
     def _with_image_params(self, comp, image_parameters):
