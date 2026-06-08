@@ -66,7 +66,12 @@ def prune_fields(selection: Selection, bad: set[str]) -> Selection:
             lists[name] = ChildSelection(scalars=kept, pk_field=pk)
 
     return Selection(
-        endpoint=selection.endpoint, pk_fields=selection.pk_fields, scalars=scalars, nested=nested, lists=lists
+        endpoint=selection.endpoint,
+        pk_fields=selection.pk_fields,
+        scalars=scalars,
+        nested=nested,
+        lists=lists,
+        filter_type=selection.filter_type,
     )
 
 
@@ -87,7 +92,7 @@ def all_field_paths(client, endpoint: str) -> list[str]:
 def resolve_selection(
     client, endpoint: str, fields: list[str], incremental_field: str | None, override_pk: list[str] | None
 ) -> Selection:
-    item_type, _ = client.endpoint_meta(endpoint)
+    item_type, filter_type = client.endpoint_meta(endpoint)
     entity_fields = client.type_fields(item_type)
     scalar_names, object_types, list_types = classify_fields(entity_fields)
 
@@ -124,4 +129,11 @@ def resolve_selection(
         if required and required in scalar_names and required not in selected_scalars:
             selected_scalars.append(required)
 
-    return Selection(endpoint=endpoint, pk_fields=pk_fields, scalars=selected_scalars, nested=nested, lists=lists)
+    return Selection(
+        endpoint=endpoint,
+        pk_fields=pk_fields,
+        scalars=selected_scalars,
+        nested=nested,
+        lists=lists,
+        filter_type=filter_type,
+    )

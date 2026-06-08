@@ -37,3 +37,19 @@ def test_incremental_and_destination():
 def test_missing_required_raises_userexception():
     with pytest.raises(UserException):
         Configuration(base_url="x")  # missing client_id etc.
+
+
+def test_empty_incremental_field_with_incremental_load_raises():
+    data = _base() | {"load_type": "incremental_load", "incremental_field": ""}
+    with pytest.raises(UserException, match="incremental_field"):
+        Configuration(**data)
+
+
+def test_empty_incremental_field_with_date_bound_raises():
+    data = _base() | {"incremental_field": "", "date_from": "2024-01-01"}
+    with pytest.raises(UserException, match="incremental_field"):
+        Configuration(**data)
+
+
+def test_empty_incremental_field_is_fine_for_plain_full_load():
+    Configuration(**(_base() | {"incremental_field": ""}))  # no filter built → no error

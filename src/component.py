@@ -105,7 +105,7 @@ class Component(ComponentBase):
                 state[cfg.endpoint] = {"last_value": new_value}
                 self.write_state_file(state)
 
-    def _fetch_rows(self, selection, where_clause, endpoint):
+    def _fetch_rows(self, selection, where, endpoint):
         """Fetch all rows for the endpoint, pruning legislation-incompatible fields on the way.
 
         The first page doubles as a compatibility probe: if the server rejects any fields
@@ -114,10 +114,19 @@ class Component(ComponentBase):
         is accepted — so one incompatible field no longer aborts an otherwise valid endpoint.
         Non-legislation errors are still raised with their original message. Returns the
         (possibly pruned) selection together with the collected rows."""
+        if where is not None and not selection.filter_type:
+            raise UserException(f"Endpoint '{endpoint}' does not support date filtering (it has no 'where' argument).")
+
+        def variables(skip):
+            v = {"skip": skip, "take": _PAGE_SIZE}
+            if where is not None:
+                v["where"] = where  # sent as the typed $where variable, never interpolated
+            return v
+
         body = None
         for _ in range(_PRUNE_MAX_ROUNDS):
-            query = build_query(selection, where_clause)
-            body = self._client.execute_with_errors(query, variables={"skip": 0, "take": _PAGE_SIZE})
+            query = build_query(selection, with_where=where is not None)
+            body = self._client.execute_with_errors(query, variables=variables(0))
             bad = legislation_incompatible_members(body.get("errors") or [])
             if not bad:
                 break
@@ -140,7 +149,7 @@ class Component(ComponentBase):
         rows = list(segment.get("items") or [])
         skip = _PAGE_SIZE
         while segment.get("pageInfo", {}).get("hasNextPage"):
-            data = self._client.execute(query, variables={"skip": skip, "take": _PAGE_SIZE})
+            data = self._client.execute(query, variables=variables(skip))
             segment = data[endpoint]
             rows.extend(segment.get("items") or [])
             skip += _PAGE_SIZE
