@@ -67,6 +67,30 @@ def test_paginate_follows_has_next_page(mocker):
     assert [i["id"] for i in items] == [1, 2, 3]
 
 
+def test_type_fields_is_cached_across_calls(mocker):
+    # The schema is constant for the lifetime of a run, so a given type must be introspected once.
+    # Without caching, resolving an endpoint re-introspects each nested object type once per
+    # sub-field — hundreds of redundant requests for a single table.
+    c = MoneyS3Client("http://h", _FakeToken(), "ag-1")
+    post = mocker.patch.object(c._http, "post", return_value={"data": {"__type": {"fields": [{"name": "x"}]}}})
+    first = c.type_fields("SomeType")
+    second = c.type_fields("SomeType")
+    assert first == second == [{"name": "x"}]
+    assert post.call_count == 1  # second call served from cache
+    c.type_fields("OtherType")
+    assert post.call_count == 2  # a different type still hits the API
+
+
+def test_query_roots_and_input_fields_are_cached(mocker):
+    c = MoneyS3Client("http://h", _FakeToken(), "ag-1")
+    roots = {"data": {"__schema": {"queryType": {"fields": [{"name": "ep"}]}}}}
+    inputs = {"data": {"__type": {"inputFields": [{"name": "lastChange"}]}}}
+    post = mocker.patch.object(c._http, "post", side_effect=[roots, inputs])
+    assert c.query_roots() == c.query_roots() == [{"name": "ep"}]
+    assert c.input_fields("F") == c.input_fields("F") == [{"name": "lastChange"}]
+    assert post.call_count == 2  # one request each, despite two calls apiece
+
+
 def test_endpoint_meta_resolves_item_and_filter_types(mocker):
     introspection = {
         "data": {

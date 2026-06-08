@@ -56,6 +56,12 @@ class MoneyS3Client:
         )
         self._tokens = token_provider
         self._agenda_id = agenda_id
+        # The GraphQL schema is constant for the lifetime of a run, so introspection results are
+        # memoized. Without this, resolving an endpoint with several nested objects re-introspects
+        # each object type once per sub-field — hundreds of redundant requests for a single table.
+        self._query_roots_cache: list[dict] | None = None
+        self._type_fields_cache: dict[str, list[dict]] = {}
+        self._input_fields_cache: dict[str, list[dict]] = {}
 
     def execute_with_errors(self, query: str, variables: dict | None = None, with_agenda: bool = True) -> dict:
         """Run a GraphQL request and return the full response body ({data, errors}) WITHOUT raising.
@@ -89,19 +95,25 @@ class MoneyS3Client:
                 break
             skip += page_size
 
-    # --- introspection ---
+    # --- introspection (memoized for the lifetime of the client; the schema is constant) ---
     def query_roots(self) -> list[dict]:
-        return self.execute(_QUERY_ROOTS, with_agenda=False)["__schema"]["queryType"]["fields"]
+        if self._query_roots_cache is None:
+            self._query_roots_cache = self.execute(_QUERY_ROOTS, with_agenda=False)["__schema"]["queryType"]["fields"]
+        return self._query_roots_cache
 
     def type_fields(self, type_name: str) -> list[dict]:
-        data = self.execute(_TYPE_FIELDS, variables={"name": type_name}, with_agenda=False)
-        node = data["__type"]
-        return node["fields"] if node else []
+        if type_name not in self._type_fields_cache:
+            data = self.execute(_TYPE_FIELDS, variables={"name": type_name}, with_agenda=False)
+            node = data["__type"]
+            self._type_fields_cache[type_name] = node["fields"] if node else []
+        return self._type_fields_cache[type_name]
 
     def input_fields(self, type_name: str) -> list[dict]:
-        data = self.execute(_INPUT_FIELDS, variables={"name": type_name}, with_agenda=False)
-        node = data["__type"]
-        return node["inputFields"] if node else []
+        if type_name not in self._input_fields_cache:
+            data = self.execute(_INPUT_FIELDS, variables={"name": type_name}, with_agenda=False)
+            node = data["__type"]
+            self._input_fields_cache[type_name] = node["inputFields"] if node else []
+        return self._input_fields_cache[type_name]
 
     def agendas(self) -> list[dict]:
         data = self.execute("query { agendas { items { guid displayName name } } }", with_agenda=False)
