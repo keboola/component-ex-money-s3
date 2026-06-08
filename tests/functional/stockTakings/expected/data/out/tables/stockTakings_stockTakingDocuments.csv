@@ -1,0 +1,2 @@
+stockTakings_id,index,id,stockTakingId,stockTakingDocumentId,description,issuedByEmployee,checkedByEmployee,note,lastChangeDate,lastChangeTime,year
+1,0,1,1,1,,"Bohatý Jindřich, Ing.",Chudá Jindřiška,,2025-12-04,13:22:00,0

@@ -1,0 +1,1021 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=PLACEHOLDER_CLIENTID&client_secret=PLACEHOLDER_SECRET&scope=s3api
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '103'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/connect/token?AppId=PLACEHOLDER_APPID
+  response:
+    body:
+      string: '{"access_token":"PLACEHOLDER_BEARER_TOKEN","expires_in":3600,"token_type":"Bearer","scope":"s3api"}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, max-age=0
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:25 GMT
+      Pragma:
+      - no-cache
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery {\n  __schema { queryType { fields {\n    name\n    args
+      { name type { kind name ofType { kind name } } }\n    type { kind name ofType
+      { kind name } }\n  } } }\n}\n", "variables": {}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '202'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__schema":{"queryType":{"fields":[{"name":"journalAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJournalAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JournalAccsCollectionSegment","ofType":null}},{"name":"journalTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJournalTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JournalTrsCollectionSegment","ofType":null}},{"name":"cashVouchers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICashVoucherFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CashVouchersCollectionSegment","ofType":null}},{"name":"bankStatements","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankStatementFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BankStatementsCollectionSegment","ofType":null}},{"name":"liabilities","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ILiabilityFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"LiabilitiesCollectionSegment","ofType":null}},{"name":"receivables","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IReceivableFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivablesCollectionSegment","ofType":null}},{"name":"internalDocuments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInternalDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"InternalDocumentsCollectionSegment","ofType":null}},{"name":"agendas","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAgendaFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AgendasCollectionSegment","ofType":null}},{"name":"years","args":[],"type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IAgendaYear"}}},{"name":"currencies","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICurrencyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CurrenciesCollectionSegment","ofType":null}},{"name":"centres","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICentreFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CentresCollectionSegment","ofType":null}},{"name":"operations","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOperationFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"OperationsCollectionSegment","ofType":null}},{"name":"jobOrderTypes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJobOrderTypeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JobOrderTypesCollectionSegment","ofType":null}},{"name":"addressKeys","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAddressKeyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AddressKeysCollectionSegment","ofType":null}},{"name":"banks","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BanksCollectionSegment","ofType":null}},{"name":"shippings","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IShippingFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ShippingsCollectionSegment","ofType":null}},{"name":"combinedNomenclatures","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICombinedNomenclatureFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CombinedNomenclaturesCollectionSegment","ofType":null}},{"name":"municipalityPostalCodes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IMunicipalityPostalCodeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"MunicipalityPostalCodesCollectionSegment","ofType":null}},{"name":"countries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICountryFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CountriesCollectionSegment","ofType":null}},{"name":"parameters","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IParameterFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ParametersCollectionSegment","ofType":null}},{"name":"vatClassifications","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatClassificationFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatClassificationsCollectionSegment","ofType":null}},{"name":"accountCharts","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountChartFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountChartsCollectionSegment","ofType":null}},{"name":"accountMovements","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountMovementFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountMovementsCollectionSegment","ofType":null}},{"name":"vatAccountingTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatAccountingTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatAccountingTrsCollectionSegment","ofType":null}},{"name":"vatAccountingAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatAccountingAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatAccountingAccsCollectionSegment","ofType":null}},{"name":"accountAssignmentTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountAssignmentTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountAssignmentTrsCollectionSegment","ofType":null}},{"name":"accountAssignmentAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountAssignmentAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountAssignmentAccsCollectionSegment","ofType":null}},{"name":"numericalSeries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"INumericalSerieFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"NumericalSeriesCollectionSegment","ofType":null}},{"name":"exchangeLists","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IExchangeListFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ExchangeListsCollectionSegment","ofType":null}},{"name":"bankAccountCashBoxes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankAccountCashBoxFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BankAccountCashBoxesCollectionSegment","ofType":null}},{"name":"nonMonetaryPayments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"INonMonetaryPaymentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"NonMonetaryPaymentsCollectionSegment","ofType":null}},{"name":"constantSymbols","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IConstantSymbolFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ConstantSymbolsCollectionSegment","ofType":null}},{"name":"definitionXMLTransfers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IDefinitionXMLTransferFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"DefinitionXMLTransfersCollectionSegment","ofType":null}},{"name":"priceLevels","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IPriceLevelFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"PriceLevelsCollectionSegment","ofType":null}},{"name":"jobOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJobOrderFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JobOrdersCollectionSegment","ofType":null}},{"name":"activities","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IActivityFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ActivitiesCollectionSegment","ofType":null}},{"name":"vatPurposes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatPurposeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatPurposesCollectionSegment","ofType":null}},{"name":"eshops","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEshopFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EshopsCollectionSegment","ofType":null}},{"name":"employmentType","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmploymentTypeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmploymentTypeCollectionSegment","ofType":null}},{"name":"employmentCode","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmploymentCodeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmploymentCodeCollectionSegment","ofType":null}},{"name":"companies","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICompanyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CompaniesCollectionSegment","ofType":null}},{"name":"employees","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmployeeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmployeesCollectionSegment","ofType":null}},{"name":"importStatus","args":[{"name":"importGuid","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"UUID"}}}],"type":{"kind":"OBJECT","name":"IImportData","ofType":null}},{"name":"warehouses","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IWarehouseFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"WarehousesCollectionSegment","ofType":null}},{"name":"issuedInvoices","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IIssuedInvoiceFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedInvoicesCollectionSegment","ofType":null}},{"name":"receivedInvoices","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IReceivedInvoiceFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedInvoicesCollectionSegment","ofType":null}},{"name":"receivedOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedOrdersCollectionSegment","ofType":null}},{"name":"issuedOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedOrdersCollectionSegment","ofType":null}},{"name":"receivedOffers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedOffersCollectionSegment","ofType":null}},{"name":"issuedOffers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedOffersCollectionSegment","ofType":null}},{"name":"receivedInquiries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedInquiriesCollectionSegment","ofType":null}},{"name":"issuedInquiries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedInquiriesCollectionSegment","ofType":null}},{"name":"services","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ServicesCollectionSegment","ofType":null}},{"name":"repairs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"RepairsCollectionSegment","ofType":null}},{"name":"articles","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IArticleFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ArticlesCollectionSegment","ofType":null}},{"name":"warehouseStocks","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IWarehouseStockFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"WarehouseStocksCollectionSegment","ofType":null}},{"name":"receivedSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedSlipsCollectionSegment","ofType":null}},{"name":"issuedSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedSlipsCollectionSegment","ofType":null}},{"name":"saleSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"SaleSlipsCollectionSegment","ofType":null}},{"name":"transferNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"TransferNotesCollectionSegment","ofType":null}},{"name":"productionNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ProductionNotesCollectionSegment","ofType":null}},{"name":"receivedDeliveryNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedDeliveryNotesCollectionSegment","ofType":null}},{"name":"issuedDeliveryNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedDeliveryNotesCollectionSegment","ofType":null}},{"name":"stockTakingDocuments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IStockTakingDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingDocumentsCollectionSegment","ofType":null}},{"name":"stockTakings","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IStockTakingFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingsCollectionSegment","ofType":null}},{"name":"stockTakingTypes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"StockTakingTypeFilter","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingTypesCollectionSegment","ofType":null}}]}}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:26 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "ReceivedOffersCollectionSegment"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '214'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"pageInfo","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"OBJECT","name":"CollectionSegmentInfo","ofType":null}}},{"name":"items","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IOrderDocument","ofType":null}}},{"name":"totalCount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:26 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IOrderDocument"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '197'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"id","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"type","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"OrderDocumentType","ofType":null}}},{"name":"documentNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"description","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"textBeforePrices","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"textBehindPrices","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"dateOfIssue","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"dateOfSettleBy","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"dateOfSettled","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"phoneNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"email","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"percentageDiscount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"numericalSerieSequence","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"issuedUser","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isNotReserved","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isFixedPrices","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"paymentMethod","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"shippingMethod","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"lastChangeDate","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"lastChangeTime","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"TimeOnly","ofType":null}}},{"name":"documentTitle","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"dateOfSettleFirst","type":{"kind":"SCALAR","name":"Date","ofType":null}},{"name":"documentType","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"receivedDocumentNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"variableSymbol","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"barCode","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"vatRoundingSystem","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"DocumentRoundingSystem","ofType":null}}},{"name":"vatRoundingMode","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"DocumentRoundingMode","ofType":null}}},{"name":"totalRoundingSystem","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"DocumentRoundingSystem","ofType":null}}},{"name":"totalRoundingMode","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"DocumentRoundingMode","ofType":null}}},{"name":"isNoteDisplayed","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"exchangeRateAmount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"exchangeRate","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"transactionType","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"deliveryTerm","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"typeOfTransport","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"withoutVatIdentificationNumber","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"differentVatIdentificationNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"insured","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"serviceRepairType","type":{"kind":"ENUM","name":"ServiceRepairType","ofType":null}},{"name":"receptionMethod","type":{"kind":"ENUM","name":"ReceptionMethod","ofType":null}},{"name":"deliveryMethod","type":{"kind":"ENUM","name":"DeliveryMethod","ofType":null}},{"name":"assumedPriceRepair","type":{"kind":"SCALAR","name":"Decimal","ofType":null}},{"name":"depositAmount","type":{"kind":"SCALAR","name":"Decimal","ofType":null}},{"name":"fault","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"removalMethod","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"receptionStatus","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"userField1","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"userField2","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"userField3","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"totalWithVat","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"totalWithVatHc","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"serviceMode","type":{"kind":"ENUM","name":"ServiceMode","ofType":null}},{"name":"repairTotalWithVat","type":{"kind":"SCALAR","name":"Decimal","ofType":null}},{"name":"repairTotalWithVatHc","type":{"kind":"SCALAR","name":"Decimal","ofType":null}},{"name":"year","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"partnerAddress","type":{"kind":"OBJECT","name":"IPartnerAddress","ofType":null}},{"name":"deliveryAddress","type":{"kind":"OBJECT","name":"IDeliveryAddress","ofType":null}},{"name":"vatRateSummary","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IVatRateSummary","ofType":null}}},{"name":"vatRateSummaryHc","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IVatRateSummary","ofType":null}}},{"name":"repairVatRateSummary","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IVatRateSummary","ofType":null}}},{"name":"repairVatRateSummaryHc","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IVatRateSummary","ofType":null}}},{"name":"eshop","type":{"kind":"OBJECT","name":"orderEshop","ofType":null}},{"name":"numericalSerie","type":{"kind":"OBJECT","name":"INumericalSerie","ofType":null}},{"name":"centre","type":{"kind":"OBJECT","name":"ICentre","ofType":null}},{"name":"jobOrder","type":{"kind":"OBJECT","name":"IJobOrder","ofType":null}},{"name":"operation","type":{"kind":"OBJECT","name":"IOperation","ofType":null}},{"name":"currency","type":{"kind":"OBJECT","name":"ICurrency","ofType":null}},{"name":"destinationDispatchCountry","type":{"kind":"OBJECT","name":"ICountry","ofType":null}},{"name":"shipping","type":{"kind":"OBJECT","name":"IShipping","ofType":null}},{"name":"shippingType","type":{"kind":"OBJECT","name":"IShippingType","ofType":null}},{"name":"shippingPayroll","type":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}},{"name":"shippingPayment","type":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}},{"name":"shippingClass","type":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}},{"name":"shippingListServices","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}}},{"name":"ossCountry","type":{"kind":"OBJECT","name":"ICountry","ofType":null}},{"name":"repairSupplier","type":{"kind":"OBJECT","name":"ICompany","ofType":null}},{"name":"attachedDocuments","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IAttachedDocument","ofType":null}}},{"name":"flagLinks","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IFlagLink","ofType":null}}},{"name":"relatedDocuments","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IRelatedDocument","ofType":null}}},{"name":"userFields","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IOrderDocumentUserField","ofType":null}}},{"name":"items","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IOrderDocumentItem","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:26 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IPartnerAddress"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '198'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"contactPersonName","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"businessAddress","type":{"kind":"OBJECT","name":"IDocumentAddress","ofType":null}},{"name":"billingAddress","type":{"kind":"OBJECT","name":"IDocumentAddress","ofType":null}},{"name":"identificationNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"vatIdentificationNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"vatIdentificationNumberSk","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"company","type":{"kind":"OBJECT","name":"ICompany","ofType":null}},{"name":"contactPerson","type":{"kind":"OBJECT","name":"IContactPerson","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:26 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IDeliveryAddress"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '199'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"contactPersonName","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"address","type":{"kind":"OBJECT","name":"IDocumentAddress","ofType":null}},{"name":"company","type":{"kind":"OBJECT","name":"ICompany","ofType":null}},{"name":"branch","type":{"kind":"OBJECT","name":"IBranch","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:27 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "orderEshop"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '193'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"isNew","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"documentId","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"state","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"EshopState","ofType":null}}},{"name":"isRequestCancel","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isConfirmCancel","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"eshop","type":{"kind":"OBJECT","name":"IEshop","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:27 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "INumericalSerie"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '198'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"prefix","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"number","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"isNonSignificantZeros","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"numberOfPlaces","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isInvoicesIssued","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isInvoicesReceived","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isCashVouchersReceived","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isCashVouchersIssued","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isBankStatementsReceived","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isBankStatementsIssued","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isLiabilities","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isReceivables","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isInternalDocuments","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isSaleSlips","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isIssueSlips","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isIssuedDeliveryNotes","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isReceivedSlips","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isReceivedDeliveryNotes","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isTransferNotes","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isProductionNotes","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isReceivedOrders","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isIssuedOrders","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isIssuedOffers","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isReceivedOffers","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isIssuedInquiries","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isReceivedInquiries","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isStocktakingDocuments","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isJobOrders","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isTravelingOrders","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isServices","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isRepairs","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"year","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"centre","type":{"kind":"OBJECT","name":"ICentre","ofType":null}},{"name":"freeNumbers","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IFreeNumber","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:27 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "ICentre"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '190'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"id","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"lastChange","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"DateTime","ofType":null}}},{"name":"year","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:27 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IJobOrder"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '192'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"id","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"lastChange","type":{"kind":"SCALAR","name":"DateTime","ofType":null}},{"name":"year","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"numericalSerieSequence","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"dateOfPlannedStart","type":{"kind":"SCALAR","name":"Date","ofType":null}},{"name":"dateOfStart","type":{"kind":"SCALAR","name":"Date","ofType":null}},{"name":"dateOfPlannedHandOver","type":{"kind":"SCALAR","name":"Date","ofType":null}},{"name":"dateOfHandOver","type":{"kind":"SCALAR","name":"Date","ofType":null}},{"name":"isWarranty","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"warrantyTo","type":{"kind":"SCALAR","name":"Date","ofType":null}},{"name":"responsibleEmployee","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"state","type":{"kind":"ENUM","name":"JobOrderState","ofType":null}},{"name":"rating","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"companyName","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isBusinessCase","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"orderNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"attachedDocuments","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IAttachedDocument","ofType":null}}},{"name":"numericalSerie","type":{"kind":"OBJECT","name":"INumericalSerie","ofType":null}},{"name":"jobOrderType","type":{"kind":"OBJECT","name":"IJobOrderType","ofType":null}},{"name":"company","type":{"kind":"OBJECT","name":"ICompany","ofType":null}},{"name":"user","type":{"kind":"OBJECT","name":"IUser","ofType":null}},{"name":"flags","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IFlagLink","ofType":null}}},{"name":"activities","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IActivity","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:28 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IOperation"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '193'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"id","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"lastChange","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"DateTime","ofType":null}}},{"name":"year","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:28 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "ICurrency"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '192'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"lastChange","type":{"kind":"SCALAR","name":"DateTime","ofType":null}},{"name":"country","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"exchangeRateAmount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"code","type":{"kind":"SCALAR","name":"String","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:28 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "ICountry"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '191'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"nameCzech","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"code","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isEuMember","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"codeVat","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"sepa","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isCsw","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:28 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IShipping"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '192'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"shippingCode","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"types","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IShippingType","ofType":null}}},{"name":"adds","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:29 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IShippingType"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '196'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:29 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IShippingAdd"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '195'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"type","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"ShippingAddType","ofType":null}}},{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:29 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "ICompany"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '191'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"id","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"guid","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"UUID","ofType":null}}},{"name":"phonePrefix","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"phoneNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"phoneClapper","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"faxPrefix","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"faxNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"faxClapper","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"mobilePrefix","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"mobileNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"email","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"emailCopy","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"emailHidden","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"www","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"contact","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"identificationNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"vatIdentificationNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isVatPayer","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isPerson","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"bankName","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"accountNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"bankCode","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"variableSymbol","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"specificSymbol","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isCredit","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"creditValue","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"isMaturityReceivables","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"isMaturityLiabilities","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"maturityReceivablesDays","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"maturityLiabilitiesDays","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"lastDocumentDateOfIssue","type":{"kind":"SCALAR","name":"Date","ofType":null}},{"name":"lastDocumentNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"discount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"isDiscount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"lastSendMail","type":{"kind":"SCALAR","name":"Date","ofType":null}},{"name":"isSendMail","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"message","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"code","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"contactPerson","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"lastChangeDate","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"lastChangeTime","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"TimeOnly","ofType":null}}},{"name":"dataBoxName","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"dataBoxId","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"vatIdentificationNumberSk","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isdocDocumentDesignation","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isdocProductIdentifier","type":{"kind":"ENUM","name":"CompanyIsdocProductIdentifier","ofType":null}},{"name":"isdocCatalogue","type":{"kind":"ENUM","name":"CompanyIsdocCatalogue","ofType":null}},{"name":"isdocPlu","type":{"kind":"ENUM","name":"CompanyIsdocPlu","ofType":null}},{"name":"isSendReminders","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"type","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"CompanyType","ofType":null}}},{"name":"isPaymentMethod","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"paymentMethod","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isShippingMethod","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"shippingMethod","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isShipping","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"insured","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"businessAddress","type":{"kind":"OBJECT","name":"IGpsAddress","ofType":null}},{"name":"deliveryAddress","type":{"kind":"OBJECT","name":"IGpsAddress","ofType":null}},{"name":"billingAddress","type":{"kind":"OBJECT","name":"IAddress","ofType":null}},{"name":"executiveSecretary","type":{"kind":"OBJECT","name":"IContactPerson","ofType":null}},{"name":"contactPersons","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IContactPerson","ofType":null}}},{"name":"addressKeys","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IAddressKey","ofType":null}}},{"name":"addressGroup","type":{"kind":"OBJECT","name":"IAddressGroup","ofType":null}},{"name":"bankAccounts","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IBankAccount","ofType":null}}},{"name":"branches","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IBranch","ofType":null}}},{"name":"operations","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IOperation","ofType":null}}},{"name":"priceLevels","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IPriceLevel","ofType":null}}},{"name":"priceLists","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IWarehouse","ofType":null}}},{"name":"jobOrders","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IJobOrder","ofType":null}}},{"name":"activities","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IActivity","ofType":null}}},{"name":"flagLinks","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IFlagLink","ofType":null}}},{"name":"userFields","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"ICompanyUserField","ofType":null}}},{"name":"attachedDocuments","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IAttachedDocument","ofType":null}}},{"name":"shipping","type":{"kind":"OBJECT","name":"IShipping","ofType":null}},{"name":"shippingType","type":{"kind":"OBJECT","name":"IShippingType","ofType":null}},{"name":"shippingPayroll","type":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}},{"name":"shippingPayment","type":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}},{"name":"shippingClass","type":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}},{"name":"shippingListServices","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IShippingAdd","ofType":null}}},{"name":"eshop","type":{"kind":"OBJECT","name":"ICompanyEshop","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:30 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IVatRateSummary"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '198'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"vatRate","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"totalWithoutVat","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"totalVat","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:31 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IAttachedDocument"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '200'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"lastChange","type":{"kind":"SCALAR","name":"DateTime","ofType":null}},{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"path","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"guid","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"UUID","ofType":null}}},{"name":"documentType","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"AttachedDocumentDocumentType","ofType":null}}},{"name":"user","type":{"kind":"OBJECT","name":"IUser","ofType":null}},{"name":"content","type":{"kind":"SCALAR","name":"ByteArray","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:33 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IFlagLink"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '192'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"remark","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"rfWidth","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"rfHeight","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"flag","type":{"kind":"OBJECT","name":"IFlag","ofType":null}},{"name":"user","type":{"kind":"OBJECT","name":"IUser","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:33 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IRelatedDocument"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '199'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"relType","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"RelatedDocumentRelType","ofType":null}}},{"name":"subRelType","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"RelatedDocumentSubRelType","ofType":null}}},{"name":"srcDocumentYear","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"srcDocumentType","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"RelatedDocumentDocumentType","ofType":null}}},{"name":"srcDocumentId","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"srcDocumentItemType","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"srcDocumentItemId","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"dstDocumentYear","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"dstDocumentType","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"RelatedDocumentDocumentType","ofType":null}}},{"name":"dstDocumentId","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"dstDocumentItemType","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"dstDocumentItemId","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"relAmount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:33 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IOrderDocumentUserField"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '206'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"value1","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"value2","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"value3","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"value4","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"value5","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"gValue1","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"gValue2","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"gValue3","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"gValue4","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"gValue5","type":{"kind":"SCALAR","name":"String","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:33 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IOrderDocumentItem"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '201'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"description","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"amount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"remainAmount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"unitPriceHc","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"vatRate","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"priceType","type":{"kind":"ENUM","name":"OrderPriceType","ofType":null}},{"name":"discountPercentage","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"estimatedPurchasePrice","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"dateOfIssue","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"dateOfSettleFirst","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"dateOfSettleBy","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"dateOfSettled","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"amountUnit","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"catalogue","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"barCode","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"barCodeType","type":{"kind":"ENUM","name":"OrderDocumentItemBarCodeType","ofType":null}},{"name":"warrantyType","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"WarrantyType","ofType":null}}},{"name":"warranty","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"subItemAmount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"decimalPlacesMeasureUnit","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"sequence","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"isNotReserved","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"plu","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"unitPrice","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"transactionType","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"weight","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"serialNumber","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"dateOfExpiration","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"dateOfPurchase","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Date","ofType":null}}},{"name":"isUserPrice","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"movementUnit","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"amountMovementUnit","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"coefficientMovementUnit","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"priceMovementUnit","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"vatSpecialRegime","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"VatSpecialRegime","ofType":null}}},{"name":"vatRateSpecialRegime","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Decimal","ofType":null}}},{"name":"year","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"partnerAddress","type":{"kind":"OBJECT","name":"IOrderDocumentItemPartnerAddress","ofType":null}},{"name":"article","type":{"kind":"OBJECT","name":"IArticle","ofType":null}},{"name":"warehouse","type":{"kind":"OBJECT","name":"IWarehouse","ofType":null}},{"name":"centre","type":{"kind":"OBJECT","name":"ICentre","ofType":null}},{"name":"jobOrder","type":{"kind":"OBJECT","name":"IJobOrder","ofType":null}},{"name":"operation","type":{"kind":"OBJECT","name":"IOperation","ofType":null}},{"name":"priceLevel","type":{"kind":"OBJECT","name":"IPriceLevel","ofType":null}},{"name":"priceList","type":{"kind":"OBJECT","name":"IWarehouse","ofType":null}},{"name":"countryOfOrigin","type":{"kind":"OBJECT","name":"ICountry","ofType":null}},{"name":"supplier","type":{"kind":"OBJECT","name":"ICompany","ofType":null}},{"name":"itemSerialNumbers","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"ISerialNumber","ofType":null}}},{"name":"subStockItems","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IOrderDocumentItem","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:34 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "query ($skip: Int!, $take: Int!) {\n  receivedOffers(skip: $skip,
+      take: $take) {\n    pageInfo { hasNextPage }\n    totalCount\n    items { id
+      type documentNumber description note textBeforePrices textBehindPrices dateOfIssue
+      dateOfSettleBy dateOfSettled phoneNumber email percentageDiscount numericalSerieSequence
+      issuedUser isNotReserved isFixedPrices paymentMethod shippingMethod lastChangeDate
+      lastChangeTime documentTitle dateOfSettleFirst documentType receivedDocumentNumber
+      variableSymbol barCode vatRoundingSystem vatRoundingMode totalRoundingSystem
+      totalRoundingMode isNoteDisplayed exchangeRateAmount exchangeRate transactionType
+      deliveryTerm typeOfTransport withoutVatIdentificationNumber differentVatIdentificationNumber
+      insured serviceRepairType receptionMethod deliveryMethod assumedPriceRepair
+      depositAmount fault removalMethod receptionStatus userField1 userField2 userField3
+      totalWithVat totalWithVatHc serviceMode repairTotalWithVat repairTotalWithVatHc
+      year partnerAddress { contactPersonName identificationNumber vatIdentificationNumber
+      vatIdentificationNumberSk } deliveryAddress { contactPersonName } eshop { isNew
+      documentId state isRequestCancel isConfirmCancel note } numericalSerie { prefix
+      number isNonSignificantZeros numberOfPlaces name isInvoicesIssued isInvoicesReceived
+      isCashVouchersReceived isCashVouchersIssued isBankStatementsReceived isBankStatementsIssued
+      isLiabilities isReceivables isInternalDocuments isSaleSlips isIssueSlips isIssuedDeliveryNotes
+      isReceivedSlips isReceivedDeliveryNotes isTransferNotes isProductionNotes isReceivedOrders
+      isIssuedOrders isIssuedOffers isReceivedOffers isIssuedInquiries isReceivedInquiries
+      isStocktakingDocuments isJobOrders isTravelingOrders note isServices isRepairs
+      year } centre { id lastChange year shortCut name note } jobOrder { id lastChange
+      year shortCut name note numericalSerieSequence dateOfPlannedStart dateOfStart
+      dateOfPlannedHandOver dateOfHandOver isWarranty warrantyTo responsibleEmployee
+      state rating companyName isBusinessCase orderNumber } operation { id lastChange
+      year shortCut name note } currency { lastChange country exchangeRateAmount code
+      } destinationDispatchCountry { name nameCzech code isEuMember codeVat sepa isCsw
+      } shipping { shortCut name note shippingCode } shippingType { shortCut name
+      note } shippingPayroll { type shortCut name note } shippingPayment { type shortCut
+      name note } shippingClass { type shortCut name note } ossCountry { name nameCzech
+      code isEuMember codeVat sepa isCsw } repairSupplier { id guid phonePrefix phoneNumber
+      phoneClapper faxPrefix faxNumber faxClapper mobilePrefix mobileNumber email
+      emailCopy emailHidden www contact identificationNumber vatIdentificationNumber
+      isVatPayer isPerson bankName accountNumber bankCode variableSymbol specificSymbol
+      isCredit creditValue isMaturityReceivables isMaturityLiabilities maturityReceivablesDays
+      maturityLiabilitiesDays lastDocumentDateOfIssue lastDocumentNumber discount
+      isDiscount lastSendMail isSendMail message note code contactPerson lastChangeDate
+      lastChangeTime dataBoxName dataBoxId vatIdentificationNumberSk isdocDocumentDesignation
+      isdocProductIdentifier isdocCatalogue isdocPlu isSendReminders type isPaymentMethod
+      paymentMethod isShippingMethod shippingMethod isShipping insured } vatRateSummary
+      { vatRate totalWithoutVat totalVat } vatRateSummaryHc { vatRate totalWithoutVat
+      totalVat } repairVatRateSummary { vatRate totalWithoutVat totalVat } repairVatRateSummaryHc
+      { vatRate totalWithoutVat totalVat } shippingListServices { type shortCut name
+      note } attachedDocuments { lastChange name path guid documentType content }
+      flagLinks { remark rfWidth rfHeight } relatedDocuments { relType subRelType
+      srcDocumentYear srcDocumentType srcDocumentId srcDocumentItemType srcDocumentItemId
+      dstDocumentYear dstDocumentType dstDocumentId dstDocumentItemType dstDocumentItemId
+      relAmount } userFields { value1 value2 value3 value4 value5 gValue1 gValue2
+      gValue3 gValue4 gValue5 } items { description note amount remainAmount unitPriceHc
+      vatRate priceType discountPercentage estimatedPurchasePrice dateOfIssue dateOfSettleFirst
+      dateOfSettleBy dateOfSettled amountUnit catalogue barCode barCodeType warrantyType
+      warranty subItemAmount decimalPlacesMeasureUnit shortCut sequence isNotReserved
+      plu unitPrice transactionType weight serialNumber dateOfExpiration dateOfPurchase
+      isUserPrice movementUnit amountMovementUnit coefficientMovementUnit priceMovementUnit
+      vatSpecialRegime vatRateSpecialRegime year } }\n  }\n}", "variables": {"skip":
+      0, "take": 500}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      AgendaId:
+      - PLACEHOLDER_AGENDA
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '4545'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"receivedOffers":{"pageInfo":{"hasNextPage":false},"totalCount":0,"items":[]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:32:34 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,92 @@
+name,shortCut,code,swift,countryCode,isCsw
+ABAPAY s.r.o.,EEPS,8230,EEPSCZPP,CZ,True
+Air Bank a.s.,BAIR,3030,AIRACZPP,CZ,True
+"Artesa, spořitelní družstvo",ARTZ,2220,ARTTCZPP,CZ,True
+"AXA Bank Europe, organizační složka",AXAB,2230,,CZ,True
+"Bank of Communications Co., Ltd., Prague Branch",,8255,COMMCZPP,CZ,True
+Bank of China (CEE) Ltd. Prague Branch,BKCH,8250,BKCHCZPP,CZ,True
+Banka CREDITAS a.s.,CREZ,2250,CTASCZ22,CZ,True
+"Beekash Payment Solutions, s.r.o.",,8282,BPORCZ22,CZ,True
+BESTPAY s.r.o.,,8299,,CZ,True
+"BNP Paribas Personal Finance SA, odštěpný závod",GEBA,3050,BPPFCZP1,CZ,True
+"BNP Paribas S.A., pobočka Česká republika",GEBA,6300,GEBACZPP,CZ,True
+Celní banka pro Intrastat,ZOLL,ZOLL,,CZ,True
+"Centrální depozitář cenných papírů, a.s.",BRCP,9910,,CZ,True
+"Citfin, spořitelní družstvo",CITF,2060,CITFCZPP,CZ,True
+"Citibank Europe plc, organizační složka",CITI,2600,CITICZPX,CZ,True
+"COMMERZBANK Aktiengesellschaft, pobočka Praha",COBA,6200,COBACZPX,CZ,True
+Crédit Agricole Corporate and Investment Bank S.A.,CRLY,5000,CRLYCZPP,CZ,True
+"Česká exportní banka, a.s.",CEXB,8090,CZEECZPP,CZ,True
+Česká národní banka,CNBA,0710,CNBACZPP,CZ,True
+Česká národní banka - zúčtovací centrum,CNBACC,0730,,CZ,True
+"Česká spořitelna, a.s.",CSPO,0800,GIBACZPX,CZ,True
+"Československá obchodní banka, a.s.",CEKO,0300,CEKOCZPP,CZ,True
+"Československá obchodní banka, a.s.-platební karty",VISA,9980,,CZ,True
+Československé úvěrní družstvo,VVDZ,2030,AKCTCZ22,CZ,True
+ČNB-Krátkodobé dluhopisy,TKDL,9960,,CZ,True
+"ČSOB Hypoteční banka, a.s.",CMHB,2100,,CZ,True
+"ČSOB Stavební spořitelna, a.s.",CMSS,7960,,CZ,True
+"Deutsche Bank A.G. Filiale Prag,organizační složka",DEUT,7910,DEUTCZPX,CZ,True
+Devizová burza a.s.,,8610,,CZ,True
+"Družstevní záložna Kredit, v likvidaci",DZKR,8240,,CZ,True
+"ERB bank, a.s., v likvidaci",FICH,2210,FICHCZPP,CZ,True
+FAS finance company s.r.o.,,8198,FFCSCZP1,CZ,True
+"Fio banka, a.s.",FIOB,2010,FIOBCZPP,CZ,True
+GoPay platební brána,GPCZ,GPCZ,,CZ,True
+"HSBC Continental Europe, Czech Republic",MIDL,8150,MIDLCZPP,CZ,True
+Industrial and Commercial Bank of China Limited Pr,ICBK,8265,ICBKCZPP,CZ,True
+ING Bank N.V.,INGB,3500,INGBCZPP,CZ,True
+"J&T BANKA, a.s.",JTBP,5800,JTBPCZPP,CZ,True
+"Komerční banka, a.s.",KOMB,0100,KOMBCZPP,CZ,True
+MasterCard Europe sprl. - platební karty,MCEB,9870,,CZ,True
+Max banka a.s.,EXPN,4000,EXPNCZPP,CZ,True
+"mBank S.A., organizační složka (pobočka v ČR)",BREX,6210,BREXCZPP,CZ,True
+"mBank S.A., organizační složka (pobočka v SR)",BREXSA,8360,BREXSKBX,SK,True
+"MEINL BANK Aktiengesellschaft, pobočka Praha",,3020,,CZ,True
+Mercurius partners s.r.o.,,8293,MRPSCZPP,CZ,True
+"Modrá pyramida stavební spořitelna, a.s.",VSPO,7990,,CZ,True
+"MONETA Money Bank, a.s.",AGBA,0600,AGBACZPP,CZ,True
+"MONETA Stavební Spořitelna, a.s.",SSWT,7970,,CZ,True
+MoneyPolo Europe s.r.o.,,8199,MOUSCZP2,CZ,True
+MUFG Bank (Europe) N.V. Prague Branch,BOTK,2020,BOTKCZPP,CZ,True
+Multitude Bank p.l.c.,,8500,,CZ,True
+"Národní rozvojová banka, a.s.",CMZR,4300,NROZCZPP,CZ,True
+NEY spořitelní družstvo,ANOS,2260,,CZ,True
+Oberbank AG pobočka Česká republika,SMWR,8040,OBKLCZ2X,CZ,True
+"Partners Banka, a.s. ",,6363,,CZ,True
+PAYMASTER a.s.,,8260,PYYMCZPP,CZ,True
+Payment Execution s.r.o.,,8220,PAERCZP1,CZ,True
+"PAYMONT, UAB",,8660,,CZ,True
+"Peněžní dům, spořitelní družstvo",PDSD,2200,,CZ,True
+"PKO BP S.A., Czech Branch",BPKO ,3060,BPKOCZPP,CZ,True
+Platební systém pro karty AMEX,AMEX,AMEX,,CZ,True
+Platební systém pro karty DC,DC,DC,,CZ,True
+Platební systém pro karty DINERS,DINE,DINE,,CZ,True
+Platební systém pro karty ECMC,ECMC,ECMC,,CZ,True
+Platební systém pro karty JCB,JCB,JCB,,CZ,True
+Platební systém pro karty VISA,VISA,VISA,,CZ,True
+Podnikatelská družstevní záložna,PODZ,2275,,CZ,True
+"Poštová banka, a.s., pobočka Česká republika",PABKCA,2240,POBNCZPP,CZ,True
+PPF banka a.s.,PMBA,6000,PMBPCZPP,CZ,True
+PRIVAT BANK AG der Raiffeisenlandesbank,,8200,,CZ,True
+Qpay s.r.o.,,8283,QPSRCZPP,CZ,True
+Raiffeisen stavební spořitelna a.s.,ARSS,7950,,CZ,True
+Raiffeisenbank a.s.,RZBC,5500,RZBCCZPP,CZ,True
+Raiffeisenbank a.s. (do 31. 12. 2021 Equa bank),ICBN,6100,EQBKCZPP,CZ,True
+Raiffeisenbank a.s.-doběh plateb ZUNO,ZUNO,2310,ZUNOCZPP,CZ,True
+Raiffeisenbank im Stiftland eG pobočka Cheb,DRBW,8030,GENOCZ21,CZ,True
+"RM SYSTÉM, a.s.",RMSS,9900,,CZ,True
+"Sberbank CZ, a.s. v likvidaci",VBOE,6800,VBOECZ2X,CZ,True
+Sparkasse Oberlausitz-Niederschlesien,,8190,,CZ,True
+"Stavební spořitelna České spořitelny, a.s.",SSCS,8060,,CZ,True
+"Tatra banka, a.s.",TATR,1100,TATRSKBX,SK,True
+"The Royal Bank of Scotland plc, organizační složka",ABNA,5400,ABNACZPP,CZ,True
+TRINITY BANK a.s.,MPUZ,2070,MPUBCZPP,CZ,True
+UNIBON - spořitelní a úvěrní družstvo,UNIB,2040,,CZ,True
+"UniCredit Bank Czech Republic and Slovakia, a.s.",CABV,2700,BACXCZPP,CZ,True
+VIVA PAYMENT SERVICES S.A. odštěpný závod,,8272,VPAYCZP2,CZ,True
+"Všeobecná úvěrová banka a.s., pobočka Praha",SUBACA,6700,SUBACZPP,CZ,True
+Vybrané operace KB,ZOKB,9890,,CZ,True
+Waldviertler Sparkasse von 1842 AG,SPWT,7940,SPWTCZ21,CZ,True
+"WPB Capital, spořitelní družstvo",WPBZ,2050,,CZ,True
+Wüstenrot hypoteční banka a.s.,WUEH,7980,,CZ,True

@@ -1,0 +1,473 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=PLACEHOLDER_CLIENTID&client_secret=PLACEHOLDER_SECRET&scope=s3api
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '103'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/connect/token?AppId=PLACEHOLDER_APPID
+  response:
+    body:
+      string: '{"access_token":"PLACEHOLDER_BEARER_TOKEN","expires_in":3600,"token_type":"Bearer","scope":"s3api"}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, max-age=0
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:08 GMT
+      Pragma:
+      - no-cache
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery {\n  __schema { queryType { fields {\n    name\n    args
+      { name type { kind name ofType { kind name } } }\n    type { kind name ofType
+      { kind name } }\n  } } }\n}\n", "variables": {}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '202'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__schema":{"queryType":{"fields":[{"name":"journalAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJournalAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JournalAccsCollectionSegment","ofType":null}},{"name":"journalTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJournalTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JournalTrsCollectionSegment","ofType":null}},{"name":"cashVouchers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICashVoucherFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CashVouchersCollectionSegment","ofType":null}},{"name":"bankStatements","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankStatementFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BankStatementsCollectionSegment","ofType":null}},{"name":"liabilities","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ILiabilityFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"LiabilitiesCollectionSegment","ofType":null}},{"name":"receivables","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IReceivableFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivablesCollectionSegment","ofType":null}},{"name":"internalDocuments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInternalDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"InternalDocumentsCollectionSegment","ofType":null}},{"name":"agendas","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAgendaFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AgendasCollectionSegment","ofType":null}},{"name":"years","args":[],"type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IAgendaYear"}}},{"name":"currencies","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICurrencyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CurrenciesCollectionSegment","ofType":null}},{"name":"centres","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICentreFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CentresCollectionSegment","ofType":null}},{"name":"operations","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOperationFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"OperationsCollectionSegment","ofType":null}},{"name":"jobOrderTypes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJobOrderTypeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JobOrderTypesCollectionSegment","ofType":null}},{"name":"addressKeys","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAddressKeyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AddressKeysCollectionSegment","ofType":null}},{"name":"banks","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BanksCollectionSegment","ofType":null}},{"name":"shippings","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IShippingFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ShippingsCollectionSegment","ofType":null}},{"name":"combinedNomenclatures","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICombinedNomenclatureFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CombinedNomenclaturesCollectionSegment","ofType":null}},{"name":"municipalityPostalCodes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IMunicipalityPostalCodeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"MunicipalityPostalCodesCollectionSegment","ofType":null}},{"name":"countries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICountryFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CountriesCollectionSegment","ofType":null}},{"name":"parameters","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IParameterFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ParametersCollectionSegment","ofType":null}},{"name":"vatClassifications","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatClassificationFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatClassificationsCollectionSegment","ofType":null}},{"name":"accountCharts","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountChartFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountChartsCollectionSegment","ofType":null}},{"name":"accountMovements","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountMovementFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountMovementsCollectionSegment","ofType":null}},{"name":"vatAccountingTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatAccountingTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatAccountingTrsCollectionSegment","ofType":null}},{"name":"vatAccountingAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatAccountingAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatAccountingAccsCollectionSegment","ofType":null}},{"name":"accountAssignmentTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountAssignmentTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountAssignmentTrsCollectionSegment","ofType":null}},{"name":"accountAssignmentAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountAssignmentAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountAssignmentAccsCollectionSegment","ofType":null}},{"name":"numericalSeries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"INumericalSerieFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"NumericalSeriesCollectionSegment","ofType":null}},{"name":"exchangeLists","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IExchangeListFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ExchangeListsCollectionSegment","ofType":null}},{"name":"bankAccountCashBoxes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankAccountCashBoxFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BankAccountCashBoxesCollectionSegment","ofType":null}},{"name":"nonMonetaryPayments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"INonMonetaryPaymentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"NonMonetaryPaymentsCollectionSegment","ofType":null}},{"name":"constantSymbols","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IConstantSymbolFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ConstantSymbolsCollectionSegment","ofType":null}},{"name":"definitionXMLTransfers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IDefinitionXMLTransferFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"DefinitionXMLTransfersCollectionSegment","ofType":null}},{"name":"priceLevels","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IPriceLevelFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"PriceLevelsCollectionSegment","ofType":null}},{"name":"jobOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJobOrderFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JobOrdersCollectionSegment","ofType":null}},{"name":"activities","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IActivityFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ActivitiesCollectionSegment","ofType":null}},{"name":"vatPurposes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatPurposeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatPurposesCollectionSegment","ofType":null}},{"name":"eshops","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEshopFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EshopsCollectionSegment","ofType":null}},{"name":"employmentType","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmploymentTypeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmploymentTypeCollectionSegment","ofType":null}},{"name":"employmentCode","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmploymentCodeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmploymentCodeCollectionSegment","ofType":null}},{"name":"companies","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICompanyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CompaniesCollectionSegment","ofType":null}},{"name":"employees","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmployeeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmployeesCollectionSegment","ofType":null}},{"name":"importStatus","args":[{"name":"importGuid","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"UUID"}}}],"type":{"kind":"OBJECT","name":"IImportData","ofType":null}},{"name":"warehouses","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IWarehouseFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"WarehousesCollectionSegment","ofType":null}},{"name":"issuedInvoices","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IIssuedInvoiceFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedInvoicesCollectionSegment","ofType":null}},{"name":"receivedInvoices","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IReceivedInvoiceFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedInvoicesCollectionSegment","ofType":null}},{"name":"receivedOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedOrdersCollectionSegment","ofType":null}},{"name":"issuedOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedOrdersCollectionSegment","ofType":null}},{"name":"receivedOffers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedOffersCollectionSegment","ofType":null}},{"name":"issuedOffers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedOffersCollectionSegment","ofType":null}},{"name":"receivedInquiries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedInquiriesCollectionSegment","ofType":null}},{"name":"issuedInquiries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedInquiriesCollectionSegment","ofType":null}},{"name":"services","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ServicesCollectionSegment","ofType":null}},{"name":"repairs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"RepairsCollectionSegment","ofType":null}},{"name":"articles","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IArticleFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ArticlesCollectionSegment","ofType":null}},{"name":"warehouseStocks","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IWarehouseStockFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"WarehouseStocksCollectionSegment","ofType":null}},{"name":"receivedSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedSlipsCollectionSegment","ofType":null}},{"name":"issuedSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedSlipsCollectionSegment","ofType":null}},{"name":"saleSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"SaleSlipsCollectionSegment","ofType":null}},{"name":"transferNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"TransferNotesCollectionSegment","ofType":null}},{"name":"productionNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ProductionNotesCollectionSegment","ofType":null}},{"name":"receivedDeliveryNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedDeliveryNotesCollectionSegment","ofType":null}},{"name":"issuedDeliveryNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedDeliveryNotesCollectionSegment","ofType":null}},{"name":"stockTakingDocuments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IStockTakingDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingDocumentsCollectionSegment","ofType":null}},{"name":"stockTakings","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IStockTakingFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingsCollectionSegment","ofType":null}},{"name":"stockTakingTypes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"StockTakingTypeFilter","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingTypesCollectionSegment","ofType":null}}]}}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:08 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "ConstantSymbolsCollectionSegment"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '215'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"pageInfo","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"OBJECT","name":"CollectionSegmentInfo","ofType":null}}},{"name":"items","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IConstantSymbol","ofType":null}}},{"name":"totalCount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:08 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IConstantSymbol"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '198'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"code","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"description","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:08 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "query ($skip: Int!, $take: Int!) {\n  constantSymbols(skip:
+      $skip, take: $take) {\n    pageInfo { hasNextPage }\n    totalCount\n    items
+      { code description note }\n  }\n}", "variables": {"skip": 0, "take": 500}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      AgendaId:
+      - PLACEHOLDER_AGENDA
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '224'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"constantSymbols":{"pageInfo":{"hasNextPage":false},"totalCount":319,"items":[{"code":"0417","description":"odvody
+        vedlejších hospodáøství","note":""},{"code":"0416","description":"odvody vedlejších
+        hospodáøství","note":""},{"code":"0414","description":"odvody vedlejších hospodáøství","note":""},{"code":"0409","description":"platby
+        za pøepravné","note":""},{"code":"0408","description":"platby za pøepravné","note":""},{"code":"0406","description":"platby
+        za pøepravné","note":""},{"code":"0404","description":"platby za pøepravné","note":""},{"code":"0402","description":"platby
+        za pøepravné","note":""},{"code":"0379","description":"ostatní pøíjmy (O)","note":""},{"code":"0358","description":"platby
+        urèené k výplat.v hotov.prostø.pošt","note":""},{"code":"0354","description":"platby
+        urèené k výplat.v hotov.prostø.pošt","note":""},{"code":"0309","description":"platby
+        za služby(kromì plateb pod sym.40X)(O","note":""},{"code":"0308","description":"plat.
+        za služby(kromì plateb pod sym.40X)(O)","note":""},{"code":"0306","description":"plat.
+        za služby(kromì plateb pod sym.40X)(O)","note":""},{"code":"0304","description":"plat.
+        za služby(kromì plateb pod sym.40X)(O)","note":""},{"code":"0302","description":"plat.
+        za služby(kromì plateb pod sym.40X)(O)","note":""},{"code":"0279","description":"vklady
+        na úèty zemìdìlských družstev","note":""},{"code":"0258","description":"platby
+        v Kè urèené k úhradám do zahranièí","note":""},{"code":"0254","description":"platby
+        v Kè urèené k úhradám do zahranièí","note":""},{"code":"0179","description":"tržby
+        za poskytnuté služby","note":""},{"code":"0169","description":"splátky úvìrù
+        a pùjèek (O)","note":""},{"code":"0168","description":"splátky úvìrù a pùjèek
+        (O)","note":""},{"code":"0164","description":"splátky úvìrù a pùjèek (O)","note":""},{"code":"0159","description":"hospodáøsko
+        operativní výdaje","note":""},{"code":"0158","description":"hospodáøsko operativní
+        výdaje","note":""},{"code":"0156","description":"hospodáøsko operativní výdaje","note":""},{"code":"0154","description":"hospodáøsko
+        operativní výdaje","note":""},{"code":"0149","description":"srážka danì z
+        úrokù (B)","note":""},{"code":"0139","description":"srážky z mezd","note":""},{"code":"0138","description":"srážky
+        z mezd","note":""},{"code":"0137","description":"srážky z mezd","note":""},{"code":"0136","description":"srážky
+        z mezd","note":""},{"code":"0134","description":"srážky z mezd","note":""},{"code":"0119","description":"odvody
+        pøíspìvkových organizací","note":""},{"code":"0118","description":"odvody
+        pøíspìvkových organizací","note":""},{"code":"0117","description":"odvody
+        pøíspìvkových organizací","note":""},{"code":"0116","description":"odvody
+        pøíspìvkových organizací","note":""},{"code":"0114","description":"odvody
+        pøíspìvkových organizací","note":""},{"code":"0109","description":"platby
+        za zemìdìlské výrobky","note":""},{"code":"0108","description":"platby za
+        zemìdìlské výrobky","note":""},{"code":"0106","description":"platby za zemìdìlské
+        výrobky","note":""},{"code":"0104","description":"platby za zemìdìlské výrobky","note":""},{"code":"0102","description":"platby
+        za zemìdìlské výrobky","note":""},{"code":"0079","description":"tržby za prodané
+        zboží a poskyt.stravování","note":""},{"code":"0068","description":"pøevody
+        prostø.na mzdy a ostat.osob.nákl.","note":""},{"code":"0066","description":"pøevody
+        prostø.na mzdy a ostat.osob.nákl.","note":""},{"code":"0064","description":"pøevody
+        prostø.na mzdy a ostat.osob.nákl.","note":""},{"code":"0059","description":"penále.,popl.z
+        prodl.a jiné maj.sankce","note":""},{"code":"0058","description":"penále.,popl.z
+        prodl.a jiné maj.sankce","note":""},{"code":"0056","description":"penále.,popl.z
+        prodl.a jiné maj.sankce","note":""},{"code":"0054","description":"penále.,popl.z
+        prodl.a jiné maj.sankce","note":""},{"code":"0039","description":"prostøedky
+        na mzdy","note":""},{"code":"0038","description":"prostøedky na mzdy","note":""},{"code":"0036","description":"prostøedky
+        na mzdy","note":""},{"code":"0034","description":"prostøedky na mzdy","note":""},{"code":"0029","description":"platby
+        za dodávky investièní povahy","note":""},{"code":"0028","description":"platby
+        za dodávky investièní povahy","note":""},{"code":"0026","description":"platby
+        za dodávky investièní povahy","note":""},{"code":"0024","description":"platby
+        za dodávky investièní povahy","note":""},{"code":"0009","description":"platby
+        za zboží(kromì plat.pod sym.10X,80X)","note":""},{"code":"0008","description":"platby
+        za zboží(kromì plat.pod sym.10X,80X)","note":""},{"code":"0006","description":"platby
+        za zboží(kromì plat.pod sym.10X,80X)","note":""},{"code":"0004","description":"platby
+        za zboží(kromì plat.pod sym.10X,80X)","note":""},{"code":"0418","description":"odvody
+        vedlejších hospodáøství","note":""},{"code":"0419","description":"odvody vedlejších
+        hospodáøství","note":""},{"code":"0459","description":"hotovostní výplaty
+        z úètù zemìd.družstev","note":""},{"code":"0479","description":"vrácené mzdy","note":""},{"code":"0554","description":"finanèní
+        platby ostatní (O)","note":""},{"code":"0556","description":"finanèní platby
+        ostatní (O)","note":""},{"code":"0558","description":"finanèní platby ostatní
+        (O)","note":""},{"code":"0559","description":"finanèní platby ostatní (O)","note":""},{"code":"0579","description":"vrácené
+        hotovosti na nákup","note":""},{"code":"0854","description":"pøechodnì poskytnuté
+        pùjèky","note":""},{"code":"0856","description":"pøechodnì poskytnuté pùjèky","note":""},{"code":"0858","description":"pøechodnì
+        poskytnuté pùjèky","note":""},{"code":"0859","description":"pøechodnì poskytnuté
+        pùjèky","note":""},{"code":"0934","description":"dávky sociál.zabezpeè.(dùchody,podpory,NP)","note":""},{"code":"0936","description":"dávky
+        sociál.zabezpeè.(dùchody,podpory,NP)","note":""},{"code":"0938","description":"dávky
+        sociál.zabezpeè.(dùchody,podpory,NP)","note":""},{"code":"0939","description":"dávky
+        sociál.zabezpeè.(dùchody,podpory,NP)","note":""},{"code":"0959","description":"dotace
+        poštám(B)","note":""},{"code":"0964","description":"ostatní pøevody","note":""},{"code":"0966","description":"ostatní
+        pøevody","note":""},{"code":"0968","description":"ostatní pøevody","note":""},{"code":"1144","description":"bìž.plat.daní,popl.,odv.a
+        cel.vè.zál.a spl.","note":""},{"code":"1146","description":"bìž.plat.daní,popl.,odv.a
+        cel.vè.zál.a spl.","note":""},{"code":"1147","description":"bìž.plat.daní,popl.,odv.a
+        cel.vè.zál.a spl.","note":""},{"code":"1148","description":"bìž.plat.daní,popl.,odv.a
+        cel.vè.zál.a spl.","note":""},{"code":"1149","description":"bìž.plat.daní,popl.,odv.a
+        cel.vè.zál.a spl.","note":""},{"code":"1314","description":"místní poplatky","note":""},{"code":"1316","description":"místní
+        poplatky","note":""},{"code":"1317","description":"místní poplatky","note":""},{"code":"1318","description":"místní
+        poplatky","note":""},{"code":"1319","description":"místní poplatky","note":""},{"code":"1379","description":"vklady
+        obyvatel(vè.depoz.a vkl.certifik.)(BS","note":""},{"code":"1514","description":"pøevody
+        prostøedkù na úèel.invest.výstavbu","note":""},{"code":"1516","description":"pøevody
+        prostøedkù na úèel.invest.výstavbu","note":""},{"code":"1517","description":"pøevody
+        prostøedkù na úèel.invest.výstavbu","note":""},{"code":"1518","description":"pøevody
+        prostøedkù na úèel.invest.výstavbu","note":""},{"code":"1519","description":"pøevody
+        prostøedkù na úèel.invest.výstavbu","note":""},{"code":"1559","description":"výplaty
+        z vkladù obyvatelstva(BS)","note":""},{"code":"1754","description":"zvlášt.pøíspìvky
+        zúèt. na invest.úèty SBD","note":""},{"code":"1756","description":"zvlášt.pøíspìvky
+        zúèt. na invest.úèty SBD","note":""},{"code":"1758","description":"zvlášt.pøíspìvky
+        zúèt. na invest.úèty SBD","note":""},{"code":"1759","description":"zvlášt.pøíspìvky
+        zúètované na invest.úèty SB","note":""},{"code":"1814","description":"pøevody
+        prostøedkù na ostat.(neinvest.)úèely","note":""},{"code":"1816","description":"pøevody
+        prostøedkù na ostat.(neinvest.)úèely","note":""},{"code":"1817","description":"pøevody
+        prostøedkù na ostat.(neinvest.)úèely","note":""},{"code":"1818","description":"pøevody
+        prostøedkù na ostat.(neinvest.)úèely","note":""},{"code":"1819","description":"pøevody
+        prostøedkù na ostat.(neinvest.)úèely","note":""},{"code":"1959","description":"dotace
+        bankám(BS)","note":""},{"code":"1979","description":"odvody pošt(B)","note":""},{"code":"2054","description":"nákup
+        cenných papírù(akcie,obligace,smìnky)","note":""},{"code":"2056","description":"nákup
+        cenných papírù(akcie.obligace,smìnky)","note":""},{"code":"2058","description":"nákup
+        cenných papírù(akcie,obligace,smìnky)","note":""},{"code":"2059","description":"nákup
+        cenných papírù(akcie,obligace,smìnky)","note":""},{"code":"2099","description":"nákup
+        cenných papírù(B)","note":""},{"code":"2144","description":"platby domìrkù","note":""},{"code":"2146","description":"platby
+        domìrkù","note":""},{"code":"2147","description":"platby domìrkù","note":""},{"code":"2148","description":"platby
+        domìrkù","note":""},{"code":"2149","description":"platby domìrkù","note":""},{"code":"2514","description":"pøíjmy
+        z èinnosti lékárenské služby","note":""},{"code":"2516","description":"pøíjmy
+        z èinnosti lékárenské služby","note":""},{"code":"2517","description":"pøíjmy
+        z èinnosti lékárenské služby","note":""},{"code":"2518","description":"pøíjmy
+        z èinnosti lékárenské služby","note":""},{"code":"2519","description":"pøíjmy
+        z èinnosti lékárenské služby","note":""},{"code":"2554","description":"úhrady
+        pojistných plnìní pojiš\u009Dovnami","note":""},{"code":"2556","description":"úhrady
+        pojistných plnìní pojiš\u009Dovnami","note":""},{"code":"2558","description":"úhrady
+        pojistných plnìní pojiš\u009Dovnami","note":""},{"code":"2559","description":"úhrady
+        pojistných plnìní pojiš\u009Dovnami","note":""},{"code":"2614","description":"pøíjmy
+        od obyvatelstva","note":""},{"code":"2616","description":"pøíjmy od obyvatelstva","note":""},{"code":"2617","description":"pøíjmy
+        od obyvatelstva","note":""},{"code":"2618","description":"pøíjmy od obyvatelstva","note":""},{"code":"2619","description":"pøíjmy
+        od obyvatelstva","note":""},{"code":"2699","description":"devizové operace
+        nákup(B)","note":""},{"code":"2714","description":"pøíjmy od organizací","note":""},{"code":"2716","description":"pøíjmy
+        od organizací","note":""},{"code":"2717","description":"pøíjmy od organizací","note":""},{"code":"2718","description":"pøíjmy
+        od organizací","note":""},{"code":"2719","description":"pøíjmy od organizací","note":""},{"code":"2979","description":"odvody
+        bank(BS)","note":""},{"code":"3014","description":"pøíjmy z vedlejší hospodáøské
+        èinnosti škol","note":""},{"code":"3016","description":"pøíjmy z vedlejší
+        hospodáøské èinnosti škol","note":""},{"code":"3017","description":"pøíjmy
+        z vedlejší hospodáøské èinnosti škol","note":""},{"code":"3018","description":"pøíjmy
+        z vedlejší hospodáøské èinnosti škol","note":""},{"code":"3019","description":"pøíjmy
+        z vedlejší hospodáøské èinnosti škol","note":""},{"code":"3054","description":"prodej
+        cenných papírù","note":""},{"code":"3056","description":"prodej cenných papírù","note":""},{"code":"3058","description":"prodej
+        cenných papírù","note":""},{"code":"3059","description":"prodej cenných papírù","note":""},{"code":"3099","description":"prodej
+        cenných papírù(B)","note":""},{"code":"3144","description":"platby pøíslušenst.danì
+        a cla(exek.nákl.)","note":""},{"code":"3146","description":"platby pøíslušenst.danì
+        a cla(exek.nákl.)","note":""},{"code":"3147","description":"platby pøíslušenst.danì
+        a cla(exek.nákl.)","note":""},{"code":"3148","description":"platby pøíslušenst.danì
+        a cla(exek.nákl.)","note":""},{"code":"3149","description":"platby pøíslušenst.danì
+        a cla(exek.nákl.)","note":""},{"code":"3214","description":"pøíjmy z prodeje
+        bytù do osob.vlast.obèanù","note":""},{"code":"3216","description":"pøíjmy
+        z prodeje bytù do osob.vlast.obèanù","note":""},{"code":"3217","description":"pøíjmy
+        z prodeje bytù do osob.vlast.obèanù","note":""},{"code":"3218","description":"pøíjmy
+        z prodeje bytù do osob.vlast.obèanù","note":""},{"code":"3219","description":"pøíjmy
+        z prodeje bytù do osob.vlast.obèanù","note":""},{"code":"3514","description":"lázeòský
+        poplatek","note":""},{"code":"3516","description":"lázeòský poplatek","note":""},{"code":"3517","description":"lázeòský
+        poplatek","note":""},{"code":"3518","description":"lázeòský poplatek","note":""},{"code":"3519","description":"lázeòský
+        poplatek","note":""},{"code":"3552","description":"platby pøipoj. penzijním
+        fondùm od zamìstn.","note":""},{"code":"3554","description":"platby pojistného
+        pojiš\u009Dovnám","note":""},{"code":"3556","description":"platby pojistného
+        pojiš\u009Dovnám","note":""},{"code":"3558","description":"platby pojistného
+        pojiš\u009Dovnám","note":""},{"code":"3559","description":"platby pojistného
+        pojiš\u009Dovnám","note":""},{"code":"3614","description":"pokuty ukládané
+        a vybírané obcí a okr.úøady","note":""},{"code":"3616","description":"pokuty
+        ukládané a vybírané obcí a okr.úøady","note":""},{"code":"3617","description":"pokuty
+        ukládané a vybírané obcí a okr.úøady","note":""},{"code":"3618","description":"pokuty
+        ukládané a vybírané obcí a okr.úøady","note":""},{"code":"3619","description":"pokuty
+        ukládané a vybírané obcí a okr.úøady","note":""},{"code":"3699","description":"devizové
+        operace prodej(B)","note":""},{"code":"3714","description":"sankèní poplatky","note":""},{"code":"3716","description":"sankèní
+        poplatky","note":""},{"code":"3717","description":"sankèní poplatky","note":""},{"code":"3719","description":"sankèní
+        poplatky","note":""},{"code":"4054","description":"proplacení výnosù z cenných
+        papírù","note":""},{"code":"4056","description":"proplacení výnosù z cenných
+        papírù","note":""},{"code":"4058","description":"proplacení výnosù z cenných
+        papírù","note":""},{"code":"4059","description":"proplacení výnosù z cenných
+        papírù","note":""},{"code":"4099","description":"proplacení výnosù z cenných
+        papírù(B)","note":""},{"code":"4144","description":"vratky ve prospìch úètù
+        daò.subj.","note":""},{"code":"4146","description":"vratky ve prospìch úètù
+        daò.subj.","note":""},{"code":"4147","description":"vratky ve prospìch úètù
+        daò.subj.","note":""},{"code":"4148","description":"vratky ve prospìch úètù
+        daò.subj.","note":""},{"code":"4149","description":"vratky ve prospìch úètù
+        daò.subj.","note":""},{"code":"4214","description":"pøíjmy plynoucí z prodeje
+        nemovitého majetku","note":""},{"code":"4216","description":"pøíjmy plynoucí
+        z prodeje nemovitého majetku","note":""},{"code":"4217","description":"pøíjmy
+        plynoucí z prodeje nemovitého majetku","note":""},{"code":"4218","description":"pøíjmy
+        plynoucí z prodeje nemovitého majetku","note":""},{"code":"4219","description":"pøíjmy
+        plynoucí z prodeje nemovitého majetku","note":""},{"code":"4314","description":"ostatní
+        a nahodilé pøíjmy","note":""},{"code":"4316","description":"ostatní a nahodilé
+        pøíjmy","note":""},{"code":"4317","description":"ostatní a nahodilé pøíjmy","note":""},{"code":"4318","description":"ostatní
+        a nahodilé pøíjmy","note":""},{"code":"4319","description":"ostatní a nahodilé
+        pøíjmy","note":""},{"code":"4514","description":"pøíspìvky vedlejším hospodáøstvím","note":""},{"code":"4516","description":"pøíspìvky
+        vedlejším hospodáøstvím","note":""},{"code":"4517","description":"pøíspìvky
+        vedlejším hospodáøstvím","note":""},{"code":"4518","description":"pøíspìvky
+        vedlejším hospodáøstvím","note":""},{"code":"4519","description":"pøíspìvky
+        vedlejším hospodáøstvím","note":""},{"code":"4614","description":"pøíspìvky
+        pøíspìvkovým organizacím na provoz","note":""},{"code":"4616","description":"pøíspìvky
+        pøíspìvkovým organizacím na provoz","note":""},{"code":"4617","description":"pøíspìvky
+        pøíspìvkovým organizacím na provoz","note":""},{"code":"4618","description":"pøíspìvky
+        pøíspìvkovým organizacím na provoz","note":""},{"code":"4619","description":"pøíspìvky
+        pøíspìvkovým organizacím na provoz","note":""},{"code":"4714","description":"pøíspìvky
+        obèanským sdružením","note":""},{"code":"4716","description":"pøíspìvky obèanským
+        sdružením","note":""},{"code":"4717","description":"pøíspìvky obèanským sdružením","note":""},{"code":"4718","description":"pøíspìvky
+        obèanským sdružením","note":""},{"code":"4719","description":"pøíspìvky obèanským
+        sdružením","note":""},{"code":"4814","description":"dotace církvím a náboženským
+        spoleènostem","note":""},{"code":"4816","description":"dotace církvím a náboženským
+        spoleènostem","note":""},{"code":"4817","description":"dotace církvím a náboženským
+        spoleènostem","note":""},{"code":"4818","description":"dotace církvím a náboženským
+        spoleènostem","note":""},{"code":"4819","description":"dotace církvím a náboženským
+        spoleènostem","note":""},{"code":"4914","description":"pøíspìvky a dary mezinárodním
+        organizacím","note":""},{"code":"4916","description":"pøíspìvky a dary mezinárodním
+        organizacím","note":""},{"code":"4917","description":"pøíspìvky a dary mezinárodním
+        organizacím","note":""},{"code":"4918","description":"pøíspìvky a dary mezinárodním
+        organizacím","note":""},{"code":"4919","description":"pøíspìvky a dary mezinárodním
+        organizacím","note":""},{"code":"5014","description":"dotace pøíspìv.a ostat.organ.na
+        investice","note":""},{"code":"5016","description":"dotace pøíspìv.a ostat.organ.na
+        investice","note":""},{"code":"5017","description":"dotace pøíspìv.a ostat.organ.na
+        investice","note":""},{"code":"5018","description":"dotace pøíspìv.a ostat.organ.na
+        investice","note":""},{"code":"5019","description":"dotace pøíspìv.a ostat.organ.na
+        investice","note":""},{"code":"5144","description":"pøevody prostø.mezi úèty
+        správcù daní","note":""},{"code":"5146","description":"pøevody prostø.mezi
+        úèty správcù daní","note":""},{"code":"5147","description":"pøevody prostø.mezi
+        úèty správcù daní","note":""},{"code":"5148","description":"pøevody prostø.mezi
+        úèty správcù daní","note":""},{"code":"5149","description":"pøevody prostø.mezi
+        úèty správcù daní","note":""},{"code":"5314","description":"ostatní pøíspìvky","note":""},{"code":"5316","description":"ostatní
+        pøíspìvky","note":""},{"code":"5317","description":"ostatní pøíspìvky","note":""},{"code":"5318","description":"ostatní
+        pøíspìvky","note":""},{"code":"5319","description":"ostatní pøíspìvky","note":""},{"code":"5514","description":"dotace
+        provozní","note":""},{"code":"5516","description":"dotace provozní","note":""},{"code":"5517","description":"dotace
+        provozní","note":""},{"code":"5518","description":"dotace provozní","note":""},{"code":"5519","description":"dotace
+        provozní","note":""},{"code":"5614","description":"dotace na investice","note":""},{"code":"5616","description":"dotace
+        na investice","note":""},{"code":"5617","description":"dotace na investice","note":""},{"code":"5618","description":"dotace
+        na investice","note":""},{"code":"5619","description":"dotace na investice","note":""},{"code":"6144","description":"silnièní
+        daò placená celnímu orgánu","note":""},{"code":"6146","description":"silnièní
+        daò placená celnímu orgánu","note":""},{"code":"6147","description":"silnièní
+        daò placená celnímu orgánu","note":""},{"code":"6148","description":"silnièní
+        daò placená celnímu orgánu","note":""},{"code":"6149","description":"silnièní
+        daò placená celnímu orgánu","note":""},{"code":"6414","description":"ostatní
+        úèelové dotace ze státního rozpoètu","note":""},{"code":"6416","description":"ostatní
+        úèelové dotace ze státního rozpoètu","note":""},{"code":"6417","description":"ostatní
+        úèelové dotace ze státního rozpoètu","note":""},{"code":"6418","description":"ostatní
+        úèelové dotace ze státního rozpoètu","note":""},{"code":"6419","description":"ostatní
+        úèelové dotace ze státního rozpoètu","note":""},{"code":"7114","description":"dotace
+        na investièní výstavbu ze stát.fondù","note":""},{"code":"7116","description":"dotace
+        na investièní výstavbu ze stát.fondù","note":""},{"code":"7117","description":"dotace
+        na investièní výstavbu ze stát.fondù","note":""},{"code":"7118","description":"dotace
+        na investièní výstavbu ze stát.fondù","note":""},{"code":"7119","description":"dotace
+        na investièní výstavbu ze stát.fondù","note":""},{"code":"7144","description":"poplatky
+        placené celnímu orgánu","note":""},{"code":"7146","description":"poplatky
+        placené celnímu orgánu","note":""},{"code":"7147","description":"poplatky
+        placené celnímu orgánu","note":""},{"code":"7148","description":"poplatky
+        placené celnímu orgánu","note":""},{"code":"7149","description":"poplatky
+        placené celnímu orgánu","note":""},{"code":"7214","description":"dotace okresním
+        úøadùm a obcím","note":""},{"code":"7216","description":"dotace okresním úøadùm
+        a obcím","note":""},{"code":"7217","description":"dotace okresním úøadùm a
+        obcím","note":""},{"code":"7218","description":"dotace okresním úøadùm a obcím","note":""},{"code":"7219","description":"dotace
+        okresním úøadùm a obcím","note":""},{"code":"7514","description":"vztahy státního
+        rozpoètu k bance","note":""},{"code":"7516","description":"vztahy státního
+        rozpoètu k bance","note":""},{"code":"7517","description":"vztahy státního
+        rozpoètu k bance","note":""},{"code":"7518","description":"vztahy státního
+        rozpoètu k bance","note":""},{"code":"7519","description":"vztahy státního
+        rozpoètu k bance","note":""},{"code":"7614","description":"dávky sociálního
+        zabezpeèení","note":""},{"code":"7616","description":"dávky sociálního zabezpeèení","note":""},{"code":"7617","description":"dávky
+        sociálního zabezpeèení","note":""},{"code":"7618","description":"dávky sociálního
+        zabezpeèení","note":""},{"code":"7619","description":"dávky sociálního zabezpeèení","note":""},{"code":"7714","description":"státní
+        sociální podpora","note":""},{"code":"7716","description":"státní sociální
+        podpora","note":""},{"code":"7717","description":"státní sociální podpora","note":""},{"code":"7718","description":"státní
+        sociální podpora","note":""},{"code":"7719","description":"státní sociální
+        podpora","note":""},{"code":"8144","description":"ostatní platby daní,poplatkù
+        a odvodù","note":""},{"code":"8146","description":"ostatní platby daní,poplatkù
+        a odvodù","note":""},{"code":"8147","description":"ostatní platby daní,poplatkù
+        a odvodù","note":""},{"code":"8148","description":"ostatní platby daní,poplatkù
+        a odvodù","note":""},{"code":"8149","description":"ostatní platby daní,poplatkù
+        a odvodù","note":""},{"code":"9114","description":"finanèní zúètování","note":""},{"code":"9116","description":"finanèní
+        zúètování","note":""},{"code":"9117","description":"finanèní zúètování","note":""},{"code":"9118","description":"finanèní
+        zúètování","note":""},{"code":"9119","description":"finanèní zúètování","note":""},{"code":"9144","description":"zrušené
+        dávky placené celnímu orgánu","note":""},{"code":"9146","description":"zrušené
+        dávky placené celnímu orgánu","note":""},{"code":"9147","description":"zrušené
+        dávky placené celnímu orgánu","note":""},{"code":"9148","description":"zrušené
+        dávky placené celnímu orgánu","note":""},{"code":"9149","description":"zrušené
+        dávky placené celnímu orgánu","note":""},{"code":"9617","description":"vratky
+        pøísp. na èl.podíly v družs.stab.BV","note":""},{"code":"9814","description":"mimoøádné
+        odvody v prùbìhu roku","note":""},{"code":"9816","description":"mimoøádné
+        odvody v prùbìhu roku","note":""},{"code":"9817","description":"mimoøádné
+        odvody v prùbìhu roku","note":""},{"code":"9818","description":"mimoøádné
+        odvody v prùbìhu roku","note":""},{"code":"9819","description":"mimoøádné
+        odvody v prùbìhu roku","note":""},{"code":"9914","description":"úèelové prostø.ze
+        SR poskyt.z vlád.rozp.rez.","note":""},{"code":"9916","description":"úèelové
+        prostø.ze SR poskyt.z vlád.rozp.rez.","note":""},{"code":"9917","description":"úèelové
+        prostø.ze SR poskyt.z vlád.rozp.rez.","note":""},{"code":"9918","description":"úèelové
+        prostø.ze SR poskyt.z vlád.rozp.rez.","note":""},{"code":"9919","description":"úèelové
+        prostø.ze SR poskyt.z vlád.rozp.rez.","note":""}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:10 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+version: 1

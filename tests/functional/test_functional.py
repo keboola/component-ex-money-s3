@@ -1,24 +1,21 @@
-"""
-Functional datadir test for the Money S3 GraphQL extractor.
+"""Functional datadir tests for the Money S3 GraphQL extractor.
 
-Records real HTTP interactions (token fetch + GraphQL introspection + data page) into a
-VCR cassette (tests/functional/cassettes/issued_invoices.yaml) with all secrets scrubbed,
-then replays offline (record_mode=none) so pytest passes with no network and no real
-credentials.
+Each subdirectory of this folder that contains `source/data/config.json` is one endpoint
+fixture, replayed offline against the VCR cassette `cassettes/<endpoint>.yaml`. The cassettes
+were recorded against the live test instance with all secrets scrubbed (see
+`record_cassettes.py`) and replay with `record_mode="none"`, so the suite needs no network
+and no real credentials.
 
-VCR matching strategy:
-  - All requests: method + scheme + host + port + path + query + body
-  - This uniquely identifies each interaction because:
-      * The token POST: distinct path (/connect/token) and body (form data)
-      * Each GraphQL POST: distinct body (different query / variables)
-  - Authorization and AgendaId headers are NOT part of matching
-    (they were stripped from the cassette and would differ from placeholder values).
+VCR matching: method + scheme + host + port + path + query + body (auth/agenda headers are
+not matched — they were scrubbed). `allow_playback_repeats=True` because a run re-issues some
+introspection queries (e.g. the same type lookup) more than once.
 """
 
 import sys
 import unittest
 from pathlib import Path
 
+import pytest
 import vcr
 from keboola.datadirtest import TestDataDir
 
@@ -26,13 +23,14 @@ FUNCTIONAL_DIR = Path(__file__).parent
 CASSETTES_DIR = FUNCTIONAL_DIR / "cassettes"
 COMPONENT_SCRIPT = (FUNCTIONAL_DIR.parent.parent / "src" / "component.py").as_posix()
 
-# Ensure src/ is on the path (datadirtest uses runpy.run_path, but vcr is set up
-# here in the test process, which intercepts requests made by the component).
 sys.path.insert(0, str(FUNCTIONAL_DIR.parent.parent / "src"))
 
 
-def _make_vcr():
-    """Return a configured VCR instance for offline replay."""
+def _endpoints() -> list[str]:
+    return sorted(p.parent.parent.parent.name for p in FUNCTIONAL_DIR.glob("*/source/data/config.json"))
+
+
+def _make_vcr() -> vcr.VCR:
     return vcr.VCR(
         cassette_library_dir=str(CASSETTES_DIR),
         record_mode="none",
@@ -41,35 +39,27 @@ def _make_vcr():
 
 
 class VCRTestDataDir(TestDataDir):
-    """TestDataDir subclass that wraps the component run inside a VCR cassette."""
+    """TestDataDir subclass that runs the component inside a VCR cassette."""
 
     def __init__(self, *args, vcr_cassette: str, **kwargs):
         self._vcr_cassette = vcr_cassette
         super().__init__(*args, **kwargs)
 
     def run_component(self):
-        """Run the component with VCR active so HTTP is intercepted."""
-        my_vcr = _make_vcr()
-        with my_vcr.use_cassette(self._vcr_cassette):
+        with _make_vcr().use_cassette(self._vcr_cassette, allow_playback_repeats=True):
             super().run_component()
 
 
-class TestFunctional(unittest.TestCase):
-    """Discovers and runs all functional datadir tests with VCR replay."""
-
-    def test_issued_invoices(self):
-        test = VCRTestDataDir(
-            data_dir=str(FUNCTIONAL_DIR / "issued_invoices"),
-            component_script=COMPONENT_SCRIPT,
-            vcr_cassette="issued_invoices.yaml",
-        )
-        result = unittest.TestResult()
-        test.run(result)
-        if result.errors:
-            raise AssertionError(f"Functional test 'issued_invoices' raised an error:\n{result.errors[0][1]}")
-        if result.failures:
-            raise AssertionError(f"Functional test 'issued_invoices' failed:\n{result.failures[0][1]}")
-
-
-if __name__ == "__main__":
-    unittest.main()
+@pytest.mark.parametrize("endpoint", _endpoints())
+def test_endpoint(endpoint):
+    test = VCRTestDataDir(
+        data_dir=str(FUNCTIONAL_DIR / endpoint),
+        component_script=COMPONENT_SCRIPT,
+        vcr_cassette=f"{endpoint}.yaml",
+    )
+    result = unittest.TestResult()
+    test.run(result)
+    if result.errors:
+        raise AssertionError(f"Functional test '{endpoint}' raised an error:\n{result.errors[0][1]}")
+    if result.failures:
+        raise AssertionError(f"Functional test '{endpoint}' failed:\n{result.failures[0][1]}")

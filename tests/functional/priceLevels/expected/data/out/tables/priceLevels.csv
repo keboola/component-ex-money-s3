@@ -1,0 +1,3 @@
+lastChange,shortCut,name,note,isGroupPrices,calculationPrice_isWithVat,calculationPrice_roundingSystem,calculationPrice_roundingMode,calculationPrice_priceCalculation,calculationPrice_priceCalculation2_5,calculationPrice_priceCalculationMode,calculationPrice_priceCalculationMode2_5,currency_lastChange,currency_country,currency_exchangeRateAmount,currency_code
+2025-11-27T08:48:51.851Z,10%,Sleva 10%,,False,True,UNITS,UP,BASIC_SELLING_PRICE,FIRST_SELLING_PRICE,DISCOUNT,DISCOUNT,,,,
+2025-11-27T08:48:51.855Z,20%EUR,Sleva 20 % v EUR,,False,False,UNITS,DOWN,BASIC_SELLING_PRICE,FIRST_SELLING_PRICE,DISCOUNT,DISCOUNT,2025-11-27T08:48:51.822Z,EMU,1,EUR
