@@ -23,6 +23,7 @@ class NormField:
     kind: str
     type_name: str | None
     is_list: bool
+    is_non_null: bool = False  # outermost type wrapper is NON_NULL (e.g. `Int!`)
 
     @property
     def is_scalar(self) -> bool:
@@ -34,5 +35,12 @@ class NormField:
 
 
 def normalize_field(field_json: dict) -> NormField:
-    kind, name, is_list = unwrap_type(field_json["type"])
-    return NormField(name=field_json["name"], kind=kind, type_name=name, is_list=is_list)
+    type_json = field_json["type"]
+    kind, name, is_list = unwrap_type(type_json)
+    return NormField(
+        name=field_json["name"],
+        kind=kind,
+        type_name=name,
+        is_list=is_list,
+        is_non_null=type_json.get("kind") == "NON_NULL",
+    )

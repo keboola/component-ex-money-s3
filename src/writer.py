@@ -27,9 +27,9 @@ def _normalize_one(name: str) -> str:
     return normalize_columns([name])[0]
 
 
-def _column(gql_type: str | None, is_pk: bool) -> ColumnDefinition:
+def _column(gql_type: str | None, is_pk: bool, nullable: bool = True) -> ColumnDefinition:
     base = _GQL_BASE_TYPE.get(gql_type or "", BaseType.string)
-    return ColumnDefinition(data_types=base(), primary_key=is_pk)
+    return ColumnDefinition(data_types=base(), primary_key=is_pk, nullable=nullable)
 
 
 def normalize_columns(names: list[str]) -> list[str]:
@@ -95,11 +95,14 @@ def extract_children(item: dict, sel: Selection) -> dict[str, list[dict]]:
 
 
 def parent_schema(sel: Selection) -> "OrderedDict[str, ColumnDefinition]":
-    """Typed schema (normalized column name -> ColumnDefinition) for the parent table."""
+    """Typed schema (normalized column name -> ColumnDefinition) for the parent table.
+
+    Nullability comes from the GraphQL NON_NULL marker for top-level scalars; nested object
+    columns stay nullable (the object itself may be absent)."""
     pk = set(sel.pk_fields)
     schema: OrderedDict[str, ColumnDefinition] = OrderedDict()
     for raw in parent_columns(sel):
-        schema[_normalize_one(raw)] = _column(sel.column_types.get(raw), raw in pk)
+        schema[_normalize_one(raw)] = _column(sel.column_types.get(raw), raw in pk, nullable=raw not in sel.non_null)
     return schema
 
 
@@ -112,10 +115,11 @@ def child_schema(sel: Selection, list_name: str) -> "OrderedDict[str, ColumnDefi
     schema: OrderedDict[str, ColumnDefinition] = OrderedDict()
     for raw in child_columns(sel, list_name):
         if raw == "_index":
-            gql_type = "Int"
+            gql_type, nullable = "Int", False  # always present per child row
         elif raw in fks:
             gql_type = sel.column_types.get(raw[len(sel.endpoint) + 1 :])  # parent_<pk> -> pk type
+            nullable = False  # FK = parent (non-null) PK value
         else:
-            gql_type = child.column_types.get(raw)
-        schema[_normalize_one(raw)] = _column(gql_type, raw in pk_cols)
+            gql_type, nullable = child.column_types.get(raw), raw not in child.non_null
+        schema[_normalize_one(raw)] = _column(gql_type, raw in pk_cols, nullable=nullable)
     return schema

@@ -98,6 +98,23 @@ def test_resolve_selection_full():
     assert set(sel.lists["items"].scalars) == {"sequence", "description"}
 
 
+def test_resolve_selection_nested_nonnull_subfield_stays_nullable():
+    # A NON_NULL sub-field of a (nullable) object must NOT be marked non-null, because the
+    # object can be absent and the flattened column then holds NULL.
+    fields = {
+        "IIssuedInvoice": [
+            {"name": "guid", "type": {"kind": "NON_NULL", "ofType": {"kind": "SCALAR", "name": "UUID"}}},
+            {"name": "currency", "type": {"kind": "OBJECT", "name": "ICurrency", "ofType": None}},
+        ],
+        "ICurrency": [{"name": "code", "type": {"kind": "NON_NULL", "ofType": {"kind": "SCALAR", "name": "String"}}}],
+    }
+    sel = resolve_selection(
+        _FakeClient(fields), "issuedInvoices", ["guid", "currency.code"], incremental_field=None, override_pk=None
+    )
+    assert "guid" in sel.non_null  # top-level NON_NULL scalar
+    assert "currency_code" not in sel.non_null  # nested sub-field guarded -> stays nullable
+
+
 def test_resolve_selection_detects_uuid_pk():
     fields = {
         "IIssuedInvoice": [

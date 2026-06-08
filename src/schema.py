@@ -32,6 +32,11 @@ def scalar_field_types(fields_json: list[dict]) -> dict[str, str]:
     return types
 
 
+def non_null_scalar_names(fields_json: list[dict]) -> set[str]:
+    """Names of scalar fields marked NON_NULL (e.g. `Int!`) in the GraphQL schema."""
+    return {nf.name for nf in map(normalize_field, fields_json) if nf.is_scalar and nf.is_non_null}
+
+
 def detect_pk(scalar_names: list[str], scalar_types: dict[str, str] | None = None) -> str | None:
     # The unique identifier in Money S3 is a UUID-typed field (always `guid`). The integer `id`
     # is NOT unique — it repeats across records — so keying on it would collapse distinct rows.
@@ -80,7 +85,9 @@ def prune_fields(selection: Selection, bad: set[str]) -> Selection:
         kept = [s for s in child.scalars if s not in bad]
         if kept:
             pk = child.pk_field if child.pk_field in kept else None
-            lists[name] = ChildSelection(scalars=kept, pk_field=pk, column_types=child.column_types)
+            lists[name] = ChildSelection(
+                scalars=kept, pk_field=pk, column_types=child.column_types, non_null=child.non_null
+            )
 
     return Selection(
         endpoint=selection.endpoint,
@@ -90,6 +97,7 @@ def prune_fields(selection: Selection, bad: set[str]) -> Selection:
         lists=lists,
         filter_type=selection.filter_type,
         column_types=selection.column_types,
+        non_null=selection.non_null,
     )
 
 
@@ -114,11 +122,16 @@ def resolve_selection(
     entity_fields = client.type_fields(item_type)
     scalar_names, object_types, list_types = classify_fields(entity_fields)
     item_scalar_types = scalar_field_types(entity_fields)
+    item_non_null = non_null_scalar_names(entity_fields)
 
     selected_scalars: list[str] = []
     nested: dict[str, list[str]] = {}
     lists: dict[str, ChildSelection] = {}
     column_types: dict[str, str] = {}  # raw output column name -> GraphQL scalar type
+    # Non-null only for top-level item scalars. Nested object sub-fields are deliberately
+    # excluded: a non-null sub-field of a nullable object still yields NULL when the object
+    # is absent, so those columns must stay nullable.
+    non_null: set[str] = set()
 
     for field_path in fields:
         if "." in field_path:
@@ -132,11 +145,16 @@ def resolve_selection(
             child_scalars, _, _ = classify_fields(child_fields)
             pk = "sequence" if "sequence" in child_scalars else None
             lists[field_path] = ChildSelection(
-                scalars=child_scalars, pk_field=pk, column_types=scalar_field_types(child_fields)
+                scalars=child_scalars,
+                pk_field=pk,
+                column_types=scalar_field_types(child_fields),
+                non_null=non_null_scalar_names(child_fields),
             )
         elif field_path in scalar_names:
             selected_scalars.append(field_path)
             column_types[field_path] = item_scalar_types.get(field_path)
+            if field_path in item_non_null:
+                non_null.add(field_path)
         # silently ignore unknown / object-without-subfield selections
 
     if override_pk:
@@ -155,6 +173,8 @@ def resolve_selection(
         if required and required in scalar_names and required not in selected_scalars:
             selected_scalars.append(required)
             column_types[required] = item_scalar_types.get(required)
+            if required in item_non_null:
+                non_null.add(required)
 
     return Selection(
         endpoint=endpoint,
@@ -164,4 +184,5 @@ def resolve_selection(
         lists=lists,
         filter_type=filter_type,
         column_types=column_types,
+        non_null=non_null,
     )

@@ -31,6 +31,22 @@ def test_parent_schema_maps_graphql_types_to_base_types():
     assert _base_type(schema["paid"]) == "BOOLEAN"
 
 
+def test_parent_schema_sets_nullability_from_non_null_set():
+    sel = Selection(
+        endpoint="e",
+        pk_fields=["guid"],
+        scalars=["guid", "documentNumber"],
+        nested={"currency": ["code"]},
+        lists={},
+        column_types={"guid": "UUID", "documentNumber": "String", "currency_code": "String"},
+        non_null={"guid"},  # resolve_selection only puts top-level non-null scalars here
+    )
+    schema = parent_schema(sel)
+    assert schema["guid"].nullable is False  # top-level NON_NULL scalar
+    assert schema["documentNumber"].nullable is True  # nullable scalar
+    assert schema["currency_code"].nullable is True  # nested column never in non_null -> nullable
+
+
 def test_child_schema_types_fk_index_and_scalars():
     sel = Selection(
         endpoint="e",
@@ -44,6 +60,9 @@ def test_child_schema_types_fk_index_and_scalars():
     assert _base_type(schema["e_guid"]) == "STRING"  # FK takes the parent UUID pk type
     assert _base_type(schema["index"]) == "INTEGER"  # synthetic row index
     assert _base_type(schema["amount"]) == "NUMERIC"
+    assert schema["e_guid"].nullable is False  # FK = non-null parent PK
+    assert schema["index"].nullable is False  # always present per child row
+    assert schema["amount"].nullable is True  # not marked non-null
 
 
 def test_normalize_columns_strips_leading_underscore():
