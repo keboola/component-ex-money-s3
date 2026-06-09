@@ -67,6 +67,13 @@ def test_list_incremental_fields():
     assert SelectElement("lastChangeDate") in _call(comp, "list_incremental_fields")
 
 
+def test_list_scalar_fields_excludes_objects_and_lists():
+    # Primary-key candidates are scalars only — nested objects and child lists are not valid PKs.
+    comp = _component_with_stub()
+    values = {e.value for e in _call(comp, "list_scalar_fields")}
+    assert values == {"id"}  # 'currency' (object) and 'items' (list) excluded
+
+
 def test_list_agendas():
     comp = _component_with_stub()
     result = _call(comp, "list_agendas")

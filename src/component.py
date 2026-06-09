@@ -283,6 +283,15 @@ class Component(ComponentBase):
         elements.extend(SelectElement(value=lst, label=f"{lst} (child table)") for lst in lists)
         return elements
 
+    @sync_action("list_scalar_fields")
+    def list_scalar_fields(self):
+        """Scalar fields of the endpoint — the valid candidates for a primary-key override."""
+        cfg = self._config()
+        client = self._get_client()
+        item_type, _ = client.endpoint_meta(cfg.endpoint)
+        scalars, _, _ = classify_fields(client.type_fields(item_type))
+        return [SelectElement(value=s) for s in scalars]
+
     @sync_action("list_incremental_fields")
     def list_incremental_fields(self):
         cfg = self._config()
