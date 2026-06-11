@@ -1,0 +1,373 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=PLACEHOLDER_CLIENTID&client_secret=PLACEHOLDER_SECRET&scope=s3api
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '103'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/connect/token?AppId=PLACEHOLDER_APPID
+  response:
+    body:
+      string: '{"access_token":"PLACEHOLDER_BEARER_TOKEN","expires_in":3600,"token_type":"Bearer","scope":"s3api"}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, max-age=0
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:15 GMT
+      Pragma:
+      - no-cache
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery {\n  __schema { queryType { fields {\n    name\n    args
+      { name type { kind name ofType { kind name } } }\n    type { kind name ofType
+      { kind name } }\n  } } }\n}\n", "variables": {}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '202'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__schema":{"queryType":{"fields":[{"name":"journalAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJournalAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JournalAccsCollectionSegment","ofType":null}},{"name":"journalTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJournalTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JournalTrsCollectionSegment","ofType":null}},{"name":"cashVouchers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICashVoucherFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CashVouchersCollectionSegment","ofType":null}},{"name":"bankStatements","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankStatementFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BankStatementsCollectionSegment","ofType":null}},{"name":"liabilities","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ILiabilityFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"LiabilitiesCollectionSegment","ofType":null}},{"name":"receivables","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IReceivableFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivablesCollectionSegment","ofType":null}},{"name":"internalDocuments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInternalDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"InternalDocumentsCollectionSegment","ofType":null}},{"name":"agendas","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAgendaFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AgendasCollectionSegment","ofType":null}},{"name":"years","args":[],"type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IAgendaYear"}}},{"name":"currencies","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICurrencyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CurrenciesCollectionSegment","ofType":null}},{"name":"centres","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICentreFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CentresCollectionSegment","ofType":null}},{"name":"operations","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOperationFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"OperationsCollectionSegment","ofType":null}},{"name":"jobOrderTypes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJobOrderTypeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JobOrderTypesCollectionSegment","ofType":null}},{"name":"addressKeys","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAddressKeyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AddressKeysCollectionSegment","ofType":null}},{"name":"banks","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BanksCollectionSegment","ofType":null}},{"name":"shippings","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IShippingFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ShippingsCollectionSegment","ofType":null}},{"name":"combinedNomenclatures","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICombinedNomenclatureFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CombinedNomenclaturesCollectionSegment","ofType":null}},{"name":"municipalityPostalCodes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IMunicipalityPostalCodeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"MunicipalityPostalCodesCollectionSegment","ofType":null}},{"name":"countries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICountryFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CountriesCollectionSegment","ofType":null}},{"name":"parameters","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IParameterFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ParametersCollectionSegment","ofType":null}},{"name":"vatClassifications","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatClassificationFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatClassificationsCollectionSegment","ofType":null}},{"name":"accountCharts","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountChartFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountChartsCollectionSegment","ofType":null}},{"name":"accountMovements","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountMovementFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountMovementsCollectionSegment","ofType":null}},{"name":"vatAccountingTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatAccountingTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatAccountingTrsCollectionSegment","ofType":null}},{"name":"vatAccountingAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatAccountingAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatAccountingAccsCollectionSegment","ofType":null}},{"name":"accountAssignmentTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountAssignmentTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountAssignmentTrsCollectionSegment","ofType":null}},{"name":"accountAssignmentAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountAssignmentAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountAssignmentAccsCollectionSegment","ofType":null}},{"name":"numericalSeries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"INumericalSerieFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"NumericalSeriesCollectionSegment","ofType":null}},{"name":"exchangeLists","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IExchangeListFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ExchangeListsCollectionSegment","ofType":null}},{"name":"bankAccountCashBoxes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankAccountCashBoxFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BankAccountCashBoxesCollectionSegment","ofType":null}},{"name":"nonMonetaryPayments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"INonMonetaryPaymentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"NonMonetaryPaymentsCollectionSegment","ofType":null}},{"name":"constantSymbols","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IConstantSymbolFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ConstantSymbolsCollectionSegment","ofType":null}},{"name":"definitionXMLTransfers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IDefinitionXMLTransferFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"DefinitionXMLTransfersCollectionSegment","ofType":null}},{"name":"priceLevels","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IPriceLevelFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"PriceLevelsCollectionSegment","ofType":null}},{"name":"jobOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJobOrderFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JobOrdersCollectionSegment","ofType":null}},{"name":"activities","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IActivityFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ActivitiesCollectionSegment","ofType":null}},{"name":"vatPurposes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatPurposeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatPurposesCollectionSegment","ofType":null}},{"name":"eshops","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEshopFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EshopsCollectionSegment","ofType":null}},{"name":"employmentType","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmploymentTypeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmploymentTypeCollectionSegment","ofType":null}},{"name":"employmentCode","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmploymentCodeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmploymentCodeCollectionSegment","ofType":null}},{"name":"companies","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICompanyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CompaniesCollectionSegment","ofType":null}},{"name":"employees","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmployeeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmployeesCollectionSegment","ofType":null}},{"name":"importStatus","args":[{"name":"importGuid","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"UUID"}}}],"type":{"kind":"OBJECT","name":"IImportData","ofType":null}},{"name":"warehouses","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IWarehouseFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"WarehousesCollectionSegment","ofType":null}},{"name":"issuedInvoices","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IIssuedInvoiceFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedInvoicesCollectionSegment","ofType":null}},{"name":"receivedInvoices","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IReceivedInvoiceFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedInvoicesCollectionSegment","ofType":null}},{"name":"receivedOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedOrdersCollectionSegment","ofType":null}},{"name":"issuedOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedOrdersCollectionSegment","ofType":null}},{"name":"receivedOffers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedOffersCollectionSegment","ofType":null}},{"name":"issuedOffers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedOffersCollectionSegment","ofType":null}},{"name":"receivedInquiries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedInquiriesCollectionSegment","ofType":null}},{"name":"issuedInquiries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedInquiriesCollectionSegment","ofType":null}},{"name":"services","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ServicesCollectionSegment","ofType":null}},{"name":"repairs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"RepairsCollectionSegment","ofType":null}},{"name":"articles","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IArticleFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ArticlesCollectionSegment","ofType":null}},{"name":"warehouseStocks","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IWarehouseStockFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"WarehouseStocksCollectionSegment","ofType":null}},{"name":"receivedSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedSlipsCollectionSegment","ofType":null}},{"name":"issuedSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedSlipsCollectionSegment","ofType":null}},{"name":"saleSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"SaleSlipsCollectionSegment","ofType":null}},{"name":"transferNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"TransferNotesCollectionSegment","ofType":null}},{"name":"productionNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ProductionNotesCollectionSegment","ofType":null}},{"name":"receivedDeliveryNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedDeliveryNotesCollectionSegment","ofType":null}},{"name":"issuedDeliveryNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedDeliveryNotesCollectionSegment","ofType":null}},{"name":"stockTakingDocuments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IStockTakingDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingDocumentsCollectionSegment","ofType":null}},{"name":"stockTakings","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IStockTakingFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingsCollectionSegment","ofType":null}},{"name":"stockTakingTypes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"StockTakingTypeFilter","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingTypesCollectionSegment","ofType":null}}]}}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:15 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "DefinitionXMLTransfersCollectionSegment"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '222'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"pageInfo","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"OBJECT","name":"CollectionSegmentInfo","ofType":null}}},{"name":"items","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IDefinitionXMLTransfer","ofType":null}}},{"name":"totalCount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:15 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IDefinitionXMLTransfer"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '205'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"id","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}},{"name":"type","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"DefinitionXMLTransferType","ofType":null}}},{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"description","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isCsw","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}},{"name":"systemDefinition","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"ENUM","name":"DefinitionXMLTransferSystemDefinition","ofType":null}}},{"name":"note","type":{"kind":"SCALAR","name":"String","ofType":null}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:16 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "query ($skip: Int!, $take: Int!) {\n  definitionXMLTransfers(skip:
+      $skip, take: $take) {\n    pageInfo { hasNextPage }\n    totalCount\n    items
+      { id type shortCut description isCsw systemDefinition note }\n  }\n}", "variables":
+      {"skip": 0, "take": 500}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      AgendaId:
+      - PLACEHOLDER_AGENDA
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '266'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"definitionXMLTransfers":{"pageInfo":{"hasNextPage":false},"totalCount":36,"items":[{"id":1,"type":"EXPORT","shortCut":"_OV+PV","description":"objednávky
+        a poptávky vydané pro dodavate","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        objednávek vydaných a poptávek vydaných. Je urèeno pro výmìnu obchodních dokumentù
+        mezi dvìma subjekty. Vyexportované doklady mohou být na stranì pøíjemce za
+        pomocí transformaèní šablony pro zrcadlení dokladù importovány jako objednávky
+        pøijaté a poptávky pøijaté."},{"id":3,"type":"EXPORT","shortCut":"_NV","description":"nabídky
+        vydané pro odbìratele","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        nabídek vydaných. Je urèeno pro výmìnu obchodních dokumentù mezi dvìma subjekty.
+        Vyexportované doklady mohou být na stranì pøíjemce za pomocí transormaèní
+        šablony pro zrcadlení dokladù importovány jako nabídky pøijaté."},{"id":4,"type":"IMPORT","shortCut":"_OP+PP","description":"objednávky
+        a poptávky pøijaté od odbìratele","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        objednávek pøijatých a poptávek pøijatých. Je urèeno pro výmìnu obchodních
+        dokumentù mezi dvìma subjekty. Na vstupu se pøedpokládá dokument obsahující
+        objednávky vydané a poptávky vydané vyexportované odesílatelem. Používá se
+        transormaèní šablona pro zrcadlení dokladù, která vytvoøí z vydaných dokladù
+        doklady pøijaté.\r\nPOZOR!!! Je nutné zabezpeèit jednoznaènost identifikaèního
+        klíèe partnera (standardnì IÈO) v seznamu Adresáøe a identifikaèního klíèe
+        skladových položek dokladu (standardnì katalog) v seznamu Kmenových karet.\r\nPOZOR!!!
+        Je nutné nastavit požadovaný typ dokladu (kvùli èíselné øadì) a sklad pro
+        objednávky pøijaté a poptávky pøijaté v èásti \"konfigurace dat\" tohoto pøenosu!"},{"id":5,"type":"IMPORT","shortCut":"_NP","description":"nabídky
+        pøijaté od dodavatele","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        nabídek pøijatých. Je urèeno pro výmìnu obchodních dokumentù mezi dvìma subjekty.
+        Na vstupu se pøedpokládá dokument obsahující nabídky vydané vyexportované
+        odesílatelem. Používá se transormaèní šablona pro zrcadlení dokladù, která
+        vytvoøí z vydaných dokladù doklady pøijaté. \r\nPOZOR!!! Je nutné zabezpeèit
+        jednoznaènost identifikaèního klíèe partnera (standardnì IÈO) v seznamu Adresáøe
+        a identifikaèního klíèe skladových položek dokladu (standardnì katalog) v
+        seznamu Kmenových karet.\r\nPOZOR!!! Je nutné nastavit požadovaný typ dokladu
+        (kvùli èíselné øadì) a sklad pro nabídky pøijaté v èásti \"konfigurace dat\"
+        tohoto pøenosu!"},{"id":7,"type":"IMPORT","shortCut":"_O+P+N","description":"objednávky,
+        poptávky, nabídky z vlastní provozovny","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        všech dokladù z menu Objednávky. Je urèeno pro pøenos dokladù 1:1 mezi dvìma
+        instalacemi Money uvnitø jednoho subjektu, nebo pro import tìchto dokladù
+        z jiných systémù, zaøízení apod. V èásti \"konfigurace zpracování\" tohoto
+        pøenosu je vhodné definovat zpùsob chování pøenosu pro pøenášené doklady,
+        tj. 1) podle jakého údaje se budou porovnávat importované a existující záznamy,
+        2) postup u nového záznamu a pøi opravì záznamu. Použitím nìkteré z transformaèních
+        šablon pro pøenos dokladù 1:1 lze ze vstupních dat odstranit informace o èísle
+        dokladu, èíselné øadì, typu dokladu a/nebo skladu. Informace chybìjící v datech
+        je tøeba pro pøenášené doklady nastavit v èásti \"konfigurace dat\" tohoto
+        pøenosu."},{"id":11,"type":"EXPORT","shortCut":"_O+P+N","description":"objednávky,
+        poptávky, nabídky na vlastní provozov","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        všech dokladù z menu Objednávky. Je urèeno pro pøenos dokladù 1:1 mezi dvìma
+        instalacemi Money uvnitø jednoho subjektu."},{"id":12,"type":"IMPORT","shortCut":"_ADR","description":"adresy","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        adres do adresáøe. V èásti \"konfigurace zpracování\" tohoto pøenosu je vhodné
+        definovat zpùsob chování pøenosu pro adresy, tj. 1) podle jakého údaje se
+        budou porovnávat importované a existující záznamy, 2) postup u nového záznamu
+        a pøi opravì záznamu."},{"id":13,"type":"EXPORT","shortCut":"_ADR","description":"adresy","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        adres z adresáøe"},{"id":14,"type":"EXPORT","shortCut":"_SV","description":"výdejové
+        skladové doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        výdejových skladových dokladù (tj. výdejky, vydané dodací listy, prodejky).
+        Vyexportované doklady mohou být na stranì pøíjemce za pomoci transformaèní
+        šablony pro zrcadlení dokladù importovány jako pøíjmové skladové doklady."},{"id":15,"type":"EXPORT","shortCut":"_S","description":"všechny
+        skladové doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        všech skladových dokladù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi
+        Money uvnitø jednoho subjektu."},{"id":16,"type":"IMPORT","shortCut":"_SP","description":"pøíjmové
+        skladové doklady z výdejových","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        pøíjmových skladových dokladù (pøíjemky a pøijaté dodací listy). Na vstupu
+        se pøedpokládá dokument obsahující výdejové skladové doklady vyexportované
+        odesílatelem (výdejky, vydané dodací listy, prodejky). Používá se transormaèní
+        šablona pro zrcadlení dokladù, která vytvoøí z vydaných dokladù doklady pøijaté
+        (z prodejek se stanou pøíjemky). POZOR!!! Je nutné nastavit požadovaný typ
+        dokladu (kvùli èíselné øadì) a sklad pro pøíjmové skladové doklady v èásti
+        \"konfigurace dat\" tohoto pøenosu!"},{"id":17,"type":"IMPORT","shortCut":"_S","description":"všechny
+        skladové doklady 1:1","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        všech skladových dokladù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi
+        Money uvnitø jednoho subjektu, nebo pro import tìchto dokladù z jiných systémù,
+        zaøízení apod. V èásti \"konfigurace zpracování\" tohoto pøenosu je vhodné
+        definovat zpùsob chování pøenosu pro pøenášené doklady, tj. 1) podle jakého
+        údaje se budou porovnávat importované a existující záznamy, 2) postup u nového
+        záznamu a pøi opravì záznamu. Použitím nìkteré z transformaèních šablon pro
+        pøenos dokladù 1:1 lze ze vstupních dat odstranit informace o èísle dokladu,
+        èíselné øadì, typu dokladu a/nebo skladu. Informace chybìjící v datech je
+        tøeba pro pøenášené doklady nastavit v èásti \"konfigurace dat\" tohoto pøenosu."},{"id":18,"type":"EXPORT","shortCut":"_KK","description":"kmenové
+        karty","isCsw":true,"systemDefinition":"STANDARD","note":"Export kmenových
+        karet."},{"id":19,"type":"IMPORT","shortCut":"_KK","description":"kmenové
+        karty","isCsw":true,"systemDefinition":"STANDARD","note":"Import kmenových
+        karet. V èásti \"konfigurace zpracování\" tohoto pøenosu je vhodné definovat
+        zpùsob chování pøenosu pro kmenové karty, tj. 1) podle jakého údaje se budou
+        porovnávat importované a existující záznamy, 2) postup u nového záznamu a
+        pøi opravì záznamu."},{"id":20,"type":"EXPORT","shortCut":"_ZAS","description":"zásoby","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        zásob."},{"id":21,"type":"IMPORT","shortCut":"_ZAS","description":"zásoby","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        zásob. V èásti \"konfigurace zpracování\" tohoto pøenosu je vhodné definovat
+        zpùsob chování pøenosu pro kmenové karty a sklady, tj. 1) podle jakého údaje
+        se budou porovnávat importované a existující záznamy, 2) postup u nového záznamu
+        a pøi opravì záznamu."},{"id":22,"type":"EXPORT","shortCut":"_ID","description":"interní
+        doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Export inventurních
+        dokladù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi Money uvnitø
+        jednoho subjektu."},{"id":23,"type":"IMPORT","shortCut":"_ID","description":"interní
+        doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Import interních
+        dokladù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi Money uvnitø
+        jednoho subjektu, nebo pro import tìchto dokladù z jiných systémù, zaøízení
+        apod. V èásti \"konfigurace zpracování\" tohoto pøenosu je vhodné definovat
+        zpùsob chování pøenosu pro interní doklady, tj. 1) podle jakého údaje se budou
+        porovnávat importované a existující záznamy, 2) postup u nového záznamu a
+        pøi opravì záznamu. Použitím nìkteré z transformaèních šablon pro pøenos dokladù
+        1:1 lze ze vstupních dat odstranit informace o èísle dokladu, èíselné øadì,
+        typu dokladu. Informace chybìjící v datech je tøeba pro interní doklady nastavit
+        v èásti \"konfigurace dat\" tohoto pøenosu."},{"id":24,"type":"IMPORT","shortCut":"_FP","description":"faktury
+        pøijaté od dodavatele","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        faktur pøijatých . Je urèeno pro výmìnu obchodních dokumentù mezi dvìma subjekty.
+        Na vstupu se pøedpokládá dokument obsahující faktury vydané vyexportované
+        odesílatelem. Používá se transormaèní šablona pro zrcadlení dokladù, která
+        vytvoøí z vydaných dokladù doklady pøijaté.\r\nPOZOR!!! Je nutné zabezpeèit
+        jednoznaènost identifikaèního klíèe partnera (standardnì IÈO) v seznamu Adresáøe
+        a identifikaèního klíèe skladových položek dokladu (standardnì katalog) v
+        seznamu Kmenových karet.\r\nPOZOR!!! Je nutné nastavit požadovaný typ dokladu
+        (kvùli èíselné øadì) a sklad pro objednávky pøijaté a poptávky pøijaté v èásti
+        \"konfigurace dat\" tohoto pøenosu!"},{"id":25,"type":"IMPORT","shortCut":"_FP+FV","description":"faktury
+        pøijaté a vydané","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        faktur pøijatých a vydaných. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi
+        Money uvnitø jednoho subjektu, nebo pro import tìchto dokladù z jiných systémù,
+        zaøízení apod. "},{"id":26,"type":"IMPORT","shortCut":"_BD","description":"bankovní
+        doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Import bankovních
+        dokladù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi Money uvnitø
+        jednoho subjektu, nebo pro import tìchto dokladù z jiných systémù, zaøízení
+        apod."},{"id":27,"type":"IMPORT","shortCut":"_PD","description":"pokladní
+        doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Import pokladních
+        dokladù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi Money uvnitø
+        jednoho subjektu, nebo pro import tìchto dokladù z jiných systémù, zaøízení
+        apod."},{"id":28,"type":"IMPORT","shortCut":"_ZAK","description":"zakázky","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        zakázek. Je urèeno pro pøenos zakázek 1:1 mezi dvìma instalacemi Money uvnitø
+        jednoho subjektu, nebo pro import tìchto dokladù z jiných systémù, zaøízení
+        apod."},{"id":29,"type":"EXPORT","shortCut":"_FP+FV","description":"faktury
+        pøijaté a vydané","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        faktur pøijatých a vydaných. "},{"id":30,"type":"EXPORT","shortCut":"_BD","description":"bankovní
+        doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Export bankovních
+        dokladù"},{"id":31,"type":"EXPORT","shortCut":"_PD","description":"pokladní
+        doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Export pokladních
+        dokladù"},{"id":32,"type":"EXPORT","shortCut":"_SEZNAMY","description":"kontrolingové
+        seznamy","isCsw":true,"systemDefinition":"STANDARD","note":"Export kontrolingových
+        seznamù: Seznamy Støedisek, Èinností, Pøedkontací, Zaúètování DPH, Èlenìní
+        DPH, Úètová osnova (podvojné úèetnictví), Úèetní pohyby (daòová evidence)."},{"id":33,"type":"EXPORT","shortCut":"_ZAK","description":"zakázky","isCsw":true,"systemDefinition":"STANDARD","note":"Export
+        zakázek"},{"id":34,"type":"IMPORT","shortCut":"_INVD","description":"inventurní
+        doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Import inventurních
+        dokladù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi Money uvnitø
+        jednoho subjektu, nebo pro import tìchto dokladù z jiných systémù, zaøízení
+        apod. V èásti \"konfigurace zpracování\" tohoto pøenosu je vhodné definovat
+        zpùsob chování pøenosu pro inventurní doklady u nového záznamu (pøidat, žádná
+        akce, chyba) a pøi opravì záznamu (aktualizovat, žádná akce, chyba). Importované
+        a existující záznamy se porovnávají podle Èísla dokladu a Èísla inventury.\r\nPoužitím
+        nìkteré z transformaèních šablon pro pøenos dokladù 1:1 lze ze vstupních dat
+        odstranit informaci o èísle dokladu, èísle inventury a/nebo skladu (seznam
+        použitelných transformaèních šablon - viz ..\\Data\\XMLDE\\Templates\\Import\\Readme.txt).
+        Informaci o chybìjící inventuøe a skladu je tøeba pro importované doklady
+        nastavit v èásti \"konfigurace dat\" tohoto pøenosu.\r\n"},{"id":35,"type":"EXPORT","shortCut":"_INVD","description":"inventurní
+        doklady","isCsw":true,"systemDefinition":"STANDARD","note":"Export inventurních
+        dokladù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi Money uvnitø
+        jednoho subjektu."},{"id":36,"type":"IMPORT","shortCut":"_PRSQL","description":"import
+        z programu Prodejna SQL","isCsw":true,"systemDefinition":"STANDARD","note":"Import
+        z programu Prodejna SQL."},{"id":37,"type":"IMPORT","shortCut":"_PH+ZV","description":"pohledávky
+        a závazky","isCsw":true,"systemDefinition":"STANDARD","note":"Import pohledávek
+        a závazkù. Je urèeno pro pøenos dokladù 1:1 mezi dvìma instalacemi Money uvnitø
+        jednoho subjektu, nebo pro import tìchto dokladù z jiných systémù, zaøízení
+        apod."},{"id":38,"type":"EXPORT","shortCut":"_PH+ZV","description":"pohledávky
+        a závazky","isCsw":true,"systemDefinition":"STANDARD","note":"Export pohledávek
+        a závazkù"},{"id":39,"type":"EXPORT","shortCut":"_SKL","description":"sklady,
+        ceníky","isCsw":true,"systemDefinition":"STANDARD","note":"Export skladù a
+        ceníkù."},{"id":40,"type":"EXPORT","shortCut":"_PAR","description":"parametry
+        zásob","isCsw":true,"systemDefinition":"STANDARD","note":"Export parametrù
+        zásob."},{"id":41,"type":"IMPORT","shortCut":"_PAR","description":"parametry
+        zásob","isCsw":true,"systemDefinition":"STANDARD","note":"Import parametrù
+        zásob. V èásti \"konfigurace zpracování\" tohoto pøenosu je vhodné definovat
+        zpùsob chování pøenosu pro parametry, tj. postup importu u nového záznamu
+        a pøi opravì záznamu."}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:26:17 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+version: 1

@@ -1,0 +1,299 @@
+interactions:
+- request:
+    body: grant_type=client_credentials&client_id=PLACEHOLDER_CLIENTID&client_secret=PLACEHOLDER_SECRET&scope=s3api
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '103'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/connect/token?AppId=PLACEHOLDER_APPID
+  response:
+    body:
+      string: '{"access_token":"PLACEHOLDER_BEARER_TOKEN","expires_in":3600,"token_type":"Bearer","scope":"s3api"}'
+    headers:
+      Cache-Control:
+      - no-store, no-cache, max-age=0
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Mon, 08 Jun 2026 09:25:04 GMT
+      Pragma:
+      - no-cache
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery {\n  __schema { queryType { fields {\n    name\n    args
+      { name type { kind name ofType { kind name } } }\n    type { kind name ofType
+      { kind name } }\n  } } }\n}\n", "variables": {}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '202'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__schema":{"queryType":{"fields":[{"name":"journalAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJournalAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JournalAccsCollectionSegment","ofType":null}},{"name":"journalTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJournalTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JournalTrsCollectionSegment","ofType":null}},{"name":"cashVouchers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICashVoucherFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CashVouchersCollectionSegment","ofType":null}},{"name":"bankStatements","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankStatementFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BankStatementsCollectionSegment","ofType":null}},{"name":"liabilities","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ILiabilityFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"LiabilitiesCollectionSegment","ofType":null}},{"name":"receivables","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IReceivableFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivablesCollectionSegment","ofType":null}},{"name":"internalDocuments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInternalDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"InternalDocumentsCollectionSegment","ofType":null}},{"name":"agendas","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAgendaFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AgendasCollectionSegment","ofType":null}},{"name":"years","args":[],"type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IAgendaYear"}}},{"name":"currencies","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICurrencyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CurrenciesCollectionSegment","ofType":null}},{"name":"centres","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICentreFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CentresCollectionSegment","ofType":null}},{"name":"operations","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOperationFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"OperationsCollectionSegment","ofType":null}},{"name":"jobOrderTypes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJobOrderTypeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JobOrderTypesCollectionSegment","ofType":null}},{"name":"addressKeys","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAddressKeyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AddressKeysCollectionSegment","ofType":null}},{"name":"banks","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BanksCollectionSegment","ofType":null}},{"name":"shippings","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IShippingFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ShippingsCollectionSegment","ofType":null}},{"name":"combinedNomenclatures","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICombinedNomenclatureFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CombinedNomenclaturesCollectionSegment","ofType":null}},{"name":"municipalityPostalCodes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IMunicipalityPostalCodeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"MunicipalityPostalCodesCollectionSegment","ofType":null}},{"name":"countries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICountryFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CountriesCollectionSegment","ofType":null}},{"name":"parameters","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IParameterFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ParametersCollectionSegment","ofType":null}},{"name":"vatClassifications","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatClassificationFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatClassificationsCollectionSegment","ofType":null}},{"name":"accountCharts","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountChartFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountChartsCollectionSegment","ofType":null}},{"name":"accountMovements","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountMovementFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountMovementsCollectionSegment","ofType":null}},{"name":"vatAccountingTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatAccountingTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatAccountingTrsCollectionSegment","ofType":null}},{"name":"vatAccountingAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatAccountingAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatAccountingAccsCollectionSegment","ofType":null}},{"name":"accountAssignmentTrs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountAssignmentTrFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountAssignmentTrsCollectionSegment","ofType":null}},{"name":"accountAssignmentAccs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IAccountAssignmentAccFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"AccountAssignmentAccsCollectionSegment","ofType":null}},{"name":"numericalSeries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"INumericalSerieFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"NumericalSeriesCollectionSegment","ofType":null}},{"name":"exchangeLists","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IExchangeListFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ExchangeListsCollectionSegment","ofType":null}},{"name":"bankAccountCashBoxes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IBankAccountCashBoxFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"BankAccountCashBoxesCollectionSegment","ofType":null}},{"name":"nonMonetaryPayments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"INonMonetaryPaymentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"NonMonetaryPaymentsCollectionSegment","ofType":null}},{"name":"constantSymbols","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IConstantSymbolFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ConstantSymbolsCollectionSegment","ofType":null}},{"name":"definitionXMLTransfers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IDefinitionXMLTransferFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"DefinitionXMLTransfersCollectionSegment","ofType":null}},{"name":"priceLevels","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IPriceLevelFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"PriceLevelsCollectionSegment","ofType":null}},{"name":"jobOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IJobOrderFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"JobOrdersCollectionSegment","ofType":null}},{"name":"activities","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IActivityFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ActivitiesCollectionSegment","ofType":null}},{"name":"vatPurposes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IVatPurposeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"VatPurposesCollectionSegment","ofType":null}},{"name":"eshops","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEshopFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EshopsCollectionSegment","ofType":null}},{"name":"employmentType","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmploymentTypeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmploymentTypeCollectionSegment","ofType":null}},{"name":"employmentCode","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmploymentCodeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmploymentCodeCollectionSegment","ofType":null}},{"name":"companies","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"ICompanyFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"CompaniesCollectionSegment","ofType":null}},{"name":"employees","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IEmployeeFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"EmployeesCollectionSegment","ofType":null}},{"name":"importStatus","args":[{"name":"importGuid","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"UUID"}}}],"type":{"kind":"OBJECT","name":"IImportData","ofType":null}},{"name":"warehouses","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IWarehouseFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"WarehousesCollectionSegment","ofType":null}},{"name":"issuedInvoices","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IIssuedInvoiceFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedInvoicesCollectionSegment","ofType":null}},{"name":"receivedInvoices","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IReceivedInvoiceFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedInvoicesCollectionSegment","ofType":null}},{"name":"receivedOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedOrdersCollectionSegment","ofType":null}},{"name":"issuedOrders","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedOrdersCollectionSegment","ofType":null}},{"name":"receivedOffers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedOffersCollectionSegment","ofType":null}},{"name":"issuedOffers","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedOffersCollectionSegment","ofType":null}},{"name":"receivedInquiries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedInquiriesCollectionSegment","ofType":null}},{"name":"issuedInquiries","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedInquiriesCollectionSegment","ofType":null}},{"name":"services","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ServicesCollectionSegment","ofType":null}},{"name":"repairs","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IOrderDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"RepairsCollectionSegment","ofType":null}},{"name":"articles","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IArticleFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ArticlesCollectionSegment","ofType":null}},{"name":"warehouseStocks","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IWarehouseStockFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"WarehouseStocksCollectionSegment","ofType":null}},{"name":"receivedSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedSlipsCollectionSegment","ofType":null}},{"name":"issuedSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedSlipsCollectionSegment","ofType":null}},{"name":"saleSlips","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"SaleSlipsCollectionSegment","ofType":null}},{"name":"transferNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"TransferNotesCollectionSegment","ofType":null}},{"name":"productionNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ProductionNotesCollectionSegment","ofType":null}},{"name":"receivedDeliveryNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"ReceivedDeliveryNotesCollectionSegment","ofType":null}},{"name":"issuedDeliveryNotes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IInStoreDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"IssuedDeliveryNotesCollectionSegment","ofType":null}},{"name":"stockTakingDocuments","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IStockTakingDocumentFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingDocumentsCollectionSegment","ofType":null}},{"name":"stockTakings","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"IStockTakingFilterInput","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingsCollectionSegment","ofType":null}},{"name":"stockTakingTypes","args":[{"name":"skip","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"take","type":{"kind":"SCALAR","name":"Int","ofType":null}},{"name":"where","type":{"kind":"INPUT_OBJECT","name":"StockTakingTypeFilter","ofType":null}},{"name":"order","type":{"kind":"LIST","name":null,"ofType":{"kind":"NON_NULL","name":null}}}],"type":{"kind":"OBJECT","name":"StockTakingTypesCollectionSegment","ofType":null}}]}}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:25:04 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "BanksCollectionSegment"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '205'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"pageInfo","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"OBJECT","name":"CollectionSegmentInfo","ofType":null}}},{"name":"items","type":{"kind":"LIST","name":null,"ofType":{"kind":"OBJECT","name":"IBank","ofType":null}}},{"name":"totalCount","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Int","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:25:05 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "\nquery ($name: String!) {\n  __type(name: $name) { fields {\n    name
+      type { kind name ofType { kind name ofType { kind name } } }\n  } }\n}\n", "variables":
+      {"name": "IBank"}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '188'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"__type":{"fields":[{"name":"name","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"shortCut","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"code","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"swift","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"countryCode","type":{"kind":"SCALAR","name":"String","ofType":null}},{"name":"isCsw","type":{"kind":"NON_NULL","name":null,"ofType":{"kind":"SCALAR","name":"Boolean","ofType":null}}}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:25:05 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": "query ($skip: Int!, $take: Int!) {\n  banks(skip: $skip, take:
+      $take) {\n    pageInfo { hasNextPage }\n    totalCount\n    items { name shortCut
+      code swift countryCode isCsw }\n  }\n}", "variables": {"skip": 0, "take": 500}}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      AgendaId:
+      - PLACEHOLDER_AGENDA
+      Authorization:
+      - Bearer PLACEHOLDER_BEARER_TOKEN
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '235'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.34.2
+    method: POST
+    uri: http://localhost:28085/graphql
+  response:
+    body:
+      string: '{"data":{"banks":{"pageInfo":{"hasNextPage":false},"totalCount":91,"items":[{"name":"ABAPAY
+        s.r.o.","shortCut":"EEPS","code":"8230","swift":"EEPSCZPP","countryCode":"CZ","isCsw":true},{"name":"Air
+        Bank a.s.","shortCut":"BAIR","code":"3030","swift":"AIRACZPP","countryCode":"CZ","isCsw":true},{"name":"Artesa,
+        spoøitelní družstvo","shortCut":"ARTZ","code":"2220","swift":"ARTTCZPP","countryCode":"CZ","isCsw":true},{"name":"AXA
+        Bank Europe, organizaèní složka","shortCut":"AXAB","code":"2230","swift":"","countryCode":"CZ","isCsw":true},{"name":"Bank
+        of Communications Co., Ltd., Prague Branch","shortCut":"","code":"8255","swift":"COMMCZPP","countryCode":"CZ","isCsw":true},{"name":"Bank
+        of China (CEE) Ltd. Prague Branch","shortCut":"BKCH","code":"8250","swift":"BKCHCZPP","countryCode":"CZ","isCsw":true},{"name":"Banka
+        CREDITAS a.s.","shortCut":"CREZ","code":"2250","swift":"CTASCZ22","countryCode":"CZ","isCsw":true},{"name":"Beekash
+        Payment Solutions, s.r.o.","shortCut":"","code":"8282","swift":"BPORCZ22","countryCode":"CZ","isCsw":true},{"name":"BESTPAY
+        s.r.o.","shortCut":"","code":"8299","swift":"","countryCode":"CZ","isCsw":true},{"name":"BNP
+        Paribas Personal Finance SA, odštìpný závod","shortCut":"GEBA","code":"3050","swift":"BPPFCZP1","countryCode":"CZ","isCsw":true},{"name":"BNP
+        Paribas S.A., poboèka Èeská republika","shortCut":"GEBA","code":"6300","swift":"GEBACZPP","countryCode":"CZ","isCsw":true},{"name":"Celní
+        banka pro Intrastat","shortCut":"ZOLL","code":"ZOLL","swift":"","countryCode":"CZ","isCsw":true},{"name":"Centrální
+        depozitáø cenných papírù, a.s.","shortCut":"BRCP","code":"9910","swift":"","countryCode":"CZ","isCsw":true},{"name":"Citfin,
+        spoøitelní družstvo","shortCut":"CITF","code":"2060","swift":"CITFCZPP","countryCode":"CZ","isCsw":true},{"name":"Citibank
+        Europe plc, organizaèní složka","shortCut":"CITI","code":"2600","swift":"CITICZPX","countryCode":"CZ","isCsw":true},{"name":"COMMERZBANK
+        Aktiengesellschaft, poboèka Praha","shortCut":"COBA","code":"6200","swift":"COBACZPX","countryCode":"CZ","isCsw":true},{"name":"Crédit
+        Agricole Corporate and Investment Bank S.A.","shortCut":"CRLY","code":"5000","swift":"CRLYCZPP","countryCode":"CZ","isCsw":true},{"name":"Èeská
+        exportní banka, a.s.","shortCut":"CEXB","code":"8090","swift":"CZEECZPP","countryCode":"CZ","isCsw":true},{"name":"Èeská
+        národní banka","shortCut":"CNBA","code":"0710","swift":"CNBACZPP","countryCode":"CZ","isCsw":true},{"name":"Èeská
+        národní banka - zúètovací centrum","shortCut":"CNBACC","code":"0730","swift":"","countryCode":"CZ","isCsw":true},{"name":"Èeská
+        spoøitelna, a.s.","shortCut":"CSPO","code":"0800","swift":"GIBACZPX","countryCode":"CZ","isCsw":true},{"name":"Èeskoslovenská
+        obchodní banka, a.s.","shortCut":"CEKO","code":"0300","swift":"CEKOCZPP","countryCode":"CZ","isCsw":true},{"name":"Èeskoslovenská
+        obchodní banka, a.s.-platební karty","shortCut":"VISA","code":"9980","swift":"","countryCode":"CZ","isCsw":true},{"name":"Èeskoslovenské
+        úvìrní družstvo","shortCut":"VVDZ","code":"2030","swift":"AKCTCZ22","countryCode":"CZ","isCsw":true},{"name":"ÈNB-Krátkodobé
+        dluhopisy","shortCut":"TKDL","code":"9960","swift":"","countryCode":"CZ","isCsw":true},{"name":"ÈSOB
+        Hypoteèní banka, a.s.","shortCut":"CMHB","code":"2100","swift":"","countryCode":"CZ","isCsw":true},{"name":"ÈSOB
+        Stavební spoøitelna, a.s.","shortCut":"CMSS","code":"7960","swift":"","countryCode":"CZ","isCsw":true},{"name":"Deutsche
+        Bank A.G. Filiale Prag,organizaèní složka","shortCut":"DEUT","code":"7910","swift":"DEUTCZPX","countryCode":"CZ","isCsw":true},{"name":"Devizová
+        burza a.s.","shortCut":"","code":"8610","swift":"","countryCode":"CZ","isCsw":true},{"name":"Družstevní
+        záložna Kredit, v likvidaci","shortCut":"DZKR","code":"8240","swift":"","countryCode":"CZ","isCsw":true},{"name":"ERB
+        bank, a.s., v likvidaci","shortCut":"FICH","code":"2210","swift":"FICHCZPP","countryCode":"CZ","isCsw":true},{"name":"FAS
+        finance company s.r.o.","shortCut":"","code":"8198","swift":"FFCSCZP1","countryCode":"CZ","isCsw":true},{"name":"Fio
+        banka, a.s.","shortCut":"FIOB","code":"2010","swift":"FIOBCZPP","countryCode":"CZ","isCsw":true},{"name":"GoPay
+        platební brána","shortCut":"GPCZ","code":"GPCZ","swift":"","countryCode":"CZ","isCsw":true},{"name":"HSBC
+        Continental Europe, Czech Republic","shortCut":"MIDL","code":"8150","swift":"MIDLCZPP","countryCode":"CZ","isCsw":true},{"name":"Industrial
+        and Commercial Bank of China Limited Pr","shortCut":"ICBK","code":"8265","swift":"ICBKCZPP","countryCode":"CZ","isCsw":true},{"name":"ING
+        Bank N.V.","shortCut":"INGB","code":"3500","swift":"INGBCZPP","countryCode":"CZ","isCsw":true},{"name":"J&T
+        BANKA, a.s.","shortCut":"JTBP","code":"5800","swift":"JTBPCZPP","countryCode":"CZ","isCsw":true},{"name":"Komerèní
+        banka, a.s.","shortCut":"KOMB","code":"0100","swift":"KOMBCZPP","countryCode":"CZ","isCsw":true},{"name":"MasterCard
+        Europe sprl. - platební karty","shortCut":"MCEB","code":"9870","swift":"","countryCode":"CZ","isCsw":true},{"name":"Max
+        banka a.s.","shortCut":"EXPN","code":"4000","swift":"EXPNCZPP","countryCode":"CZ","isCsw":true},{"name":"mBank
+        S.A., organizaèní složka (poboèka v ÈR)","shortCut":"BREX","code":"6210","swift":"BREXCZPP","countryCode":"CZ","isCsw":true},{"name":"mBank
+        S.A., organizaèní složka (poboèka v SR)","shortCut":"BREXSA","code":"8360","swift":"BREXSKBX","countryCode":"SK","isCsw":true},{"name":"MEINL
+        BANK Aktiengesellschaft, poboèka Praha","shortCut":"","code":"3020","swift":"","countryCode":"CZ","isCsw":true},{"name":"Mercurius
+        partners s.r.o.","shortCut":"","code":"8293","swift":"MRPSCZPP","countryCode":"CZ","isCsw":true},{"name":"Modrá
+        pyramida stavební spoøitelna, a.s.","shortCut":"VSPO","code":"7990","swift":"","countryCode":"CZ","isCsw":true},{"name":"MONETA
+        Money Bank, a.s.","shortCut":"AGBA","code":"0600","swift":"AGBACZPP","countryCode":"CZ","isCsw":true},{"name":"MONETA
+        Stavební Spoøitelna, a.s.","shortCut":"SSWT","code":"7970","swift":"","countryCode":"CZ","isCsw":true},{"name":"MoneyPolo
+        Europe s.r.o.","shortCut":"","code":"8199","swift":"MOUSCZP2","countryCode":"CZ","isCsw":true},{"name":"MUFG
+        Bank (Europe) N.V. Prague Branch","shortCut":"BOTK","code":"2020","swift":"BOTKCZPP","countryCode":"CZ","isCsw":true},{"name":"Multitude
+        Bank p.l.c.","shortCut":"","code":"8500","swift":"","countryCode":"CZ","isCsw":true},{"name":"Národní
+        rozvojová banka, a.s.","shortCut":"CMZR","code":"4300","swift":"NROZCZPP","countryCode":"CZ","isCsw":true},{"name":"NEY
+        spoøitelní družstvo","shortCut":"ANOS","code":"2260","swift":"","countryCode":"CZ","isCsw":true},{"name":"Oberbank
+        AG poboèka Èeská republika","shortCut":"SMWR","code":"8040","swift":"OBKLCZ2X","countryCode":"CZ","isCsw":true},{"name":"Partners
+        Banka, a.s. ","shortCut":"","code":"6363","swift":"","countryCode":"CZ","isCsw":true},{"name":"PAYMASTER
+        a.s.","shortCut":"","code":"8260","swift":"PYYMCZPP","countryCode":"CZ","isCsw":true},{"name":"Payment
+        Execution s.r.o.","shortCut":"","code":"8220","swift":"PAERCZP1","countryCode":"CZ","isCsw":true},{"name":"PAYMONT,
+        UAB","shortCut":"","code":"8660","swift":"","countryCode":"CZ","isCsw":true},{"name":"Penìžní
+        dùm, spoøitelní družstvo","shortCut":"PDSD","code":"2200","swift":"","countryCode":"CZ","isCsw":true},{"name":"PKO
+        BP S.A., Czech Branch","shortCut":"BPKO ","code":"3060","swift":"BPKOCZPP","countryCode":"CZ","isCsw":true},{"name":"Platební
+        systém pro karty AMEX","shortCut":"AMEX","code":"AMEX","swift":"","countryCode":"CZ","isCsw":true},{"name":"Platební
+        systém pro karty DC","shortCut":"DC","code":"DC","swift":"","countryCode":"CZ","isCsw":true},{"name":"Platební
+        systém pro karty DINERS","shortCut":"DINE","code":"DINE","swift":"","countryCode":"CZ","isCsw":true},{"name":"Platební
+        systém pro karty ECMC","shortCut":"ECMC","code":"ECMC","swift":"","countryCode":"CZ","isCsw":true},{"name":"Platební
+        systém pro karty JCB","shortCut":"JCB","code":"JCB","swift":"","countryCode":"CZ","isCsw":true},{"name":"Platební
+        systém pro karty VISA","shortCut":"VISA","code":"VISA","swift":"","countryCode":"CZ","isCsw":true},{"name":"Podnikatelská
+        družstevní záložna","shortCut":"PODZ","code":"2275","swift":"","countryCode":"CZ","isCsw":true},{"name":"Poštová
+        banka, a.s., poboèka Èeská republika","shortCut":"PABKCA","code":"2240","swift":"POBNCZPP","countryCode":"CZ","isCsw":true},{"name":"PPF
+        banka a.s.","shortCut":"PMBA","code":"6000","swift":"PMBPCZPP","countryCode":"CZ","isCsw":true},{"name":"PRIVAT
+        BANK AG der Raiffeisenlandesbank","shortCut":"","code":"8200","swift":"","countryCode":"CZ","isCsw":true},{"name":"Qpay
+        s.r.o.","shortCut":"","code":"8283","swift":"QPSRCZPP","countryCode":"CZ","isCsw":true},{"name":"Raiffeisen
+        stavební spoøitelna a.s.","shortCut":"ARSS","code":"7950","swift":"","countryCode":"CZ","isCsw":true},{"name":"Raiffeisenbank
+        a.s.","shortCut":"RZBC","code":"5500","swift":"RZBCCZPP","countryCode":"CZ","isCsw":true},{"name":"Raiffeisenbank
+        a.s. (do 31. 12. 2021 Equa bank)","shortCut":"ICBN","code":"6100","swift":"EQBKCZPP","countryCode":"CZ","isCsw":true},{"name":"Raiffeisenbank
+        a.s.-dobìh plateb ZUNO","shortCut":"ZUNO","code":"2310","swift":"ZUNOCZPP","countryCode":"CZ","isCsw":true},{"name":"Raiffeisenbank
+        im Stiftland eG poboèka Cheb","shortCut":"DRBW","code":"8030","swift":"GENOCZ21","countryCode":"CZ","isCsw":true},{"name":"RM
+        SYSTÉM, a.s.","shortCut":"RMSS","code":"9900","swift":"","countryCode":"CZ","isCsw":true},{"name":"Sberbank
+        CZ, a.s. v likvidaci","shortCut":"VBOE","code":"6800","swift":"VBOECZ2X","countryCode":"CZ","isCsw":true},{"name":"Sparkasse
+        Oberlausitz-Niederschlesien","shortCut":"","code":"8190","swift":"","countryCode":"CZ","isCsw":true},{"name":"Stavební
+        spoøitelna Èeské spoøitelny, a.s.","shortCut":"SSCS","code":"8060","swift":"","countryCode":"CZ","isCsw":true},{"name":"Tatra
+        banka, a.s.","shortCut":"TATR","code":"1100","swift":"TATRSKBX","countryCode":"SK","isCsw":true},{"name":"The
+        Royal Bank of Scotland plc, organizaèní složka","shortCut":"ABNA","code":"5400","swift":"ABNACZPP","countryCode":"CZ","isCsw":true},{"name":"TRINITY
+        BANK a.s.","shortCut":"MPUZ","code":"2070","swift":"MPUBCZPP","countryCode":"CZ","isCsw":true},{"name":"UNIBON
+        - spoøitelní a úvìrní družstvo","shortCut":"UNIB","code":"2040","swift":"","countryCode":"CZ","isCsw":true},{"name":"UniCredit
+        Bank Czech Republic and Slovakia, a.s.","shortCut":"CABV","code":"2700","swift":"BACXCZPP","countryCode":"CZ","isCsw":true},{"name":"VIVA
+        PAYMENT SERVICES S.A. odštìpný závod","shortCut":"","code":"8272","swift":"VPAYCZP2","countryCode":"CZ","isCsw":true},{"name":"Všeobecná
+        úvìrová banka a.s., poboèka Praha","shortCut":"SUBACA","code":"6700","swift":"SUBACZPP","countryCode":"CZ","isCsw":true},{"name":"Vybrané
+        operace KB","shortCut":"ZOKB","code":"9890","swift":"","countryCode":"CZ","isCsw":true},{"name":"Waldviertler
+        Sparkasse von 1842 AG","shortCut":"SPWT","code":"7940","swift":"SPWTCZ21","countryCode":"CZ","isCsw":true},{"name":"WPB
+        Capital, spoøitelní družstvo","shortCut":"WPBZ","code":"2050","swift":"","countryCode":"CZ","isCsw":true},{"name":"Wüstenrot
+        hypoteèní banka a.s.","shortCut":"WUEH","code":"7980","swift":"","countryCode":"CZ","isCsw":true}]}}}'
+    headers:
+      Content-Type:
+      - application/graphql-response+json; charset=utf-8
+      Date:
+      - Mon, 08 Jun 2026 09:25:06 GMT
+      Request-Context:
+      - appId=cid-v1:2661fca5-f404-4cd8-b97f-73b56b6ac431
+      Server:
+      - Kestrel
+      Transfer-Encoding:
+      - chunked
+      X-Powered-By:
+      - ASP.NET
+    status:
+      code: 200
+      message: OK
+version: 1

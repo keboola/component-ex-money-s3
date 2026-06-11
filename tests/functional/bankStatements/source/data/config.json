@@ -1,0 +1,53 @@
+{
+  "parameters": {
+    "base_url": "http://localhost:28085",
+    "client_id": "PLACEHOLDER_CLIENTID",
+    "#client_secret": "PLACEHOLDER_SECRET",
+    "agenda_id": "PLACEHOLDER_AGENDA",
+    "endpoint": "bankStatements",
+    "fields": [
+      "id",
+      "year",
+      "cancel",
+      "isExpense",
+      "documentNumber",
+      "registrationNumber",
+      "receivedDocumentNumber",
+      "description",
+      "dateOfAccountingEvent",
+      "dateOfIssue",
+      "dateOfPayment",
+      "dateOfTaxing",
+      "dateOfVatApplication",
+      "bankStatementNumber",
+      "bankStatementId",
+      "variableSymbol",
+      "pairingSymbol",
+      "constantSymbol",
+      "specificSymbol",
+      "totalWithVatHc",
+      "totalWithVat",
+      "note",
+      "isDeleted",
+      "numericalSerieSequence",
+      "lastChangeDate",
+      "lastChangeTime",
+      "issuedUser",
+      "exchangeRateAmount",
+      "exchangeRate",
+      "isPriceCorrection",
+      "documentType",
+      "isLock",
+      "isNotAccounting",
+      "isPaymentPayroll",
+      "phoneNumber",
+      "email"
+    ],
+    "load_type": "full_load",
+    "destination": {}
+  },
+  "image_parameters": {
+    "app_id": "PLACEHOLDER_APPID"
+  },
+  "action": "run"
+}

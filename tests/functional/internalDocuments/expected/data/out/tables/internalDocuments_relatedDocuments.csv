@@ -1,0 +1,3 @@
+internalDocuments_id,index,relType,subRelType,srcDocumentYear,srcDocumentType,srcDocumentId,srcDocumentItemType,srcDocumentItemId,dstDocumentYear,dstDocumentType,dstDocumentId,dstDocumentItemType,dstDocumentItemId,relAmount
+1,0,REVERSE_CHANGE,RC_WITH_TAX_DEDUCTION,002,RECEIVED_INVOICE,3,,0,002,INTERNAL_DOCUMENT,1,,0,0.0
+1,0,REVERSE_CHANGE,RC_WITH_TAX_DEDUCTION,002,RECEIVED_INVOICE,3,,0,002,INTERNAL_DOCUMENT,1,,0,0.0

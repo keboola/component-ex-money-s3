@@ -1,0 +1,48 @@
+name,nameCzech,code,isEuMember,codeVat,sepa,isCsw
+Austria,Rakousko,AT,True,AT,True,True
+Australia,Austrálie,AU,False,,False,True
+Belgium,Belgie,BE,True,BE,True,True
+Bulgaria,Bulharsko,BG,True,BG,True,True
+Belarus,Bělorusko,BY,False,,False,True
+Canada,Kanada,CA,False,,False,True
+China,Čína,CN,False,,False,True
+Cyprus,Kypr,CY,True,CY,True,True
+Česká republika,Česká republika,CZ,True,CZ,True,True
+Germany,Německo,DE,True,DE,True,True
+Denmark,Dánsko,DK,True,DK,True,True
+Estonia,Estonsko,EE,True,EE,True,True
+Spain,Španělsko,ES,True,ES,True,True
+Finland,Finsko,FI,True,FI,True,True
+France,Francie,FR,True,FR,True,True
+United Kingdom,Velká Británie,GB,False,GB,True,True
+Greece,Řecko,GR,True,EL,True,True
+Croatia,Chorvatsko,HR,True,HR,True,True
+Hungary,Maďarsko,HU,True,HU,True,True
+Switzerland,Švýcarsko,CH,False,,True,True
+Ireland,Irsko,IE,True,IE,True,True
+Israel,Izrael,IL,False,,False,True
+Iceland,Island,IS,False,,True,True
+Italy,Itálie,IT,True,IT,True,True
+Japan,Japonsko,JP,False,,False,True
+Liechtenstein,Lichtenštejnsko,LI,False,,True,True
+Lithuania,Litva,LT,True,LT,True,True
+Luxembourg,Lucembursko,LU,True,LU,True,True
+Latvia,Lotyšsko,LV,True,LV,True,True
+Monaco,Monako,MC,False,,True,True
+Malta,Malta,MT,True,MT,True,True
+Netherlands,Nizozemí,NL,True,NL,True,True
+Norway,Norsko,NO,False,,True,True
+Poland,Polsko,PL,True,PL,True,True
+Portugal,Portugalsko,PT,True,PT,True,True
+Romania,Rumunsko,RO,True,RO,True,True
+Russia,Rusko,RU,False,,False,True
+Sweden,Švédsko,SE,True,SE,True,True
+Slovenia,Slovinsko,SI,True,SI,True,True
+Slovenská republika,Slovenská republika,SK,True,SK,True,True
+Turkey,Turecko,TR,False,,False,True
+Taiwan,Tchajwan,TW,False,,False,True
+Ukraine,Ukrajina,UA,False,,False,True
+U.S.A.,U.S.A.,US,False,,False,True
+Vietnam,Vietnam,VN,False,,False,True
+United Kingdom (NIR),Velká Británie (Severní Irsko),XI,True,XI,True,True
+United Kingdom,Velká Británie (bez Severního Irska),XU,False,,True,True

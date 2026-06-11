@@ -1,1 +1,153 @@
-{}
+{
+  "type": "object",
+  "title": "Extraction",
+  "format": "grid",
+  "required": [
+    "endpoint",
+    "load_type"
+  ],
+  "properties": {
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "propertyOrder": 1,
+      "enum": [],
+      "format": "select",
+      "options": {
+        "grid_columns": 12,
+        "async": {
+          "label": "Load endpoints",
+          "action": "list_endpoints"
+        }
+      }
+    },
+    "fields": {
+      "type": "array",
+      "title": "Fields",
+      "description": "Fields to extract. Leave empty to extract all available fields.",
+      "propertyOrder": 2,
+      "format": "select",
+      "uniqueItems": true,
+      "items": {
+        "enum": [],
+        "type": "string"
+      },
+      "options": {
+        "grid_columns": 12,
+        "async": {
+          "label": "Load fields",
+          "action": "list_fields"
+        }
+      }
+    },
+    "load_type": {
+      "type": "string",
+      "title": "Load Type",
+      "default": "full_load",
+      "propertyOrder": 3,
+      "enum": [
+        "full_load",
+        "incremental_load"
+      ],
+      "options": {
+        "grid_columns": 12,
+        "enum_titles": [
+          "Full Load",
+          "Incremental Load"
+        ]
+      }
+    },
+    "incremental_field": {
+      "type": "string",
+      "title": "Incremental Field",
+      "description": "Date/datetime field used as the incremental watermark and for the Date From/To bounds. Only fields the API supports as server-side date filters are listed, so this is a subset of Fields.",
+      "propertyOrder": 4,
+      "enum": [],
+      "format": "select",
+      "default": "lastChange",
+      "options": {
+        "grid_columns": 12,
+        "async": {
+          "label": "Load incremental fields",
+          "action": "list_incremental_fields"
+        },
+        "dependencies": {
+          "load_type": "incremental_load"
+        }
+      }
+    },
+    "date_from": {
+      "type": "string",
+      "title": "Date From",
+      "propertyOrder": 5,
+      "description": "ISO date (YYYY-MM-DD) lower bound on the incremental field. Optional.",
+      "options": {
+        "grid_columns": 6
+      }
+    },
+    "date_to": {
+      "type": "string",
+      "title": "Date To",
+      "propertyOrder": 6,
+      "description": "ISO date (YYYY-MM-DD) upper bound on the incremental field. Optional.",
+      "options": {
+        "grid_columns": 6
+      }
+    },
+    "destination": {
+      "type": "object",
+      "title": "Destination",
+      "propertyOrder": 7,
+      "options": {
+        "grid_columns": 12
+      },
+      "properties": {
+        "table_name": {
+          "type": "string",
+          "title": "Table Name (defaults to endpoint)",
+          "propertyOrder": 1
+        },
+        "primary_key": {
+          "type": "array",
+          "title": "Primary Key override",
+          "description": "Override the auto-detected primary key. Leave empty to let the component detect it. Pick one or more scalar fields of the endpoint.",
+          "propertyOrder": 2,
+          "format": "select",
+          "uniqueItems": true,
+          "items": {
+            "enum": [],
+            "type": "string"
+          },
+          "options": {
+            "async": {
+              "label": "Load primary key fields",
+              "action": "list_scalar_fields"
+            }
+          }
+        }
+      }
+    },
+    "page_size": {
+      "type": "integer",
+      "title": "Page Size",
+      "description": "Number of records fetched per API request (skip/take pagination).",
+      "default": 500,
+      "minimum": 1,
+      "propertyOrder": 8,
+      "options": {
+        "grid_columns": 12
+      }
+    },
+    "debug": {
+      "type": "boolean",
+      "title": "Debug",
+      "description": "Enable verbose debug logging.",
+      "default": false,
+      "format": "checkbox",
+      "propertyOrder": 9,
+      "options": {
+        "grid_columns": 12
+      }
+    }
+  }
+}

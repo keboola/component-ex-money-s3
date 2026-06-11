@@ -1,0 +1,11 @@
+cashVouchers_guid,sequence,description,unitPriceHc,unitPrice,priceType,vatRate,amountUnit,amount,note,reverseChargeCode,reverseChargeRange
+38df541b-4f72-42e2-b1be-77a2e0366d3f,1,Bota Goretex,6700.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+38df541b-4f72-42e2-b1be-77a2e0366d3f,1,Bota Goretex,6700.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+8fd00bd7-03b0-46d2-8da7-4f00aaa161ca,1,Raft Caňon - evidence VÝROBNÍCH ČÍSEL,24000.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+8fd00bd7-03b0-46d2-8da7-4f00aaa161ca,1,Raft Caňon - evidence VÝROBNÍCH ČÍSEL,24000.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+d7651389-b278-4ed9-a7bb-53305cbf4eed,1,Kolečkové brusle,750.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+417517fe-1110-4408-9e78-a2f0206f7abc,1,Bota Goretex,6700.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+417517fe-1110-4408-9e78-a2f0206f7abc,1,Bota Goretex,6700.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+1f5b5087-5fdb-4cb7-a616-53d3413f3606,1,Raft Caňon - evidence VÝROBNÍCH ČÍSEL,24000.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+1f5b5087-5fdb-4cb7-a616-53d3413f3606,1,Raft Caňon - evidence VÝROBNÍCH ČÍSEL,24000.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0
+69aec04b-3ec2-487c-adb6-ab01ba13416a,1,Kolečkové brusle,750.0,0.0,WITH_VAT,21.0,ks,1.0,,,0.0

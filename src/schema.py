@@ -1,0 +1,188 @@
+from keboola.component.exceptions import UserException
+
+from graphql_types import normalize_field, unwrap_type
+from query_builder import ChildSelection, Selection
+
+_DATE_FILTER_TYPES = {"DateOnlyFilterInput", "DateOperationFilterInput", "DateTimeOperationFilterInput"}
+
+
+def classify_fields(fields_json: list[dict]) -> tuple[list[str], dict[str, str], dict[str, str]]:
+    """Return (scalar_names, {object_name: type}, {list_name: element_type})."""
+    scalars: list[str] = []
+    objects: dict[str, str] = {}
+    lists: dict[str, str] = {}
+    for raw in fields_json:
+        nf = normalize_field(raw)
+        if nf.is_list:
+            lists[nf.name] = nf.type_name
+        elif nf.is_object:
+            objects[nf.name] = nf.type_name
+        elif nf.is_scalar:
+            scalars.append(nf.name)
+    return scalars, objects, lists
+
+
+def scalar_field_types(fields_json: list[dict]) -> dict[str, str]:
+    """Map each scalar field name to its unwrapped scalar type, e.g. {'guid': 'UUID', 'id': 'Int'}."""
+    types: dict[str, str] = {}
+    for raw in fields_json:
+        nf = normalize_field(raw)
+        if nf.is_scalar:
+            types[nf.name] = nf.type_name
+    return types
+
+
+def non_null_scalar_names(fields_json: list[dict]) -> set[str]:
+    """Names of scalar fields marked NON_NULL (e.g. `Int!`) in the GraphQL schema."""
+    return {nf.name for nf in map(normalize_field, fields_json) if nf.is_scalar and nf.is_non_null}
+
+
+def detect_pk(scalar_names: list[str], scalar_types: dict[str, str] | None = None) -> str | None:
+    # The unique identifier in Money S3 is a UUID-typed field (always `guid`). The integer `id`
+    # is NOT unique — it repeats across records — so keying on it would collapse distinct rows.
+    # Prefer a UUID-typed scalar by metadata (robust even if it were named something other than
+    # `guid`); fall back to name-based detection (guid > id) for schemas without UUID typing.
+    if scalar_types:
+        uuid_fields = [n for n in scalar_names if scalar_types.get(n) == "UUID"]
+        if "guid" in uuid_fields:
+            return "guid"
+        if uuid_fields:
+            return uuid_fields[0]
+    for candidate in ("guid", "id"):
+        if candidate in scalar_names:
+            return candidate
+    return None
+
+
+def date_filter_field_names(filter_fields_json: list[dict]) -> list[str]:
+    names: list[str] = []
+    for raw in filter_fields_json:
+        _, type_name, _ = unwrap_type(raw["type"])
+        if type_name in _DATE_FILTER_TYPES:
+            names.append(raw["name"])
+    return names
+
+
+def prune_fields(selection: Selection, bad: set[str]) -> Selection:
+    """Return a copy of ``selection`` with every field named in ``bad`` removed —
+    from top-level scalars, nested object sub-fields, and child (list) selections.
+    A nested object or list left with no fields is dropped entirely. Used to strip
+    fields the server rejects (e.g. legislation-incompatible members)."""
+    scalars = [s for s in selection.scalars if s not in bad]
+
+    nested: dict[str, list[str]] = {}
+    for obj, subs in selection.nested.items():
+        if obj in bad:
+            continue
+        kept = [s for s in subs if s not in bad]
+        if kept:
+            nested[obj] = kept
+
+    lists: dict[str, ChildSelection] = {}
+    for name, child in selection.lists.items():
+        if name in bad:
+            continue
+        kept = [s for s in child.scalars if s not in bad]
+        if kept:
+            pk = child.pk_field if child.pk_field in kept else None
+            lists[name] = ChildSelection(
+                scalars=kept, pk_field=pk, column_types=child.column_types, non_null=child.non_null
+            )
+
+    return Selection(
+        endpoint=selection.endpoint,
+        pk_fields=selection.pk_fields,
+        scalars=scalars,
+        nested=nested,
+        lists=lists,
+        filter_type=selection.filter_type,
+        column_types=selection.column_types,
+        non_null=selection.non_null,
+    )
+
+
+def all_field_paths(client, endpoint: str) -> list[str]:
+    """Every selectable field path for an endpoint — scalars, nested object scalars
+    (``obj.sub``) and list field names (child tables). Mirrors what the ``list_fields``
+    sync action offers, so it can serve as the default selection when the user picks none."""
+    item_type, _ = client.endpoint_meta(endpoint)
+    scalars, objects, lists = classify_fields(client.type_fields(item_type))
+    paths = list(scalars)
+    for obj, obj_type in objects.items():
+        sub_scalars, _, _ = classify_fields(client.type_fields(obj_type))
+        paths.extend(f"{obj}.{sub}" for sub in sub_scalars)
+    paths.extend(lists.keys())
+    return paths
+
+
+def resolve_selection(
+    client, endpoint: str, fields: list[str], incremental_field: str | None, override_pk: list[str] | None
+) -> Selection:
+    item_type, filter_type = client.endpoint_meta(endpoint)
+    entity_fields = client.type_fields(item_type)
+    scalar_names, object_types, list_types = classify_fields(entity_fields)
+    item_scalar_types = scalar_field_types(entity_fields)
+    item_non_null = non_null_scalar_names(entity_fields)
+
+    selected_scalars: list[str] = []
+    nested: dict[str, list[str]] = {}
+    lists: dict[str, ChildSelection] = {}
+    column_types: dict[str, str] = {}  # raw output column name -> GraphQL scalar type
+    # Non-null only for top-level item scalars. Nested object sub-fields are deliberately
+    # excluded: a non-null sub-field of a nullable object still yields NULL when the object
+    # is absent, so those columns must stay nullable.
+    non_null: set[str] = set()
+
+    for field_path in fields:
+        if "." in field_path:
+            obj, sub = field_path.split(".", 1)
+            nested.setdefault(obj, []).append(sub)
+            obj_type = object_types.get(obj)
+            if obj_type:
+                column_types[f"{obj}_{sub}"] = scalar_field_types(client.type_fields(obj_type)).get(sub)
+        elif field_path in list_types:
+            child_fields = client.type_fields(list_types[field_path])
+            child_scalars, _, _ = classify_fields(child_fields)
+            pk = "sequence" if "sequence" in child_scalars else None
+            lists[field_path] = ChildSelection(
+                scalars=child_scalars,
+                pk_field=pk,
+                column_types=scalar_field_types(child_fields),
+                non_null=non_null_scalar_names(child_fields),
+            )
+        elif field_path in scalar_names:
+            selected_scalars.append(field_path)
+            column_types[field_path] = item_scalar_types.get(field_path)
+            if field_path in item_non_null:
+                non_null.add(field_path)
+        # silently ignore unknown / object-without-subfield selections
+
+    if override_pk:
+        missing = [c for c in override_pk if c not in scalar_names]
+        if missing:
+            raise UserException(
+                f"Configured primary key {missing} not found among scalar fields of endpoint '{endpoint}'."
+            )
+        pk_fields = list(override_pk)
+    else:
+        detected = detect_pk(scalar_names, item_scalar_types)
+        pk_fields = [detected] if detected else []
+
+    # force-include PK and incremental field as scalar columns
+    for required in (*pk_fields, incremental_field):
+        if required and required in scalar_names and required not in selected_scalars:
+            selected_scalars.append(required)
+            column_types[required] = item_scalar_types.get(required)
+            if required in item_non_null:
+                non_null.add(required)
+
+    return Selection(
+        endpoint=endpoint,
+        pk_fields=pk_fields,
+        scalars=selected_scalars,
+        nested=nested,
+        lists=lists,
+        filter_type=filter_type,
+        column_types=column_types,
+        non_null=non_null,
+    )
